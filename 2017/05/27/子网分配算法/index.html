@@ -5,17 +5,17 @@
   
   <title>子网分配算法 | DreamWu&#39;s Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所欲的字符串就都是子网，而不是ip了 第二阶段，支持修改。 思路：写一">
+  <meta name="description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。第一阶段的设计思路如下:   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所有的字符串就都是子网，而不是ip了 第二阶段">
 <meta name="keywords" content="算法 子网分配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="子网分配算法">
 <meta property="og:url" content="http://yoursite.com/2017/05/27/子网分配算法/index.html">
 <meta property="og:site_name" content="DreamWu&#39;s Archive">
-<meta property="og:description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所欲的字符串就都是子网，而不是ip了 第二阶段，支持修改。 思路：写一">
-<meta property="og:updated_time" content="2017-05-28T02:31:49.740Z">
+<meta property="og:description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。第一阶段的设计思路如下:   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所有的字符串就都是子网，而不是ip了 第二阶段">
+<meta property="og:updated_time" content="2017-05-28T02:40:51.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="子网分配算法">
-<meta name="twitter:description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所欲的字符串就都是子网，而不是ip了 第二阶段，支持修改。 思路：写一">
+<meta name="twitter:description" content="先贴代码，准备分为两个阶段写：  第一阶段，不支持修改。 第二阶段，支持修改。 现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。第一阶段的设计思路如下:   /**  IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址 为当前的子网分配一个合适的子网 第一阶段，不支持修改。支持修改的话存放的所有的字符串就都是子网，而不是ip了 第二阶段">
   
     <link rel="alternate" href="/atom.xml" title="DreamWu&#39;s Archive" type="application/atom+xml">
   
@@ -94,135 +94,117 @@
 <ul>
 <li>第一阶段，不支持修改。</li>
 <li><p>第二阶段，支持修改。</p>
-<p>现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。</p>
+<p>现在仅仅完成了第一阶段，第二阶段完成以后再来对代码进行解析。第一阶段的设计思路如下:</p>
 </li>
 </ul>
 <p>/**</p>
 <ul>
 <li>IP分配算法，现在一个三层网络的地址池，和为二层准备的子网前缀，还有一些可能已经分配出去的子网地址</li>
 <li>为当前的子网分配一个合适的子网</li>
-<li>第一阶段，不支持修改。支持修改的话存放的所欲的字符串就都是子网，而不是ip了</li>
+<li>第一阶段，不支持修改。支持修改的话存放的所有的字符串就都是子网，而不是ip了</li>
 <li>第二阶段，支持修改。</li>
-<li>思路：写一个合并和拆分子网的算法，然后每次从自由地址池里面分配之后，需要对自由地址进行子网的合并和拆分</li>
+<li>解决思路：写一个合并和拆分子网的算法，然后每次从自由地址池里面分配之后，需要对自由地址进行子网的合并和拆分</li>
 <li>每次正常添加子网的时候也需要计算后面的掩码<br>*</li>
-<li>@Author 吴自霖</li>
+<li>@Author Dream Wu</li>
 <li>@Date 2017/5/27</li>
-<li><p>@Email wzl961@163.com<br>*/</p>
-<p> public class SubnetAllocated {</p>
-<pre><code>// 当前最新子网cidr的ip部分
-public static String currentGreatestIp;
-// 存放所有已分配子网
-public static Map&lt;String, List&lt;String&gt;&gt; subnetIpMap = new HashMap&lt;&gt;();
-public static Map&lt;String, Boolean&gt; ipPoolUsableMap = new HashMap&lt;&gt;();
-//自由子网地址池，只有在部分子网创建后被释放的情况下会被使用
-public static Map&lt;String, List&lt;String&gt;&gt; freeSubnetIpMap = new HashMap&lt;&gt;();
-</code></pre><p> public static final Integer IP_SEGMENT_LENGTH = 8;</p>
-<p> public static void main(String args[]) {</p>
-<pre><code>long startTime=System.currentTimeMillis();
-System.out.println(ipToSubnet(&quot;10000000100000001000000010000000&quot;, 24));
-long endTime=System.currentTimeMillis();
-System.out.println(&quot;Run Time :&quot; + (endTime-startTime));
-</code></pre><p> }</p>
-<p> public static String allcateSubnet(String ipPool, Integer subnetMask) {</p>
-<pre><code>// 将地址池分为ip和掩码，分别进行处理
-String[] subnet = ipPool.split(&quot;\\/&quot;);
-// 地址池的上限，如果达到次上限，子网就算分完了
-String ipPoolLimit;
-// 分配好的子网的IP
-String allocatedIp;
-// 分配好的子网
-String allocatedSubnet = null;
-// ip地址池的二进制字符串
-String binaryIpPool;
-// 地址池的掩码部分
-Integer ipPoolMask = 0;
-// 分配成功的标志
-boolean flag = false;
+<li>@Email wzl961@163.com<br>*/</li>
+</ul>
+<p>Java代码如下：</p>
+<pre><code>public class SubnetAllocated {
+    // 当前最新子网cidr的ip部分
+    public static String currentGreatestIp;
+    // 存放所有已分配子网
+    public static Map&lt;String, List&lt;String&gt;&gt; subnetIpMap = new HashMap&lt;&gt;();
+    public static Map&lt;String, Boolean&gt; ipPoolUsableMap = new HashMap&lt;&gt;();
+    //自由子网地址池，只有在部分子网创建后被释放的情况下会被使用
+    public static Map&lt;String, List&lt;String&gt;&gt; freeSubnetIpMap = new HashMap&lt;&gt;();
 
-// 第一步，判断subnetMask是否合法
-if (subnet[1] != null) {
-    try {
-        ipPoolMask = Integer.valueOf(subnet[1]);
-    } catch (Exception e) {
-        System.out.println(&quot;mask Exception : &quot; + e.getMessage());
-        return null;
-    }
+public static final Integer IP_SEGMENT_LENGTH = 8;
+
+public static void main(String args[]) {
+    long startTime=System.currentTimeMillis();
+    System.out.println(ipToSubnet(&quot;10000000100000001000000010000000&quot;, 24));
+    long endTime=System.currentTimeMillis();
+    System.out.println(&quot;Run Time :&quot; + (endTime-startTime));
 }
 
-if (ipPoolMask &gt;= subnetMask) {
-    System.out.println(&quot;subnetMask should be less than ip pool mask.&quot;);
-    return null;
-}
+public static String allcateSubnet(String ipPool, Integer subnetMask) {
+    // 将地址池分为ip和掩码，分别进行处理
+    String[] subnet = ipPool.split(&quot;\\/&quot;);
+    // 地址池的上限，如果达到次上限，子网就算分完了
+    String ipPoolLimit;
+    // 分配好的子网的IP
+    String allocatedIp;
+    // 分配好的子网
+    String allocatedSubnet = null;
+    // ip地址池的二进制字符串
+    String binaryIpPool;
+    // 地址池的掩码部分
+    Integer ipPoolMask = 0;
+    // 分配成功的标志
+    boolean flag = false;
 
-// 第二步，将地址池的ip部分转化成二进制数，并且将其与地址池的上限进行比较
-try {
-     binaryIpPool = ipToBinary(subnet[0]);
-} catch (Exception e) {
-    System.out.println(&quot;Ip string illegal.Exception : &quot; + e.getMessage());
-    return null;
-}
-
-// 第三步，得到地址池的上限，并且对第一次分配子网进行初始化
-ipPoolLimit = binaryAdd(binaryIpPool, ipPoolMask);
-
-if (currentGreatestIp == null) {
-    currentGreatestIp = binaryIpPool;
-    allocatedIp = currentGreatestIp;
-} else {
-    allocatedIp = binaryAdd(currentGreatestIp, subnetMask);
-}
-
-// 第四步，IP的最终分配。满足条件：
-// 1. 分配的IP小于上限IP
-// 2. 分配的IP未被覆盖到
-// 3. 还有剩余子网
-
-// 第一次给地址池分IP，先分了再说
-if (subnetIpMap.get(ipPool) == null) {
-    List&lt;String&gt; ipList = new LinkedList&lt;&gt;();
-    ipList.add(allocatedIp);
-    subnetIpMap.put(ipPool, ipList);
-}
-if (ipPoolUsableMap.get(ipPool) == null) {
-    ipPoolUsableMap.put(ipPool, true);
-    return ipToSubnet(allocatedIp, subnetMask);
-}
-
-//地址池已经分完，不可再分
-if (!ipPoolUsableMap.get(ipPool)) {
-    System.out.println(&quot;No subnet available.&quot;);
-    return null;
-}
-
-// 第二次及以后分配ip, 没成功就一直分
-// 若在范围内就一直加
-if (!checkSubnetOverIpRange(allocatedIp, ipPoolLimit)) {
-    while (!flag) {
-        if (!checkSubnetIpIsInUsed(allocatedIp, ipPool)) {
-            List&lt;String&gt; ipList = subnetIpMap.get(ipPool);
-            ipList.add(allocatedIp);
-            subnetIpMap.put(ipPool, ipList);
-            currentGreatestIp = allocatedIp;
-            allocatedSubnet = ipToSubnet(allocatedIp, subnetMask);
-
-            flag = true;
-        } else {
-            allocatedIp = binaryAdd(allocatedIp, subnetMask);
+    // 第一步，判断subnetMask是否合法
+    if (subnet[1] != null) {
+        try {
+            ipPoolMask = Integer.valueOf(subnet[1]);
+        } catch (Exception e) {
+            System.out.println(&quot;mask Exception : &quot; + e.getMessage());
+            return null;
         }
     }
-} else {
-    // 若allocatedIp超过上限，就从自由的地址池里面分
-    if (freeSubnetIpMap.get(ipPool) != null &amp;&amp; freeSubnetIpMap.get(ipPool).size() != 0) {
-        allocatedIp = binaryIpPool;
 
-        List&lt;String&gt; freeIpList = freeSubnetIpMap.get(ipPool);
+    if (ipPoolMask &gt;= subnetMask) {
+        System.out.println(&quot;subnetMask should be less than ip pool mask.&quot;);
+        return null;
+    }
 
+    // 第二步，将地址池的ip部分转化成二进制数，并且将其与地址池的上限进行比较
+    try {
+         binaryIpPool = ipToBinary(subnet[0]);
+    } catch (Exception e) {
+        System.out.println(&quot;Ip string illegal.Exception : &quot; + e.getMessage());
+        return null;
+    }
+
+    // 第三步，得到地址池的上限，并且对第一次分配子网进行初始化
+    ipPoolLimit = binaryAdd(binaryIpPool, ipPoolMask);
+
+    if (currentGreatestIp == null) {
+        currentGreatestIp = binaryIpPool;
+        allocatedIp = currentGreatestIp;
+    } else {
+        allocatedIp = binaryAdd(currentGreatestIp, subnetMask);
+    }
+
+    // 第四步，IP的最终分配。满足条件：
+    // 1. 分配的IP小于上限IP
+    // 2. 分配的IP未被覆盖到
+    // 3. 还有剩余子网
+
+    // 第一次给地址池分IP，先分了再说
+    if (subnetIpMap.get(ipPool) == null) {
+        List&lt;String&gt; ipList = new LinkedList&lt;&gt;();
+        ipList.add(allocatedIp);
+        subnetIpMap.put(ipPool, ipList);
+    }
+    if (ipPoolUsableMap.get(ipPool) == null) {
+        ipPoolUsableMap.put(ipPool, true);
+        return ipToSubnet(allocatedIp, subnetMask);
+    }
+
+    //地址池已经分完，不可再分
+    if (!ipPoolUsableMap.get(ipPool)) {
+        System.out.println(&quot;No subnet available.&quot;);
+        return null;
+    }
+
+    // 第二次及以后分配ip, 没成功就一直分
+    // 若在范围内就一直加
+    if (!checkSubnetOverIpRange(allocatedIp, ipPoolLimit)) {
         while (!flag) {
-            if (freeIpList.contains(allocatedIp)) {
-                freeIpList.remove(allocatedIp);
-                freeSubnetIpMap.put(ipPool, freeIpList);
-
-                List&lt;String&gt; ipList =  subnetIpMap.get(ipPool);
+            if (!checkSubnetIpIsInUsed(allocatedIp, ipPool)) {
+                List&lt;String&gt; ipList = subnetIpMap.get(ipPool);
                 ipList.add(allocatedIp);
                 subnetIpMap.put(ipPool, ipList);
                 currentGreatestIp = allocatedIp;
@@ -234,58 +216,85 @@ if (!checkSubnetOverIpRange(allocatedIp, ipPoolLimit)) {
             }
         }
     } else {
-        // 自由子网也分配完了就是没有真的地址了
-        ipPoolUsableMap.put(ipPool, false);
-        System.out.println(&quot;No subnet available.&quot;);
-        return null;
+        // 若allocatedIp超过上限，就从自由的地址池里面分
+        if (freeSubnetIpMap.get(ipPool) != null &amp;&amp; freeSubnetIpMap.get(ipPool).size() != 0) {
+            allocatedIp = binaryIpPool;
+
+            List&lt;String&gt; freeIpList = freeSubnetIpMap.get(ipPool);
+
+            while (!flag) {
+                if (freeIpList.contains(allocatedIp)) {
+                    freeIpList.remove(allocatedIp);
+                    freeSubnetIpMap.put(ipPool, freeIpList);
+
+                    List&lt;String&gt; ipList =  subnetIpMap.get(ipPool);
+                    ipList.add(allocatedIp);
+                    subnetIpMap.put(ipPool, ipList);
+                    currentGreatestIp = allocatedIp;
+                    allocatedSubnet = ipToSubnet(allocatedIp, subnetMask);
+
+                    flag = true;
+                } else {
+                    allocatedIp = binaryAdd(allocatedIp, subnetMask);
+                }
+            }
+        } else {
+            // 自由子网也分配完了就是没有真的地址了
+            ipPoolUsableMap.put(ipPool, false);
+            System.out.println(&quot;No subnet available.&quot;);
+            return null;
+        }
     }
+
+    return allocatedSubnet;
 }
 
-return allocatedSubnet;
-</code></pre><p> }</p>
-<p> // 判断allocatedIp是否被使用或者超过了范围<br> private static boolean checkSubnetIpIsInUsed(String allocatedIp, String ipPool) {</p>
-<pre><code>List&lt;String&gt; ipList = subnetIpMap.get(ipPool);
-return ipList.contains(allocatedIp);
-</code></pre><p> }</p>
-<p> // 判断allocatedIp是否超越了上限<br> private static boolean checkSubnetOverIpRange(String allocatedIp, String ipPoolLimit) {</p>
-<pre><code>// 获取allocatedIp的二进制字符串字段
-int[] allocateNum = new int[4];
-int[] limitNum = new int[4];
-
-for (int i = 0; i &lt; allocateNum.length; i++) {
-    try {
-        allocateNum[i] = Integer.valueOf(allocatedIp.substring(i * 8, (i+1) * 8), 2);
-        limitNum[i] = Integer.valueOf(ipPoolLimit.substring(i * 8, (i+1) * 8), 2);
-    } catch (Exception e) {
-        System.out.println(&quot;Ip string illegal.Exception : &quot; + e.getMessage());
-        return true;
-    }
+// 判断allocatedIp是否被使用或者超过了范围
+private static boolean checkSubnetIpIsInUsed(String allocatedIp, String ipPool) {
+    List&lt;String&gt; ipList = subnetIpMap.get(ipPool);
+    return ipList.contains(allocatedIp);
 }
 
-// 比较两个子网ip的大小,一旦allocatedIp大于等于ipPoolLimit，返回false
-if (allocateNum[0] &gt; limitNum[0]) {
-    return true;
-} else if (allocateNum[0] == limitNum[0]) {
-    if (allocateNum[1] &gt; limitNum[1]) {
-        return true;
-    } else if (allocateNum[1] == limitNum[1]) {
-        if (allocateNum[2] &gt; limitNum[2]) {
+// 判断allocatedIp是否超越了上限
+private static boolean checkSubnetOverIpRange(String allocatedIp, String ipPoolLimit) {
+    // 获取allocatedIp的二进制字符串字段
+    int[] allocateNum = new int[4];
+    int[] limitNum = new int[4];
+
+    for (int i = 0; i &lt; allocateNum.length; i++) {
+        try {
+            allocateNum[i] = Integer.valueOf(allocatedIp.substring(i * 8, (i+1) * 8), 2);
+            limitNum[i] = Integer.valueOf(ipPoolLimit.substring(i * 8, (i+1) * 8), 2);
+        } catch (Exception e) {
+            System.out.println(&quot;Ip string illegal.Exception : &quot; + e.getMessage());
             return true;
-        } else if (allocateNum[2] == limitNum[2]) {
-            if (allocateNum[3] &gt; limitNum[3]) {
+        }
+    }
+
+    // 比较两个子网ip的大小,一旦allocatedIp大于等于ipPoolLimit，返回false
+    if (allocateNum[0] &gt; limitNum[0]) {
+        return true;
+    } else if (allocateNum[0] == limitNum[0]) {
+        if (allocateNum[1] &gt; limitNum[1]) {
+            return true;
+        } else if (allocateNum[1] == limitNum[1]) {
+            if (allocateNum[2] &gt; limitNum[2]) {
                 return true;
-            } else if (allocateNum[3] == limitNum[3]) {
-                return true;
+            } else if (allocateNum[2] == limitNum[2]) {
+                if (allocateNum[3] &gt; limitNum[3]) {
+                    return true;
+                } else if (allocateNum[3] == limitNum[3]) {
+                    return true;
+                }
             }
         }
     }
+
+    return false;
 }
 
-return false;
-</code></pre><p> }</p>
-</li>
-</ul>
-<pre><code>// 将二进制的ip地址和子网掩码的二进制数相加，得到的就是一个子网的ip
+
+// 将二进制的ip地址和子网掩码的二进制数相加，得到的就是一个子网的ip
 private static String binaryAdd(String binaryIp, Integer mask) {
     //先将掩码转换成二进制数
     Integer middle = 1;
@@ -426,7 +435,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj38342vm0000ywu9eeb4k46n" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj383astk0001ogu9eqkj4a8r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
