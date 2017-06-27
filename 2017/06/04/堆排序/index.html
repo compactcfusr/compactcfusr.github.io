@@ -5,16 +5,17 @@
   
   <title>堆排序 | DreamWu&#39;s Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我归档自己知识的地方">
+  <meta name="description" content="因为堆排序的时空复杂度是比较特殊和有趣的，所以这里单拎出来说一说。   堆排序的空间复杂度O(1)，因为只使用了一个辅助空间。  堆排序的时间复杂度，建堆时间O(N)，调整堆时间O(Nlog2(N))。对于堆排序的时间复杂度。可以分为两个部分分别讨论。    调堆时间，因为一共N个元素所以树的高度H=log2(N)+1（性质4），每次是从根节点开始比较，比较最多比较了2(H-1)次，交换的最坏情">
+<meta name="keywords" content="数据结构与算法 完全二叉树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="堆排序">
 <meta property="og:url" content="http://yoursite.com/2017/06/04/堆排序/index.html">
 <meta property="og:site_name" content="DreamWu&#39;s Archive">
-<meta property="og:description" content="我归档自己知识的地方">
-<meta property="og:updated_time" content="2017-06-04T03:22:03.009Z">
+<meta property="og:description" content="因为堆排序的时空复杂度是比较特殊和有趣的，所以这里单拎出来说一说。   堆排序的空间复杂度O(1)，因为只使用了一个辅助空间。  堆排序的时间复杂度，建堆时间O(N)，调整堆时间O(Nlog2(N))。对于堆排序的时间复杂度。可以分为两个部分分别讨论。    调堆时间，因为一共N个元素所以树的高度H=log2(N)+1（性质4），每次是从根节点开始比较，比较最多比较了2(H-1)次，交换的最坏情">
+<meta property="og:updated_time" content="2017-06-27T05:53:15.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="堆排序">
-<meta name="twitter:description" content="我归档自己知识的地方">
+<meta name="twitter:description" content="因为堆排序的时空复杂度是比较特殊和有趣的，所以这里单拎出来说一说。   堆排序的空间复杂度O(1)，因为只使用了一个辅助空间。  堆排序的时间复杂度，建堆时间O(N)，调整堆时间O(Nlog2(N))。对于堆排序的时间复杂度。可以分为两个部分分别讨论。    调堆时间，因为一共N个元素所以树的高度H=log2(N)+1（性质4），每次是从根节点开始比较，比较最多比较了2(H-1)次，交换的最坏情">
   
     <link rel="alternate" href="/atom.xml" title="DreamWu&#39;s Archive" type="application/atom+xml">
   
@@ -56,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -89,13 +90,53 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <blockquote>
+<p>因为堆排序的时空复杂度是比较特殊和有趣的，所以这里单拎出来说一说。</p>
+</blockquote>
+<ul>
+<li><p>堆排序的空间复杂度O(1)，因为只使用了一个辅助空间。</p>
+</li>
+<li><p>堆排序的时间复杂度，建堆时间O(N)，调整堆时间O(Nlog2(N))。对于堆排序的时间复杂度。可以分为两个部分分别讨论。</p>
+</li>
+</ul>
+<ol>
+<li>调堆时间，因为一共N个元素所以树的高度H=log2(N)+1（性质4），每次是从根节点开始比较，比较最多比较了2(H-1)次，交换的最坏情况调整了(H-1)，那么一共有N-1个元素需要调整，可以估算时间复杂度就是O(Nlog2(N))。</li>
+<li>关键是建堆时间，因为是从最后一个非叶子结点开始调整，所以肯定调整了与N同量级的次数，时间复杂度不可能是log2(N)(H)。但是会不会是O(Nlog2(N))？因为每次最后一个最后一个非叶子结点入堆顶都得使用时间为(log2(N)-1)的时间，而非叶子结点的个数为N/2，那么O(Nlog2(N))看起来很合理不是吗？<br>实际上不是的，因为不是从根开始比较而是从第一个非叶子结点开始比较，比较次数少了很多。具体计算，我们从底层开始算起，最后一层（H层）父节点一共有2^(H-1)个结点，他们最多需要交换的次数是1次，比较的次数是2次；倒数第二层的一共有2^(H-2)个结点，他们最多需要交换的次数是2次，比较的次数是4次，倒数第二层父节点的个数是2个，他们最多需要交换的次数是H-2次，比较的次数是2(H-2)次；根节点就1个，它最多需要交换的次数是(H-1)次，比较的次数是2(H-1)次。</li>
+</ol>
+<p>所以说，最坏情况下的交换次数是S = 1 <em> 2^(H-1) + 2 </em> 2^(H-2) + ··· + (H-2) <em> 2^1 + (H-1) </em> 2^0 = 2N - 2 - log2(N),最坏情况下比较的次数是 2S 次，所以时间复杂度是O(3S = 6N - 6 - 3log2(N))，即为O(N);<br>没有排序是完美的，堆排序尽管非常优秀，有很高效的时间复杂度（平均O(nlogn)），而且有很低的空间复杂度O(1)，但是由于非连续比较的缘故，并不是稳定的排序算法。</p>
+<hr>
+<p>附加专题：完全二叉树的5个性质推导</p>
+<ol>
+<li>所有二叉树的第i层上最多拥有2^(i-1)个节点。<br>证明：数学归纳法<br>1层   1个 2^0<br>2层   2个 2^1<br>…<br>假设 k层   2^k个<br>k+1 层 2*2^(k+1) = 2^(k+1)个【父节点下最多拥有两个子节点】<br>…<br>n层 2^n个<br>所以，性质成立。</li>
+<li>二叉树中如果深度为k,那么最多有2^k - 1个节点<br>证明：根据性质1，求k层满二叉树的节点个数，个数s = (1+2+…+2^(k-1)) = 1 * (1 - 2^k)/ (1 - 2) = 2^k - 1。<br>注释：满二叉树就是每一层都是满节点的特殊二叉树，是完全二叉树的究极形态。</li>
+<li>n0=n2+1  n0表示度数为0的节点 n2表示度数为2的节点<br>证明：根据两个公式：<br>n = n0 + n1 + n2<br>n - 1 = n1 + 2 <em> n2 入度等于出度，入度是除了根节点外其他节点都为1，出度是按定义计算。<br>两个公式通过n作为桥梁，就可以化简为 (n0 + n1 + n2) - 1 = n1 + 2 </em> n2<br>得到n0=n2+1<ol>
+<li>在完全二叉树中，具有n个节点的完全二叉树的高度是[log2(n)] + 1，其中，[log2(n)] 是向下取整。<br>证明：我们假设这个完全二叉树的高度为k.<br>对一个高度为k的完全二叉树而言，它的节点数一定比高度为(k-1)的满二叉树要多（大于），小于等于高度为k的满二叉树。根据性质2，可以得不等式 2^(k-1) - 1 &lt; n &lt;= 2^k - 1。因为n为整数，<br>所以不等式可以大胆地加减1，得：2^(k-1) -1 + 1  &lt;= n &lt; 2^k - 1 + 1 。<br>对不等式去以二为底的对数，得： k - 1 &lt;= log2(n) &lt; k。所以 k = [log2(n)] + 1，其中，[log2(n)] 是向下取整。</li>
+<li>如果有一颗有n个节点的完全二叉树的节点按层次序编号，对任一层的节点i（1&lt;=i&lt;=n）有：</li>
+</ol>
+<ul>
+<li>如果i = 1，则节点为根节点，无双亲，如果i &gt; 1， 那么它的双亲为[i/2]，向下取整</li>
+<li>如果2i &gt; n，节点i没有左孩子节点，否则左孩子节点为2i</li>
+<li>如果2i + 1 &gt; n，节点i没有右孩子节点，否则右孩子节点为2i + 1</li>
+<li>最后一个非叶子节点编号为 n/2</li>
+</ul>
+</li>
+</ol>
+<p>第五条：对Java而言，数组从0开始，那么规律就需要变化一下</p>
+<ul>
+<li>如果i = 0，则节点为根节点，无双亲，如果i &gt; 0， 那么它的双亲为[(i - 1)/2]，向下取整</li>
+<li>如果2i + 1 &gt; n，节点i没有左孩子节点，否则左孩子节点为2i + 1</li>
+<li>如果2i + 2 &gt; n，节点i没有右孩子节点，否则右孩子节点为2i + 2</li>
+<li>最后一个非叶子节点编号为 n/2 - 1</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj4ez0c4z0001h8u9zmtiq25x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj4ez0c4z0001h8u9zmtiq25x" class="article-share-link">Partager</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li></ul>
+
     </footer>
   </div>
   
@@ -103,7 +144,7 @@
 <nav id="article-nav">
   
     <a href="/2017/06/10/排序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Récent</strong>
       <div class="article-nav-title">
         
           排序
@@ -113,7 +154,7 @@
   
   
     <a href="/2017/05/27/子网分配算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">子网分配算法</div>
     </a>
   
@@ -131,9 +172,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
   </div>
 
@@ -141,9 +182,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
+      <a href="/tags/数据结构与算法-完全二叉树/" style="font-size: 10px;">数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
   </div>
 
@@ -160,7 +201,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -193,7 +234,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
