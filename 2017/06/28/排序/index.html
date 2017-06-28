@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg">
-<meta property="og:updated_time" content="2017-06-28T09:38:46.286Z">
+<meta property="og:updated_time" content="2017-06-28T09:40:52.546Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序">
 <meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 #1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排">
@@ -717,15 +717,6 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 </code></pre><p>复杂度：<br>时间复杂度：首先， 归并排序需要将temp[0]…temp[n]中相邻长度为h的所有记录两两排序归，并存放到target[0]…target[n]里面去。此过程，需要将temp所有记录都扫描一遍，因此耗费O(n)的时间，而由完全二叉树的深度为[log2(n)]+1可知，归并排序需要进行[log2(n)]的常数倍次，因此，总的时间复杂度为O(nlog2(n))，而且是最好、平均、最坏都是如此。</p>
 <p>空间复杂度：存放扫描后数据的空间为O(n)，扫描过程中递归需要的栈空间为O(logn)，所以时间复杂度为O(n+logn)。排序空间耗费很大，这是归并排序的一大缺陷。</p>
 <p>稳定性：因为归并排序是相邻数字两两交换，所以说是稳定的。</p>
-<blockquote>
-<p>总结：<br>注意：在写算法的时候，一定要注意：可读性。不要玩什么骚操作，否则你可能制造了bug还半天认不出来。<br>就比如说，我按部就班使用《大话数据结构》里面的骚操作，把start作为前半部分序列的指针，结果弄得我代码也不好读懂，而且target，temp的的指针傻傻分不清楚，排序各种错误。<br>而当我使用了常规的i,j,k之后，马上就能读懂代码理解为什么会出现排序失败，那是因为我把target的指针拿来作为temp前半序列的指针，导致把数组里面的空位置的0拿过来了。<br>所以，要增加代码的可读性，注意两点：</p>
-<p>结论：</p>
-<ul>
-<li>写代码一定要按照阅读习惯来写，写出来的代码才能方便理解。数组下标就用i,j,k，不要使用其他难于理解的单词，或者想着多个数组共用指针，简化多个数组，代码优化是写完代码之后的事情，写的时候，怎么清楚怎么写，多创一些变量也不要紧。</li>
-<li>写代码命名一定要易懂，不要为了简化而简化，导致代码不可读。</li>
-</ul>
-<p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
-</blockquote>
 <p>##2.5.2 改进的归并排序</p>
 <p>问题的提出：因为空间耗费大是归并排序的一大缺陷，而且这一缺陷是递归造成的。所以在这里，可以将递归优化成迭代。减少空间占用。</p>
 <p>思想：将递归换成迭代，利用新创建的target数组与源数组辗转排序最终完成排序。</p>
@@ -822,7 +813,16 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
     }
 }
 </code></pre><p>复杂度：<br>因为没有使用递归，所以这里的空间复杂度降低了，但是在interval最大的一次归并还是需要扫描整个序列的一半以上，所以空间复杂度仍然是O(n)，但是相比于递归已经好很多了。<br>时间复杂度：因为i是以2为底的指数，所以时间复杂度和改进之前的一样，都是O(nlogn)。所以，我们一半使用的归并排序都是非递归形式的归并排序。</p>
+<blockquote>
+<p>总结：<br>注意：在写归并排序算法merge函数的时候，一定要注意：可读性。不要玩什么骚操作，否则你可能制造了bug还半天认不出来。<br>就比如说，我写按部就班使用《大话数据结构》里面的骚操作，把start作为前半部分序列的指针，结果弄得我代码也不好读懂，而且target，temp的的指针傻傻分不清楚，排序各种错误。<br>而当我使用了常规的i,j,k之后，马上就能读懂代码理解为什么会出现排序失败，那是因为我把target的指针拿来作为temp前半序列的指针，导致把数组里面的空位置的0拿过来了。<br>所以，要增加代码的可读性，注意两点：</p>
+<p>结论：</p>
+<ul>
+<li>写代码一定要按照阅读习惯来写，写出来的代码才能方便理解。数组下标就用i,j,k，不要使用其他难于理解的单词，或者想着多个数组共用指针，简化多个数组，代码优化是写完代码之后的事情，写的时候，怎么清楚怎么写，多创一些变量也不要紧。</li>
+<li>写代码命名一定要易懂，不要为了简化而简化，导致代码不可读。</li>
+</ul>
+<p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 <p>排序算法优化的原则：<br>1.能用迭代就不要用递归。<br>2.能用替换就不要用交换(swap)<br>3.低级排序并不一定比高级排序差，主要还是要看清楚应用场景</p>
+</blockquote>
 <p>#3 外排序</p>
 <ul>
 <li>定义：外排序（External sorting）是指能够处理极大量数据的排序算法。</li>
@@ -833,7 +833,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gt6yie0003d8u9ansqbkpw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gta7400002nou90wbtlqte" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li></ul>
