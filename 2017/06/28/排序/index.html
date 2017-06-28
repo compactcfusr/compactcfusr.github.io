@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg">
-<meta property="og:updated_time" content="2017-06-28T09:29:43.552Z">
+<meta property="og:updated_time" content="2017-06-28T09:35:54.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序">
 <meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 #1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排">
@@ -63,9 +63,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -263,8 +263,9 @@ public static int[] modified_bubble_sort(int[] array) {
 <li>每一趟分组，先从高位进行分组，选出比枢纽值小的值，与枢纽原位置进行交换（枢纽值处于高位）；接着低位开始进行分组，选出比枢纽值大的元素，与枢纽值进行交换（枢纽值处于低位），一趟结束。</li>
 <li>若低位仍然小于高位，就继续循环，直到低位与高位相等，循环结束</li>
 </ul>
-<p>代码：<br>/**</p>
-<pre><code> * 快速排序。分治法的应用，先将数组根据第一个元素大小分成两边。
+<p>代码：</p>
+<pre><code>/**
+ * 快速排序。分治法的应用，先将数组根据第一个元素大小分成两边。
  * 一边小，一边大。再对将两边的数组分别进行同样的划分。
  * @param array 待排序数组
  * @param low 低位下标
@@ -531,9 +532,15 @@ private static int getPartitionUltimate(int[] array, int low, int high) {
 <p>##2.3.1 简单选择排序<br>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
 <p>代码实现：使用两层循环，每次用min（max）保存一个最值，对未排序元素进行依次比较，得出的结果与未排序元素头元素进行交换，然后又指针（数组下标）往后移动一位，形成新的无序元素表，循环直到剩余元素为空。</p>
 <p>代码：</p>
-<pre><code>public static int[] simple_select_sort(int[] array) {
+<pre><code>/**
+ * 简单选择排序，第i轮循环记录一个最小值的位置，在循环结束后将位置为i的元素与最小值交换
+ * @param array 待排序序列
+ * @return 排好序序列
+ */
+public static int[] simple_select_sort(int[] array) {
     int length = array.length;
     int pos;
+
     for (int i = 0; i &lt; length - 1; i++) {
         pos = i;
         for (int j = i + 1; j &lt;= length - 1;j++) {
@@ -545,6 +552,14 @@ private static int getPartitionUltimate(int[] array, int low, int high) {
         swap(array, i, pos);
     }
     return array;
+}
+
+private static void swap(int[] array, int i, int j) {
+    if (i != j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
 }
 </code></pre><p>复杂度分析：<br>时间复杂度：最好，最坏比较都是(N-1)*(N+1)/2,交换是N-1次，所以时间复杂度是O(n^2)<br>空间复杂度：原地排序，一个临时变量，所以是常数级别的O(1)<br>稳定性:因为是相邻元素的比较，而且中途没有交换，所以是稳定的，而且是特别稳定，任何情况的比较和交换（不算赋值过程）都是一样的</p>
 <p>##2.3.2 堆排序<br>储备知识：</p>
@@ -818,7 +833,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gswied0007jcu91zgs9mzy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gswied0007jcu91zgs9mzy" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li></ul>
@@ -831,7 +846,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
   
     <a href="/2017/06/27/查找算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">查找算法</div>
     </a>
   
@@ -849,7 +864,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
@@ -859,7 +874,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/数据结构-算法-内外排序/" style="font-size: 10px;">数据结构 算法 内外排序</a> <a href="/tags/数据结构与算法-完全二叉树/" style="font-size: 10px;">数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
@@ -878,7 +893,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -911,7 +926,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
