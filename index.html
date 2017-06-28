@@ -708,8 +708,11 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
         target[k++] = temp[j++];
     }
 }
-</code></pre><blockquote>
-<p>注意：<br>在写算法的时候，一定要注意：可读性。不要玩什么骚操作，否则你可能制造了bug还半天认不出来。<br>就比如说，我按部就班使用《大话数据结构》里面的骚操作，把start作为前半部分序列的指针，结果弄得我代码也不好读懂，而且target，temp的的指针傻傻分不清楚，排序各种错误。<br>而当我使用了常规的i,j,k之后，马上就能读懂代码理解为什么会出现排序失败，那是因为我把target的指针拿来作为temp前半序列的指针，导致把数组里面的空位置的0拿过来了。<br>所以，要增加代码的可读性，注意两点：</p>
+</code></pre><p>复杂度：<br>时间复杂度：首先， 归并排序需要将temp[0]…temp[n]中相邻长度为h的所有记录两两排序归，并存放到target[0]…target[n]里面去。此过程，需要将temp所有记录都扫描一遍，因此耗费O(n)的时间，而由完全二叉树的深度为[log2(n)]+1可知，归并排序需要进行[log2(n)]的常数倍次，因此，总的时间复杂度为O(nlog2(n))，而且是最好、平均、最坏都是如此。</p>
+<p>空间复杂度：存放扫描后数据的空间为O(n)，扫描过程中递归需要的栈空间为O(logn)，所以时间复杂度为O(n+logn)。排序空间耗费很大，这是归并排序的一大缺陷。</p>
+<p>稳定性：因为归并排序是相邻数字两两交换，所以说是稳定的。</p>
+<blockquote>
+<p>总结：<br>注意：在写算法的时候，一定要注意：可读性。不要玩什么骚操作，否则你可能制造了bug还半天认不出来。<br>就比如说，我按部就班使用《大话数据结构》里面的骚操作，把start作为前半部分序列的指针，结果弄得我代码也不好读懂，而且target，temp的的指针傻傻分不清楚，排序各种错误。<br>而当我使用了常规的i,j,k之后，马上就能读懂代码理解为什么会出现排序失败，那是因为我把target的指针拿来作为temp前半序列的指针，导致把数组里面的空位置的0拿过来了。<br>所以，要增加代码的可读性，注意两点：</p>
 <p>结论：</p>
 <ul>
 <li>写代码一定要按照阅读习惯来写，写出来的代码才能方便理解。数组下标就用i,j,k，不要使用其他难于理解的单词，或者想着多个数组共用指针，简化多个数组，代码优化是写完代码之后的事情，写的时候，怎么清楚怎么写，多创一些变量也不要紧。</li>
@@ -717,9 +720,6 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 </ul>
 <p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 </blockquote>
-<p>复杂度：<br>时间复杂度：首先， 归并排序需要将temp[0]…temp[n]中相邻长度为h的所有记录两两排序归，并存放到target[0]…target[n]里面去。此过程，需要将temp所有记录都扫描一遍，因此耗费O(n)的时间，而由完全二叉树的深度为[log2(n)]+1可知，归并排序需要进行[log2(n)]的常数倍次，因此，总的时间复杂度为O(nlog2(n))，而且是最好、平均、最坏都是如此。</p>
-<p>空间复杂度：存放扫描后数据的空间为O(n)，扫描过程中递归需要的栈空间为O(logn)，所以时间复杂度为O(n+logn)。排序空间耗费很大，这是归并排序的一大缺陷。</p>
-<p>稳定性：因为归并排序是相邻数字两两交换，所以说是稳定的。</p>
 <p>##2.5.2 改进的归并排序</p>
 <p>问题的提出：因为空间耗费大是归并排序的一大缺陷，而且这一缺陷是递归造成的。所以在这里，可以将递归优化成迭代。减少空间占用。</p>
 <p>思想：将递归换成迭代，利用新创建的target数组与源数组辗转排序最终完成排序。</p>
@@ -827,7 +827,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gt480x0004pwu94pe4l23r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gt6yie0003d8u9ansqbkpw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li></ul>
@@ -865,7 +865,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/27/查找算法/" data-id="cj4gt480i0003pwu9phbfscrt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/27/查找算法/" data-id="cj4gt6yis0009d8u90z7bvcgz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -939,7 +939,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj4gt48020000pwu9p1h8cxei" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj4gt6yi60000d8u9jczxj1e2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li></ul>
@@ -1318,7 +1318,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj4gt480i0001pwu9rqlkmo6q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj4gt6yia0001d8u947spxom1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
