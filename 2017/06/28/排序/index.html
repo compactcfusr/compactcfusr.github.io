@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg">
-<meta property="og:updated_time" content="2017-06-29T03:17:23.767Z">
+<meta property="og:updated_time" content="2017-06-29T03:28:43.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序">
 <meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
@@ -63,9 +63,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -322,46 +322,59 @@ private static void swap(int[] array, int i, int j) {
     }
 }
 </code></pre><h3 id="2-2-4-改进的快速排序"><a href="#2-2-4-改进的快速排序" class="headerlink" title="2.2.4 改进的快速排序"></a>2.2.4 改进的快速排序</h3><ul>
-<li>问题</li>
+<li>问题:快速排序存在四个问题：</li>
 </ul>
-<p>快速排序存在两个问题：<br>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
+<p>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
 <p>2) 递归交换<br>  问：这里面的分组函数getPartition每次调用swap都会进行3次操作，能不能改成替换，只进行一次操作？<br>  答：可以。</p>
 <p>3) 性能问题（小数据样本时）<br>  问：当数组数量低于7个（资料显示）的时候，采用插入排序反而效率较高？<br>  答：博士生去小学教“1+1=2”也不见得比本科生教得好。快速排序对于基本有序，或者样本极少的数组排序的确效率不高。插入排序反而比较适合基本有序的小样本排序。</p>
 <p>4) 递归交换<br>  问：大家知道，递归对性能是有一定影响的，quick_sort函数在其尾部有两次递归操作。如果待排序的序列划分极端不平衡（正序或反序），递归深度将趋近于n，而不是平衡时的log2n，栈的空间是极其有限的，如何减少递归？<br>  答：解决递归地最好方法就是使用迭代。所以我们需要优化这里面不必要的递归交换。</p>
 <ul>
-<li><p>改进<br>1)问题1解决方案：<br> 修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
-<p> /**</p>
-<ul>
-<li>分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。</li>
-<li>@param array 待排序数组</li>
-<li>@param low 低位下标</li>
-<li>@param high 高位下标</li>
-<li><p>@return 划分好的数组<br>*/<br>private static int getPartition1(int[] array, int low, int high) {<br> int pivot_key;<br> // 进行三数取中<br> int mid = low + (high - low) / 2;<br> // 先确保左边是比右边小<br> if (array[low] &gt; array[high]) {</p>
-<pre><code>swap(array, low, high);
-</code></pre><p> }<br> // 再确保中间比右边小<br> if (array[mid] &gt; array[high]) {</p>
-<pre><code>swap(array, mid, high);
-</code></pre><p> }<br> // 最后确保左边比中间小<br> if (array[low] &gt; array[mid]) {</p>
-<pre><code>swap(array, low, mid);
-</code></pre><p> }<br> pivot_key = array[low];</p>
-<p> // 从表的两端交替向中间扫描<br> while (low &lt; high) {</p>
-<pre><code>while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-    high--;
-}
-
-swap(array, low, high);
-
-while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-    low++;
-}
-
-swap(array, low, high);
-</code></pre><p> }</p>
-<p> return low;<br>}</p>
-</li>
+<li>改进</li>
 </ul>
-</li>
-</ul>
-<p>2)问题2解决方案：<br>    修改getPartition函数。交换换成替换就可以了。</p>
+<p>1)问题1解决方案：<br>修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
+<pre><code>/**
+ * 分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 划分好的数组
+ */
+private static int getPartition1(int[] array, int low, int high) {
+    int pivot_key;
+    // 进行三数取中
+    int mid = low + (high - low) / 2;
+    // 先确保左边是比右边小
+    if (array[low] &gt; array[high]) {
+        swap(array, low, high);
+    }
+    // 再确保中间比右边小
+    if (array[mid] &gt; array[high]) {
+        swap(array, mid, high);
+    }
+    // 最后确保左边比中间小
+    if (array[low] &gt; array[mid]) {
+        swap(array, low, mid);
+    }
+    pivot_key = array[low];
+
+    // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+
+        swap(array, low, high);
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        swap(array, low, high);
+    }
+
+    return low;
+}
+</code></pre><p>2)问题2解决方案：<br>    修改getPartition函数。交换换成替换就可以了。</p>
 <pre><code>/**
  * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
  * @param array 待排序数组
@@ -826,7 +839,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4hv09sc0003usu9tdm6j7w2" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4hv09sc0003usu9tdm6j7w2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li></ul>
@@ -839,7 +852,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
   
     <a href="/2017/06/27/查找算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">查找算法</div>
     </a>
   
@@ -857,9 +870,9 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
   </div>
 
@@ -867,9 +880,9 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/数据结构与算法-完全二叉树/" style="font-size: 10px;">数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
+      <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/堆排序-数据结构与算法-完全二叉树/" style="font-size: 10px;">堆排序 数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
   </div>
 
@@ -886,7 +899,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -919,7 +932,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
