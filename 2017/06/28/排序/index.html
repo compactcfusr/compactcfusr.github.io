@@ -5,22 +5,22 @@
   
   <title>排序 | DreamWu&#39;s Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 #1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排">
-<meta name="keywords" content="数据结构 算法 内外排序">
+  <meta name="description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
+<meta name="keywords" content="内外排序 数据结构 算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="排序">
 <meta property="og:url" content="http://yoursite.com/2017/06/28/排序/index.html">
 <meta property="og:site_name" content="DreamWu&#39;s Archive">
-<meta property="og:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 #1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排">
+<meta property="og:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%A4%A7%E6%A0%B9%E5%A0%86%E5%B0%8F%E6%A0%B9%E5%A0%86.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%86.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg">
-<meta property="og:updated_time" content="2017-06-28T09:40:52.546Z">
+<meta property="og:updated_time" content="2017-06-29T03:17:23.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序">
-<meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 #1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排">
+<meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%A4%A7%E6%A0%B9%E5%A0%86%E5%B0%8F%E6%A0%B9%E5%A0%86.jpg">
   
     <link rel="alternate" href="/atom.xml" title="DreamWu&#39;s Archive" type="application/atom+xml">
@@ -63,9 +63,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -97,13 +97,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。</p>
-<p>#1.前言<br>根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
+<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
 <p>常见的内外排序有哪些？<br>内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法<br>外排序：外归并排序算法</p>
 <hr>
-<p>#2.内排序</p>
-<p>##2.1插入排序</p>
-<p>###2.1.1 直接插入排序<br>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
+<h1 id="2-内排序"><a href="#2-内排序" class="headerlink" title="2.内排序"></a>2.内排序</h1><h2 id="2-1插入排序"><a href="#2-1插入排序" class="headerlink" title="2.1插入排序"></a>2.1插入排序</h2><h3 id="2-1-1-直接插入排序"><a href="#2-1-1-直接插入排序" class="headerlink" title="2.1.1 直接插入排序"></a>2.1.1 直接插入排序</h3><p>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
 <p>思路：无序插入有序表，每次从位置K由后向前进行比较，找到第一个不大于（小于）A[K]的数字，否则就放在数组头部。</p>
+<p>复杂度分析：</p>
+<ul>
+<li>最好情况：正序情况，正好每1个内层循环都只比较了一次，一共比较了(n-1)次，没有交换</li>
+<li>最差情况：逆序情况，正好每个内层循环比较了等差数列次，第一次比较了1次，交换了1次，第二次比<br>较了2次，交换了2次···第n-2次循环比较了(n-1)次，交换了(n-1)次；第(n-1)次循环比较了(n-1)次，       交换了(n-1)次。共比较 1 + 2 + ··· + (n-2) + (n-1) = n * (n-1) / 2次，交换n(n-1)/2次</li>
+<li>平均情况：O(n^2)</li>
+</ul>
+<p>稳定性：连续比较，相同不交换，稳定</p>
+<p>评价：对于基本有序的序列，插入排序的复杂度较低，但是插入排序的效率较低，每次只移动了一位</p>
 <p>代码实现：采用双层循环，外层循环每次将数据跟前面的有序表进行对比，如果小于，就交换数字，往前对比；若不小于，则停止前进。</p>
 <p>代码：</p>
 <pre><code>/**
@@ -126,16 +132,34 @@ public static int[] directly_insert_sort(int[] array) {
     }
     return array;
 }
-</code></pre><p>复杂度分析：</p>
-<ul>
-<li>最好情况：正序情况，正好每1个内层循环都只比较了一次，一共比较了(n-1)次，没有交换</li>
-<li>最差情况：逆序情况，正好每个内层循环比较了等差数列次，第一次比较了1次，交换了1次，第二次比<br>较了2次，交换了2次···第n-2次循环比较了(n-1)次，交换了(n-1)次；第(n-1)次循环比较了(n-1)次，       交换了(n-1)次。共比较 1 + 2 + ··· + (n-2) + (n-1) = n * (n-1) / 2次，交换n(n-1)/2次</li>
-<li>平均情况：O(n^2)</li>
-</ul>
-<p>稳定性：连续比较，相同不交换，稳定</p>
-<p>结论：对于基本有序的序列，插入排序的复杂度较低，但是插入排序的效率较低，每次只移动了一位</p>
-<p>###2.1.2 希尔排序<br>定义：是直接插入的改进，分组插入排序。希尔排序利用了插入排序对有序数组排序性能大增的特点，实现了计算</p>
+</code></pre><h3 id="2-1-2-希尔排序"><a href="#2-1-2-希尔排序" class="headerlink" title="2.1.2 希尔排序"></a>2.1.2 希尔排序</h3><p>定义：是直接插入的改进，分组插入排序。希尔排序利用了插入排序对有序数组排序性能大增的特点，实现了计算</p>
 <p>思路：通过选择特定的步长dl，将比较的元素分成几个区域来（进行插入排序）提升插入排序的性能。每次将区域缩小一点，最后缩小到步长dl=1的时候，就是普通的插入排序了。</p>
+<p>复杂度分析：<br>步长不同，所得的时间复杂度也不同：</p>
+<table>
+<thead>
+<tr>
+<th>步长序列</th>
+<th>最坏情况下复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n/2^i</td>
+<td>O(n^2)</td>
+</tr>
+<tr>
+<td>2^k - 1</td>
+<td>O(n^{3/2})</td>
+</tr>
+<tr>
+<td>2^i*3^j</td>
+<td>O( n*log^2 n)</td>
+</tr>
+</tbody>
+</table>
+<p>时间复杂度：<br>这里采用的dlta(i) = n/2^i，时间复杂度是O(n^2)，若采用其他步长序列，则会更加高效。<br>平均时间复杂度为O(n^2)。<br>dlta(i) = 2^k-1，平均价时间复杂度为O(n^{3/2})，低于O(n^2)，这就是Shell排序划时代的地方了。</p>
+<p>稳定性：跨越比较，相等元素之间可能交换，不稳定。</p>
+<p>评价：希尔排序是最早打破人们思维定式，终结O(n^2)时间复杂度，突破慢速排序时间的排序算法。</p>
 <p>代码实现：</p>
 <ul>
 <li>采用分割记录法，将数组分成(n/dl)个子序列</li>
@@ -168,36 +192,11 @@ public static int[] shell_sort(int[] array) {
     }
     return array;
 }
-</code></pre><p>复杂度分析：<br>步长不同，所得的时间复杂度也不同：</p>
-<table>
-<thead>
-<tr>
-<th>步长序列</th>
-<th>最坏情况下复杂度</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>n/2^i</td>
-<td>O(n^2)</td>
-</tr>
-<tr>
-<td>2^k - 1</td>
-<td>O(n^{3/2})</td>
-</tr>
-<tr>
-<td>2^i*3^j</td>
-<td>O( n*log^2 n)</td>
-</tr>
-</tbody>
-</table>
-<p>时间复杂度：<br>这里采用的dlta(i) = n/2^i，时间复杂度是O(n^2)，若采用其他步长序列，则会更加高效。<br>平均时间复杂度为O(n^2)。<br>dlta(i) = 2^k-1，平均价时间复杂度为O(n^{3/2})，低于O(n^2)，这就是Shell排序划时代的地方了。</p>
-<p>稳定性：跨越比较，相等元素之间可能交换，不稳定。</p>
-<p>总结：希尔排序是最早打破人们思维定式，终结O(n^2)时间复杂度，突破慢速排序时间的排序算法。</p>
-<hr>
-<p>##2.2 交换排序</p>
-<p>###2.2.1 冒泡排序及其优化<br>定义： 对普通交换排序的改进，对无序区的记录依次进行比较，使得最大（小）的记录如同“气泡”一样“冒出水面”。</p>
+</code></pre><hr>
+<h2 id="2-2-交换排序"><a href="#2-2-交换排序" class="headerlink" title="2.2 交换排序"></a>2.2 交换排序</h2><h3 id="2-2-1-冒泡排序及其优化"><a href="#2-2-1-冒泡排序及其优化" class="headerlink" title="2.2.1 冒泡排序及其优化"></a>2.2.1 冒泡排序及其优化</h3><p>定义： 对普通交换排序的改进，对无序区的记录依次进行比较，使得最大（小）的记录如同“气泡”一样“冒出水面”。</p>
 <p>思想：通过对无序区记录进行两两比较，若反序就进行交换，一直交换到序列尾部，使元素成为有序区记录。依次交换，直到没有反序的记录为止。</p>
+<p>复杂度分析：这里要对它进行改进，之后再对其时间复杂度进行分析。</p>
+<p>稳定性：因为是相邻交换，所以冒泡排序是稳定排序。</p>
 <p>代码实现：通过两层循环，从序列头部开始进行比较，反序就交换，从下往上交换。注意：尾部指的是无序区的尾部。</p>
 <p>代码：</p>
 <pre><code>/**
@@ -222,9 +221,15 @@ private static void swap(int[] array, int i, int j) {
     array[i] = array[j];
     array[j] = temp;
 } 
-</code></pre><p>复杂度分析：这里要对它进行改进，之后再对其时间复杂度进行分析。</p>
-<p>###2.2.2 优化的冒泡排序</p>
-<p>思想：普通冒泡可能会产生许多无用的比较，尤其是在顺序情况下，强行比较；为了避免这种情况，可以记录下上一轮的比较是否进行了交换，有交换继续排序，没有则是已经有序，结束排序。</p>
+</code></pre><h3 id="2-2-2-优化的冒泡排序"><a href="#2-2-2-优化的冒泡排序" class="headerlink" title="2.2.2 优化的冒泡排序"></a>2.2.2 优化的冒泡排序</h3><p>思想：普通冒泡可能会产生许多无用的比较，尤其是在顺序情况下，强行比较；为了避免这种情况，可以记录下上一轮的比较是否进行了交换，有交换继续排序，没有则是已经有序，结束排序。</p>
+<p>复杂度分析：</p>
+<ul>
+<li><p>时间复杂度：<br>最好情况：正序情况下，比较(n-1)次，交换0次，时间复杂度O(n)<br>最坏情况：反序情况下，比较n*(n-1)/2次，交换同样多的次数，时间复杂度为O(n^2)<br>平均情况：时间复杂度O(n^2)</p>
+</li>
+<li><p>空间复杂度：原地排序，辅助空间为O(1)，交换的时候用到了辅助空间</p>
+</li>
+</ul>
+<p>评价：优化后的交换排序思路简单，对小样本性能也较好，是好用的排序。</p>
 <p>代码实现：设置一个标记位FLAG，每次外层循环设为FALSE，在内层循环中，若有一次交换就设置为TRUE。</p>
 <p>代码：</p>
 <pre><code>/**
@@ -247,16 +252,13 @@ public static int[] modified_bubble_sort(int[] array) {
     }
     return array;
 }
-</code></pre><p>复杂度分析：</p>
-<ul>
-<li><p>时间复杂度：<br>最好情况：正序情况下，比较(n-1)次，交换0次，时间复杂度O(n)<br>最坏情况：反序情况下，比较n*(n-1)/2次，交换同样多的次数，时间复杂度为O(n^2)<br>平均情况：时间复杂度O(n^2)</p>
-</li>
-<li><p>空间复杂度：原地排序，辅助空间为O(1)，交换的时候用到了辅助空间</p>
-</li>
-</ul>
-<p>###2.2.3 快速排序（重要）</p>
-<p>定义：对冒泡排序的改进。</p>
+</code></pre><h3 id="2-2-3-快速排序（重要）"><a href="#2-2-3-快速排序（重要）" class="headerlink" title="2.2.3 快速排序（重要）"></a>2.2.3 快速排序（重要）</h3><p>定义：对冒泡排序的改进。</p>
 <p>思想：通过一趟排序实现对记录的分割，其中一部分记录的关键字均比另一部分记录的关键字小。则可分别对两部分记录进行排序，已达到整体有序的。</p>
+<p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，所以最后分出来的递归树的深度就是：[log2n]+1（[x]表示不大于x的最大整数），仅需要递归.log2n.次，每次比较的次数为n次，交换的次数是n-1次，每次的时间复杂度为O(n)，每次除了比较，交换之外，还需要对其他两个子树进行排序，根据推导：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤nT（1）+（log2n）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
+<p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)，</p>
+<p>最坏情况：<br>时间复杂度：最坏情况下，序列是反序的，每次分组都是比上一次少划分一个记录的子序列，另一边则为空，这样就需要进行n-1次分组，递归树深度为n-1，每次比较了n-i次，一共比较了n*(n-1)/2次，所以时间复杂度为O(n^2)</p>
+<p>稳定性：因为不是相邻交换了，所以快速排序是不稳定的。</p>
+<p>评价：快速排序，大家说好，就是真的好。</p>
 <p>代码实现：</p>
 <ul>
 <li>找到枢纽位置pivot是关键步骤，取低位元素作为枢纽值，进行循环分组。</li>
@@ -319,57 +321,47 @@ private static void swap(int[] array, int i, int j) {
         array[j] = temp;
     }
 }
-</code></pre><p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，所以最后分出来的递归树的深度就是：[log2n]+1（[x]表示不大于x的最大整数），仅需要递归.log2n.次，每次比较的次数为n次，交换的次数是n-1次，每次的时间复杂度为O(n)，每次除了比较，交换之外，还需要对其他两个子树进行排序，根据推导：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤nT（1）+（log2n）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
-<p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)，</p>
-<p>最坏情况：<br>时间复杂度：最坏情况下，序列是反序的，每次分组都是比上一次少划分一个记录的子序列，另一边则为空，这样就需要进行n-1次分组，递归树深度为n-1，每次比较了n-i次，一共比较了n*(n-1)/2次，所以时间复杂度为O(n^2)</p>
-<p>###2.2.4 改进的快速排序<br>快速排序存在两个问题：<br>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
+</code></pre><h3 id="2-2-4-改进的快速排序"><a href="#2-2-4-改进的快速排序" class="headerlink" title="2.2.4 改进的快速排序"></a>2.2.4 改进的快速排序</h3><ul>
+<li>问题</li>
+</ul>
+<p>快速排序存在两个问题：<br>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
 <p>2) 递归交换<br>  问：这里面的分组函数getPartition每次调用swap都会进行3次操作，能不能改成替换，只进行一次操作？<br>  答：可以。</p>
 <p>3) 性能问题（小数据样本时）<br>  问：当数组数量低于7个（资料显示）的时候，采用插入排序反而效率较高？<br>  答：博士生去小学教“1+1=2”也不见得比本科生教得好。快速排序对于基本有序，或者样本极少的数组排序的确效率不高。插入排序反而比较适合基本有序的小样本排序。</p>
 <p>4) 递归交换<br>  问：大家知道，递归对性能是有一定影响的，quick_sort函数在其尾部有两次递归操作。如果待排序的序列划分极端不平衡（正序或反序），递归深度将趋近于n，而不是平衡时的log2n，栈的空间是极其有限的，如何减少递归？<br>  答：解决递归地最好方法就是使用迭代。所以我们需要优化这里面不必要的递归交换。</p>
-<p>1)问题1解决方案：<br>    修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
-<pre><code>/**
- * 分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition1(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-    return low;
+<ul>
+<li><p>改进<br>1)问题1解决方案：<br> 修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
+<p> /**</p>
+<ul>
+<li>分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。</li>
+<li>@param array 待排序数组</li>
+<li>@param low 低位下标</li>
+<li>@param high 高位下标</li>
+<li><p>@return 划分好的数组<br>*/<br>private static int getPartition1(int[] array, int low, int high) {<br> int pivot_key;<br> // 进行三数取中<br> int mid = low + (high - low) / 2;<br> // 先确保左边是比右边小<br> if (array[low] &gt; array[high]) {</p>
+<pre><code>swap(array, low, high);
+</code></pre><p> }<br> // 再确保中间比右边小<br> if (array[mid] &gt; array[high]) {</p>
+<pre><code>swap(array, mid, high);
+</code></pre><p> }<br> // 最后确保左边比中间小<br> if (array[low] &gt; array[mid]) {</p>
+<pre><code>swap(array, low, mid);
+</code></pre><p> }<br> pivot_key = array[low];</p>
+<p> // 从表的两端交替向中间扫描<br> while (low &lt; high) {</p>
+<pre><code>while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+    high--;
 }
-</code></pre><p>2)问题2解决方案：<br>    修改getPartition函数。交换换成替换就可以了。</p>
+
+swap(array, low, high);
+
+while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+    low++;
+}
+
+swap(array, low, high);
+</code></pre><p> }</p>
+<p> return low;<br>}</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>2)问题2解决方案：<br>    修改getPartition函数。交换换成替换就可以了。</p>
 <pre><code>/**
  * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
  * @param array 待排序数组
@@ -528,8 +520,9 @@ private static int getPartitionUltimate(int[] array, int low, int high) {
     return low;
 }
 </code></pre><hr>
-<p>#2.3 选择排序</p>
-<p>##2.3.1 简单选择排序<br>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
+<h1 id="2-3-选择排序"><a href="#2-3-选择排序" class="headerlink" title="2.3 选择排序"></a>2.3 选择排序</h1><h2 id="2-3-1-简单选择排序"><a href="#2-3-1-简单选择排序" class="headerlink" title="2.3.1 简单选择排序"></a>2.3.1 简单选择排序</h2><p>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
+<p>复杂度分析：<br>时间复杂度：最好，最坏比较都是(N-1)*(N+1)/2,交换是N-1次，所以时间复杂度是O(n^2)<br>空间复杂度：原地排序，一个临时变量，所以是常数级别的O(1)<br>稳定性:因为是相邻元素的比较，而且中途没有交换，所以是稳定的，而且是特别稳定，任何情况的比较和交换（不算赋值过程）都是一样的</p>
+<p>评价：交换的次数较少，但是比较的次数较多，普通性能的排序。</p>
 <p>代码实现：使用两层循环，每次用min（max）保存一个最值，对未排序元素进行依次比较，得出的结果与未排序元素头元素进行交换，然后又指针（数组下标）往后移动一位，形成新的无序元素表，循环直到剩余元素为空。</p>
 <p>代码：</p>
 <pre><code>/**
@@ -561,8 +554,7 @@ private static void swap(int[] array, int i, int j) {
         array[j] = temp;
     }
 }
-</code></pre><p>复杂度分析：<br>时间复杂度：最好，最坏比较都是(N-1)*(N+1)/2,交换是N-1次，所以时间复杂度是O(n^2)<br>空间复杂度：原地排序，一个临时变量，所以是常数级别的O(1)<br>稳定性:因为是相邻元素的比较，而且中途没有交换，所以是稳定的，而且是特别稳定，任何情况的比较和交换（不算赋值过程）都是一样的</p>
-<p>##2.3.2 堆排序<br>储备知识：</p>
+</code></pre><p>##2.3.2 堆排序<br>储备知识：</p>
 <ul>
 <li><p>堆排序：<br>1.堆排序是采用树形式的数据结构队数据进行排序的，其中每个堆（每次排序只用得上）都是完全二叉树。<br>2.堆排序分为大根堆和小根堆 。大根堆（小根堆）表示在完全二叉树中，所用的非叶子节点都大于等于<br>（小于等于）他们的左右子节点（存在）。所以堆的顶点都是最大（小）值，每次取出顶点的值，放在堆的尾部，形成有序序列。</p>
 </li>
@@ -572,6 +564,9 @@ private static void swap(int[] array, int i, int j) {
 </li>
 </ul>
 <p>思想：大根堆或者小根堆的顶点都是最大（小）值，每次取出顶点的值，放在堆的尾部，形成有序序列。</p>
+<p>复杂度分析：<br>  运行时间主要在排序阶段。先是建立一个初始堆，需要时间O(n)（N/2-1）时间。然后第i次建立堆得比较和交换次数都是log2(i)次，而一共排序(n-1)次，所以排序的时间复杂度为O(nlogn)。<br>  空间复杂度：O(1)，原地排序，辅助空间就一个temp</p>
+<p>稳定性：<br>因为是父节点跟子节点的比较，不会连续，所以堆排序是不稳定的。</p>
+<p>评价：堆排序是性能较好的排序，只是空间占用会大一点，不好理解一点。</p>
 <p>代码实现：<br>设数组为a[0…N-1]<br>根据完全二叉树的性质：非叶子节点i的左右叶子节点（存在）下标分别为2<em>i+1,2</em>i+2。数组的最后一个非叶子节点为N/2-1。<br>实现堆排序步骤如下：<br>1.得到大根堆或者小根堆。这里以大根堆为例：<br>我们可以把每个非叶子节点都看成一个完全二叉树，然后都生成一个大根堆，得到一个初始大根堆堆。<br>2.取出生成大根堆的顶点值，与堆中第N个元素，也就是a[N-1]交换<br>3.此时大根堆被破坏，再重新生成大根堆，容量N–<br>4.重复2,3，直到N=1，排序完成</p>
 <p>代码：</p>
 <pre><code>/**
@@ -593,6 +588,7 @@ private static void swap(int[] array, int i, int j) {
      }
      return array;
  }
+
  /**
   * 调整成为大根堆
   * @param array
@@ -616,6 +612,7 @@ private static void swap(int[] array, int i, int j) {
      }
      array[top] = max;
  }
+
  private static void swap(int[] array, int i, int j) {
      if (i != j) {
          int temp = array[i];
@@ -623,16 +620,17 @@ private static void swap(int[] array, int i, int j) {
          array[j] = temp;
      }
  }
-</code></pre><p>复杂度分析：<br>  运行时间主要在排序阶段。先是建立一个初始堆，需要时间O(n)（N/2-1）时间。然后第i次建立堆得比较和交换次数都是log2(i)次，而一共排序(n-1)次，所以排序的时间复杂度为O(nlogn)。<br>  空间复杂度：O(1)，原地排序，辅助空间就一个temp</p>
-<p>稳定性：<br>因为是父节点跟子节点的比较，不会连续，所以堆排序是不稳定的。</p>
-<p>#2.5 归并排序</p>
-<p>##2.5.1 原始的归并排序<br>预备知识：</p>
+</code></pre><h1 id="2-5-归并排序"><a href="#2-5-归并排序" class="headerlink" title="2.5 归并排序"></a>2.5 归并排序</h1><h2 id="2-5-1-原始的归并排序"><a href="#2-5-1-原始的归并排序" class="headerlink" title="2.5.1 原始的归并排序"></a>2.5.1 原始的归并排序</h2><p>预备知识：</p>
 <ol>
 <li>归并在数据结构中的定义是：将两个或者两个以上的有序表组合成一个新的有序表。</li>
 <li>归并算法不唯一：多路归并算法有多种实现它的路数是浮动的K，我们在这里讲的是最简单的二路归并。</li>
 <li>分治法：将一个复杂的问题不断地分成两个或者更多相同或相似的子问题来解决，直到最后子问题可以直接简单求解为止，子问题的解得合并即为原问题的解。</li>
 </ol>
 <p>思想：二路归并算法是利用分治法的思想。它假设初始序列有N个记录，将这N个元素看做N个有序子序列，每个子序列的长度为1，然后进行合并。<br>它的归并过程大致如下：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg" alt="Merge Sort"><br>它的分组和归并全过程如下：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg" alt="Merge Sort"></p>
+<p>复杂度：<br>时间复杂度：首先， 归并排序需要将temp[0]…temp[n]中相邻长度为h的所有记录两两排序归，并存放到target[0]…target[n]里面去。此过程，需要将temp所有记录都扫描一遍，因此耗费O(n)的时间，而由完全二叉树的深度为[log2(n)]+1可知，归并排序需要进行[log2(n)]的常数倍次，因此，总的时间复杂度为O(nlog2(n))，而且是最好、平均、最坏都是如此。</p>
+<p>空间复杂度：存放扫描后数据的空间为O(n)，扫描过程中递归需要的栈空间为O(logn)，所以时间复杂度为O(n+logn)。排序空间耗费很大，这是归并排序的一大缺陷。</p>
+<p>稳定性：因为归并排序是相邻数字两两交换，所以说是稳定的。</p>
+<p>评价：归并排序在外排序的时候用的更多一些，跟堆排序一样的缺点。</p>
 <p>代码实现：两个步骤，先是划分成N个子序列，然后是两两合并。</p>
 <p>代码：</p>
 <pre><code>/**
@@ -714,11 +712,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
         target[k++] = temp[j++];
     }
 }
-</code></pre><p>复杂度：<br>时间复杂度：首先， 归并排序需要将temp[0]…temp[n]中相邻长度为h的所有记录两两排序归，并存放到target[0]…target[n]里面去。此过程，需要将temp所有记录都扫描一遍，因此耗费O(n)的时间，而由完全二叉树的深度为[log2(n)]+1可知，归并排序需要进行[log2(n)]的常数倍次，因此，总的时间复杂度为O(nlog2(n))，而且是最好、平均、最坏都是如此。</p>
-<p>空间复杂度：存放扫描后数据的空间为O(n)，扫描过程中递归需要的栈空间为O(logn)，所以时间复杂度为O(n+logn)。排序空间耗费很大，这是归并排序的一大缺陷。</p>
-<p>稳定性：因为归并排序是相邻数字两两交换，所以说是稳定的。</p>
-<p>##2.5.2 改进的归并排序</p>
-<p>问题的提出：因为空间耗费大是归并排序的一大缺陷，而且这一缺陷是递归造成的。所以在这里，可以将递归优化成迭代。减少空间占用。</p>
+</code></pre><h2 id="2-5-2-改进的归并排序"><a href="#2-5-2-改进的归并排序" class="headerlink" title="2.5.2 改进的归并排序"></a>2.5.2 改进的归并排序</h2><p>问题的提出：因为空间耗费大是归并排序的一大缺陷，而且这一缺陷是递归造成的。所以在这里，可以将递归优化成迭代。减少空间占用。</p>
 <p>思想：将递归换成迭代，利用新创建的target数组与源数组辗转排序最终完成排序。</p>
 <p>代码：</p>
 <pre><code> /**
@@ -823,20 +817,19 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 <p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 <p>排序算法优化的原则：<br>1.能用迭代就不要用递归。<br>2.能用替换就不要用交换(swap)<br>3.低级排序并不一定比高级排序差，主要还是要看清楚应用场景</p>
 </blockquote>
-<p>#3 外排序</p>
-<ul>
+<h1 id="3-外排序"><a href="#3-外排序" class="headerlink" title="3 外排序"></a>3 外排序</h1><ul>
 <li>定义：外排序（External sorting）是指能够处理极大量数据的排序算法。</li>
 </ul>
 <p>通常来说，外排序处理的数据不能一次装入内存，只能放在读写较慢的外存储器（通常是硬盘）上。外排序通常采用的是一种“排序-归并”的策略。在排序阶段，先读入能放在内存中的数据量，将其排序输出到一个临时文件，依此进行，将待排序数据组织为多个有序的临时文件。尔后在归并阶段将这些临时文件组合为一个大的有序文件，也即排序结果。</p>
-<p>#附加1：基数排序&amp;桶排序<br>待完成</p>
+<h1 id="附加1：基数排序-amp-桶排序"><a href="#附加1：基数排序-amp-桶排序" class="headerlink" title="附加1：基数排序&amp;桶排序"></a>附加1：基数排序&amp;桶排序</h1><p>待完成</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4gta7400002nou90wbtlqte" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4hv09sc0003usu9tdm6j7w2" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li></ul>
 
     </footer>
   </div>
@@ -846,7 +839,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
   
     <a href="/2017/06/27/查找算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ancien</strong>
       <div class="article-nav-title">查找算法</div>
     </a>
   
@@ -864,9 +857,9 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构-算法-内外排序/">数据结构 算法 内外排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法-完全二叉树/">数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
   </div>
 
@@ -874,9 +867,9 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/数据结构-算法-内外排序/" style="font-size: 10px;">数据结构 算法 内外排序</a> <a href="/tags/数据结构与算法-完全二叉树/" style="font-size: 10px;">数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
+      <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/数据结构与算法-完全二叉树/" style="font-size: 10px;">数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
   </div>
 
@@ -893,7 +886,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -926,7 +919,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
