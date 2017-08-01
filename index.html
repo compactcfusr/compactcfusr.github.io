@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,42 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-经典排序算法有关笔试题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/07/经典排序算法有关笔试题/" class="article-date">
+  <time datetime="2017-07-07T01:52:16.000Z" itemprop="datePublished">2017-07-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/07/经典排序算法有关笔试题/">经典排序算法有关笔试题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/07/经典排序算法有关笔试题/" data-id="cj5tei0460001d0u9dz1piego" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-排序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -82,7 +118,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/28/排序/">排序</a>
+      <a class="article-title" href="/2017/06/28/排序/">比较排序算法</a>
     </h1>
   
 
@@ -93,8 +129,10 @@
         <p>今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。</p>
 <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
 <p>常见的内外排序有哪些？<br>内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法<br>外排序：外归并排序算法</p>
+<p>比较排序算法有哪些？性能表现又是如何？<br>(Pic here)<br>注1：关于 Memory，如果算法为 “in place”（原地） 排序，则仅需要 O(1) 内存；有时对于额外的 O(log(n)) 内存也可以称为 “in place”（原地）。</p>
+<p>注2：Microsoft .Net Framework中Array.Sort方法就是实现了内省排序算法。</p>
 <hr>
-<h1 id="2-内排序"><a href="#2-内排序" class="headerlink" title="2.内排序"></a>2.内排序</h1><h2 id="2-1插入排序"><a href="#2-1插入排序" class="headerlink" title="2.1插入排序"></a>2.1插入排序</h2><h3 id="2-1-1-直接插入排序"><a href="#2-1-1-直接插入排序" class="headerlink" title="2.1.1 直接插入排序"></a>2.1.1 直接插入排序</h3><p>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
+<h1 id="2-内排序"><a href="#2-内排序" class="headerlink" title="2.内排序"></a>2.内排序</h1><h2 id="2-1插入排序-（Insertion-Sorts）"><a href="#2-1插入排序-（Insertion-Sorts）" class="headerlink" title="2.1插入排序 （Insertion Sorts）"></a>2.1插入排序 （Insertion Sorts）</h2><h3 id="2-1-1-直接插入排序-Directly-Insertion-Sort"><a href="#2-1-1-直接插入排序-Directly-Insertion-Sort" class="headerlink" title="2.1.1 直接插入排序 (Directly Insertion Sort)"></a>2.1.1 直接插入排序 (Directly Insertion Sort)</h3><p>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
 <p>思路：无序插入有序表，每次从位置K由后向前进行比较，找到第一个不大于（小于）A[K]的数字，否则就放在数组头部。</p>
 <p>复杂度分析：</p>
 <ul>
@@ -104,7 +142,7 @@
 </ul>
 <p>稳定性：连续比较，相同不交换，稳定</p>
 <p>评价：对于基本有序的序列，插入排序的复杂度较低，但是插入排序的效率较低，每次只移动了一位</p>
-<p>代码实现：采用双层循环，外层循环每次将数据跟前面的有序表进行对比，如果小于，就交换数字，往前对比；若不小于，则停止前进。</p>
+<p>代码实现：采用双层循环，外层循环每次将数据跟前面的有序表进行对比，如果小于，就交换数字，往前对比；若不小于，则停止前进。<br>注释：这里的话作为交换条件的temp和array[j]的比较加到到循环里面去合理一些，所以说内层循环使用while更加简洁。</p>
 <p>代码：</p>
 <pre><code>/**
  * 直接插入排序
@@ -118,15 +156,25 @@ public static int[] directly_insert_sort(int[] array) {
         int temp = array[i];
         int j = i - 1;
         // 进行连续比较，直到数组开头
-        while (j &gt;= 0 &amp;&amp; temp &lt;= array[j]) {
+        while (j &gt;= 0 &amp;&amp; temp &lt; array[j]) {
             array[j + 1] = array[j];
             j--;
         }
-        array[j] = temp;
+        array[j + 1] = temp;
     }
     return array;
 }
-</code></pre><h3 id="2-1-2-希尔排序"><a href="#2-1-2-希尔排序" class="headerlink" title="2.1.2 希尔排序"></a>2.1.2 希尔排序</h3><p>定义：是直接插入的改进，分组插入排序。希尔排序利用了插入排序对有序数组排序性能大增的特点，实现了计算</p>
+</code></pre><p>关键代码：</p>
+<pre><code>        int j = i - 1;
+        // 进行连续比较，直到数组开头
+        while (j &gt;= 0 &amp;&amp; temp &lt; array[j]) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1**粗体文本**] = temp;
+
+注释：这里使用了while而非for，让循环看起来更加清晰。while相比于for，更加强调对循环条件的满足，而插入排序的核心思想就是：把小于等于要插入数字的所有数字往后移一位， 然后插入数字，为保证移动和判断的连贯性，使用了while循环。       
+</code></pre><h3 id="2-1-2-希尔排序-Shell-Sort"><a href="#2-1-2-希尔排序-Shell-Sort" class="headerlink" title="2.1.2 希尔排序 (Shell Sort)"></a>2.1.2 希尔排序 (Shell Sort)</h3><p>定义：是直接插入的改进，分组插入排序。希尔排序利用了插入排序对有序数组排序性能大增的特点，实现了计算</p>
 <p>思路：通过选择特定的步长dl，将比较的元素分成几个区域来（进行插入排序）提升插入排序的性能。每次将区域缩小一点，最后缩小到步长dl=1的时候，就是普通的插入排序了。</p>
 <p>复杂度分析：<br>步长不同，所得的时间复杂度也不同：</p>
 <table>
@@ -186,8 +234,20 @@ public static int[] shell_sort(int[] array) {
     }
     return array;
 }
+</code></pre><p>关键代码：</p>
+<pre><code>for (;gap &gt; 0; gap = gap / 2) {
+            for (i = gap; i &lt; len; i++) {
+                int temp = array[i];
+                for (j = i - gap; j &gt;= 0 &amp;&amp; array[j] &gt; temp; j -= gap) {
+                    array[j + gap] = array[j];
+                }
+                array[j + gap]  = temp;
+            }
+        }
+
+注释：三层循环，最里层是一个增量为gap的插入排序，里层的是一个从步长位置开始（因为之前位置没有意义）的排序，并且每次循环结尾都会把待插入的值插入最终位置。最外层就是变步长的循环，用于不断缩小步长，逼近有序。            
 </code></pre><hr>
-<h2 id="2-2-交换排序"><a href="#2-2-交换排序" class="headerlink" title="2.2 交换排序"></a>2.2 交换排序</h2><h3 id="2-2-1-冒泡排序及其优化"><a href="#2-2-1-冒泡排序及其优化" class="headerlink" title="2.2.1 冒泡排序及其优化"></a>2.2.1 冒泡排序及其优化</h3><p>定义： 对普通交换排序的改进，对无序区的记录依次进行比较，使得最大（小）的记录如同“气泡”一样“冒出水面”。</p>
+<h2 id="2-2-交换排序-Exchange-Sort"><a href="#2-2-交换排序-Exchange-Sort" class="headerlink" title="2.2 交换排序 (Exchange Sort)"></a>2.2 交换排序 (Exchange Sort)</h2><h3 id="2-2-1-普通冒泡排序-Bubble-Sort"><a href="#2-2-1-普通冒泡排序-Bubble-Sort" class="headerlink" title="2.2.1 普通冒泡排序 (Bubble Sort)"></a>2.2.1 普通冒泡排序 (Bubble Sort)</h3><p>定义： 对普通交换排序的改进，对无序区的记录依次进行比较，使得最大（小）的记录如同“气泡”一样“冒出水面”。</p>
 <p>思想：通过对无序区记录进行两两比较，若反序就进行交换，一直交换到序列尾部，使元素成为有序区记录。依次交换，直到没有反序的记录为止。</p>
 <p>复杂度分析：这里要对它进行改进，之后再对其时间复杂度进行分析。</p>
 <p>稳定性：因为是相邻交换，所以冒泡排序是稳定排序。</p>
@@ -246,7 +306,175 @@ public static int[] modified_bubble_sort(int[] array) {
     }
     return array;
 }
-</code></pre><h3 id="2-2-3-快速排序（重要）"><a href="#2-2-3-快速排序（重要）" class="headerlink" title="2.2.3 快速排序（重要）"></a>2.2.3 快速排序（重要）</h3><p>定义：对冒泡排序的改进。</p>
+</code></pre><h3 id="2-2-3-鸡尾酒排序（Cocktail-Sort）"><a href="#2-2-3-鸡尾酒排序（Cocktail-Sort）" class="headerlink" title="2.2.3 鸡尾酒排序（Cocktail Sort）"></a>2.2.3 鸡尾酒排序（Cocktail Sort）</h3><p>思想：鸡尾酒排序，也叫双向冒泡排序(Bidirectional Bubble Sort)，这一下就很清晰了。以升序排列为例，<br>它先把最大的数移到序列末尾，然后接着从还没排好序的序列从尾部开始，把最小的数字移到最前边开头的地方。来回这样序列长度的一半的次数，排序就完成了</p>
+<p>算法复杂度<br>时间复杂度：最好O(n)，最差O(n^2)，平均O(n^2)</p>
+<p>空间复杂度：最差O(1)</p>
+<p>代码：</p>
+<pre><code>/**
+ * 双向冒泡排序
+ * @param array 待排序数组
+ * @return 排好序数组
+ */
+public static int[] cocktailSort(int[] array) {
+    int length = array.length;
+    for (int i = 0; i &lt; (length - 1) / 2; i++) {
+        // 先把最大的数移到后边
+        for (int j = i + 1; j &lt; length - i;j++) {
+            if (array[j] &lt; array[j - 1]) {
+                swap(array, j - 1, j);
+            }
+        }
+
+        // 再把最小的数移到最前边
+        for (int k = length - i - 1; k &gt; i; k--) {
+            if (array[k] &lt; array[k - 1]) {
+                swap(array, k, k - 1);
+            }
+        }
+    }
+    return array;
+}
+
+/**
+ * 改进的双向冒泡排序。可以避免冗余的比较和交换
+ * @param array 待排序数组
+ * @return 排好序数组
+ */
+public static int[] optimizedCocktailSort(int[] array) {
+    int length = array.length;
+    boolean flag = true;
+
+    for (int i = 0; i &lt; (length - 1) / 2 &amp;&amp; flag; i++) {
+        flag = false;
+        for (int j = i + 1; j &lt; length - i;j++) {
+            if (array[j] &lt; array[j - 1]) {
+                swap(array, j - 1, j);
+                flag = true;
+            }
+        }
+
+        // 若没有交换就直接跳出循环
+        if (!flag) {
+            break;
+        }
+
+        flag = false;
+        for (int k = length - i - 1; k &gt; i; k--) {
+            if (array[k] &lt; array[k - 1]) {
+                swap(array, k, k - 1);
+                flag = true;
+            }
+        }
+    }
+
+    return array;
+}
+</code></pre><p>关键代码：</p>
+<pre><code>// 头部冒泡
+for (int i = 0; i &lt; (length - 1) / 2 &amp;&amp; flag; i++) {
+    flag = false;
+    for (int j = i + 1; j &lt; length - i;j++) {
+        if (array[j] &lt; array[j - 1]) {
+            swap(array, j - 1, j);
+            flag = true;
+        }
+    }
+
+    // 若没有交换就直接跳出循环
+    if (!flag) {
+        break;
+    }
+    // 尾部冒泡
+    flag = false;
+    for (int k = length - i - 1; k &gt; i; k--) {
+        if (array[k] &lt; array[k - 1]) {
+            swap(array, k, k - 1);
+            flag = true;
+        }
+    }
+}
+
+注释：对于头部冒泡和尾部冒泡两次循环，对于j,k值得设置十分重要，因为两者会相互干涉，所以在设置的时候就需要考虑到对方的影响，都是处理待排序序列，头部冒泡的起始节点是待排序序列的头部开始，对于第（i+1）次来看，也就是从位置i开始；尾部冒泡是从尾部开始，也就是(length - 1 - i)开始
+</code></pre><h3 id="2-2-4-奇偶排序（Odd-Even-Sort）"><a href="#2-2-4-奇偶排序（Odd-Even-Sort）" class="headerlink" title="2.2.4 奇偶排序（Odd-Even Sort）"></a>2.2.4 奇偶排序（Odd-Even Sort）</h3><p>思想：选取奇数或者偶数为起始位置，以2位比较长度，两两进行比较。</p>
+<p>代码实现：比较从第一位开始，下标能被2整除就是奇数排序，否则就是偶数排序，然后比较每个起始位置和下一个位置的大小，每次排序的增量为2，直到到达最后一位。</p>
+<p>代码：</p>
+<p>/**</p>
+<pre><code> * 奇偶排序
+ * @param array 待排序数组
+ * @return 排好序数组
+ */
+public static int[] oddEvenSort(int[] array) {
+    int length = array.length;
+    for (int i = 0; i &lt; length; i++) {
+        // 先判断是否能被2整除
+        if (i % 2 != 0) {
+            // 进行偶数排序
+            for (int j = 2; j &lt; length; j += 2) {
+                if (array[j] &lt; array[j - 1]) {
+                    swap(array, j, j - 1);
+                }
+            }
+        } else {
+            // 进行奇数排序
+            for (int j = 1; j &lt; length; j += 2) {
+                if (array[j] &lt; array[j - 1]) {
+                    swap(array, j, j - 1);
+                }
+            }
+        }
+
+    }
+    return array;
+}
+</code></pre><p>/**</p>
+<pre><code> * 改进的奇偶排序。可以避免冗余的比较和交换
+ * @param array 待排序数组
+ * @return 排好序数组
+ */
+public static int[] optimizedOddEvenSort(int[] array) {
+    int length = array.length;
+    int i;
+    boolean sorted = true;
+
+    while (sorted){
+        sorted = true;
+        for (int odd_even = 0; odd_even &lt; 2; odd_even++) {
+            for (i = odd_even; i &lt; length - 1; i += 2) {
+                if (array[i + 1] &lt; array[i]) {
+                    swap(array, i + 1, i);
+                    sorted = false;
+                }
+            }
+        }
+    }
+
+    return array;
+}
+
+private static void swap(int[] array, int i, int j) {
+    if (i != j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+</code></pre><p>核心代码：</p>
+<pre><code>while (sorted){
+    sorted = true;
+    for (int odd_even = 0; odd_even &lt; 2; odd_even++) {
+        for (i = odd_even; i &lt; length - 1; i += 2) {
+            if (array[i + 1] &lt; array[i]) {
+                swap(array, i + 1, i);
+                sorted = false;
+            }
+        }
+    }
+}
+
+注释：
+1.因为没有办法每次选出一个最值，所以这个排序是要进行很多次的，优化之前的排序进行N-1次，优化之后，排序进行到已经有序。
+2.因为排序都是先奇数，再偶数，要等两轮排序就等于冒泡排序的从头到尾的一轮排序
+</code></pre><h3 id="2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法"><a href="#2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法" class="headerlink" title="2.2.5 快速排序（Quick Sort） — 最重要的排序算法"></a>2.2.5 快速排序（Quick Sort） — 最重要的排序算法</h3><p>定义：对冒泡排序的改进。</p>
 <p>思想：通过一趟排序实现对记录的分割，其中一部分记录的关键字均比另一部分记录的关键字小。则可分别对两部分记录进行排序，已达到整体有序的。</p>
 <p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，所以最后分出来的递归树的深度就是：[log2n]+1（[x]表示不大于x的最大整数），仅需要递归.log2n.次，每次比较的次数为n次，交换的次数是n-1次，每次的时间复杂度为O(n)，每次除了比较，交换之外，还需要对其他两个子树进行排序，根据推导：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤nT（1）+（log2n）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
 <p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)，</p>
@@ -315,7 +543,31 @@ private static void swap(int[] array, int i, int j) {
         array[j] = temp;
     }
 }
-</code></pre><h3 id="2-2-4-改进的快速排序"><a href="#2-2-4-改进的快速排序" class="headerlink" title="2.2.4 改进的快速排序"></a>2.2.4 改进的快速排序</h3><ul>
+</code></pre><p>关键代码：</p>
+<pre><code>    if (low &lt; high) {
+        pivot = getPartition(array, low, high);
+        quick_sort(array, low, pivot - 1);
+        quick_sort(array, pivot + 1, high);
+    }
+注释：先分组，再各组递归排序
+
+ // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+
+        swap(array, low, high);
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        swap(array, low, high);
+    }
+
+注释：交替扫描    
+</code></pre><h3 id="2-2-6-改进的快速排序"><a href="#2-2-6-改进的快速排序" class="headerlink" title="2.2.6 改进的快速排序"></a>2.2.6 改进的快速排序</h3><ul>
 <li>问题:快速排序存在四个问题：</li>
 </ul>
 <p>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
@@ -368,7 +620,7 @@ private static int getPartition1(int[] array, int low, int high) {
 
     return low;
 }
-</code></pre><p>2)问题2解决方案：<br>    修改getPartition函数。交换换成替换就可以了。</p>
+</code></pre><p>2)问题2解决方案1：<br>    修改getPartition函数。交换换成替换就可以了。</p>
 <pre><code>/**
  * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
  * @param array 待排序数组
@@ -412,6 +664,42 @@ private static int getPartition2(int[] array, int low, int high) {
 
     return low;
 }
+</code></pre><p>2)问题2解决方案1：<br>    或者换一种思路，设计一个小于等于枢轴值的区域，先将取出的枢轴与数组末尾进行交换，设为哨兵。然后将所有小于等于枢轴值的数字都放进区域，并将区域末尾指针相应右移，直到整个数组末尾。</p>
+<pre><code>/**
+    * 划分方法。完全按照左老师的方法来。
+    * 1.交换枢划分值和数组高位值，让划分值成为哨兵
+    * 2.先在规定区域(high, low)的低位前一位规定一个小于等于划分值区域，初始长度为0
+    * 3.移动index指针，遇到满足条件的数，就放在小于等于划分值区域的下一位（就是交换），区域长度增加1，直到指针走到高位
+    *
+    * 虽然较好的去划分值的方法是三数取中，但是随机数也是可以的。
+    * @param A 待排序数组
+    * @param low 低位指针
+    * @param high 高位指针
+    * @return 划分值在数组中位置以及一个划分过的数组
+    */
+   public static int getPartition3(int[] A, int low, int high) {
+       //随机法取划分值
+       int random = low + (int)((high - low) * Math.random());
+
+       // 交换划分值和数组高位值，让它成为哨兵
+       swap(A, random, high);
+
+       // 划分小于等于划分值区域，刚开始为低位的左边区域的前一位
+       int pivot = low - 1;
+       // 区域指针
+       int index = low;
+       // 移动低位指针，不移动高位指针
+       while (index &lt;= high) {
+           if (A[index] &lt;= A[high]) {
+               // 将小于等于划分值区域的下一个与较小值交换,并将小于等于划分值区域长度加1
+               swap(A, ++pivot, index);
+           }
+
+           index++;
+       }
+
+       return pivot;
+   }
 </code></pre><p>3)问题3解决方案：<br>    修改quick_sort函数。那就加入判断，小于等于7个的时候调用插入排序，大于7个采用快速排序。</p>
 <pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
 /**
@@ -519,12 +807,77 @@ private static int getPartitionUltimate(int[] array, int low, int high) {
         while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
             low++;
         }
-
         array[high] = array[low];
     }
     array[low] = temp;
 
     return low;
+}
+</code></pre><p>关键代码：</p>
+<pre><code>// 将递归换成迭代，减少对栈的使用
+    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
+        while (low &lt; high) {
+            pivot = getPartition(array, low, high);
+            quick_sort(array, low, pivot - 1);
+            low = pivot + 1;
+        }
+    }
+
+// 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+        array[low] = array[high];
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+        array[high] = array[low];
+    }
+    array[low] = temp;
+
+注释：这里用到了插入排序的思想
+</code></pre><h3 id="2-3-7-快速排序的单链表实现（C语言版）"><a href="#2-3-7-快速排序的单链表实现（C语言版）" class="headerlink" title="2.3.7 快速排序的单链表实现（C语言版）"></a>2.3.7 快速排序的单链表实现（C语言版）</h3><p>背景：因为看到有的阿里面试面经里面写到了，觉得很有趣，所以就在这里收录下来了。</p>
+<p>思路：C里面都是操作指针，快排也有操作指针实现的方法。但是这里用改变值得方法来排序，会不会更接近Java程序员的思维？对于初始版本，选择，采用两个指针，一快一慢。快指针负责比较，慢指针负责记录比枢轴小的序列的末尾位置，这个位置后来会存放枢轴。一直循环直到快指针指向数组末尾指针的next—NULL。</p>
+<p>具体实例：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG" alt="Quick Sort"><br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F_%E7%BB%AD.JPG" alt="Quick Sort"></p>
+<p>代码：</p>
+<pre><code>struct Node
+{
+    int key;
+    Node* next;
+};
+
+Node* getPartition(Node* pBegin, Node* pEnd) {
+    int key = pBegin-&gt;key;
+    Node* p = pBegin;
+    Node* q = p-&gt;next;
+
+    while(q != pEnd) {
+        if (q-&gt;key &lt; key) {
+            p = p-&gt;next;
+            swap(p, q);
+        }
+        q = q-&gt;next;
+    }
+
+    swap(p, pBegin);
+}
+
+void QuickSort(Node* pBegin, Node* pEnd) {
+    if (pBegin != pEnd) {
+        Node* pivot = getPartition(pBegin, pEnd);
+        QuickSort(pBegin, pivot);
+        QuickSort(pivot, pEnd);
+    }
+}
+
+void swap(Node* a, Node* b) {
+    if (a-&gt;key != b-&gt;key) {
+        int temp = b-&gt;key;
+        b-&gt;key = a-&gt;key;
+        a-&gt;key = temp;
+    }
 }
 </code></pre><hr>
 <h1 id="2-3-选择排序"><a href="#2-3-选择排序" class="headerlink" title="2.3 选择排序"></a>2.3 选择排序</h1><h2 id="2-3-1-简单选择排序"><a href="#2-3-1-简单选择排序" class="headerlink" title="2.3.1 简单选择排序"></a>2.3.1 简单选择排序</h2><p>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
@@ -570,7 +923,7 @@ private static void swap(int[] array, int i, int j) {
 <li><p>调整成大根堆：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%86.jpg" alt="Heap Sort"><br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg" alt="Heap Sort"><br>调整成最小堆正好相反</p>
 </li>
 </ul>
-<p>思想：大根堆或者小根堆的顶点都是最大（小）值，每次取出顶点的值，放在堆的尾部，形成有序序列。</p>
+<p>思想：1.建立初始大根堆或小根堆的原因是为了保证节点层次上的绝对有序，上一层的父节点一定大于下一层的子节点。为后面的调整简化了思想。<br>2.大根堆或者小根堆的顶点都是最大（小）值，每次取出顶点的值，放在堆的尾部，然后再将头部元素放到合适的位置，将次大或小的元素置于堆顶，依次重复以上步骤，形成有序序列。</p>
 <p>复杂度分析：<br>  运行时间主要在排序阶段。先是建立一个初始堆，需要时间O(n)（N/2-1）时间。然后第i次建立堆得比较和交换次数都是log2(i)次，而一共排序(n-1)次，所以排序的时间复杂度为O(nlogn)。<br>  空间复杂度：O(1)，原地排序，辅助空间就一个temp</p>
 <p>稳定性：<br>因为是父节点跟子节点的比较，不会连续，所以堆排序是不稳定的。</p>
 <p>评价：堆排序是性能较好的排序，只是空间占用会大一点，不好理解一点。</p>
@@ -627,6 +980,29 @@ private static void swap(int[] array, int i, int j) {
          array[j] = temp;
      }
  }
+</code></pre><p>关键代码：</p>
+<pre><code>for (int i = N/2 - 1; i &gt;= 0; i--) {
+            fitToMaxHeap(array, i, N - 1);
+        }
+注释：建立初始堆，相当重要，为后面的调整做出了层次上有序的保证。
+
+int max = array[top];
+// 沿着关键字较大的孩子节点向下
+for (int i = 2 * top + 1; i &lt;= tail; i = 2 * i + 1) {
+    if (i &lt; tail &amp;&amp; array[i + 1] &gt; array[i]) {
+        ++i;
+    }
+    // 如果这是最大的，直接跳出，如果不是，交换元素
+    if (max &gt;= array[i]) {
+        break;
+    }
+    // 顶点也要移动
+    array[top] = array[i];
+    top = i;
+}
+array[top] = max;
+
+注释：变相的插入排序，但是因为增量复杂，所以设置的有前置指针top。
 </code></pre><h1 id="2-5-归并排序"><a href="#2-5-归并排序" class="headerlink" title="2.5 归并排序"></a>2.5 归并排序</h1><h2 id="2-5-1-原始的归并排序"><a href="#2-5-1-原始的归并排序" class="headerlink" title="2.5.1 原始的归并排序"></a>2.5.1 原始的归并排序</h2><p>预备知识：</p>
 <ol>
 <li>归并在数据结构中的定义是：将两个或者两个以上的有序表组合成一个新的有序表。</li>
@@ -722,7 +1098,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 </code></pre><h2 id="2-5-2-改进的归并排序"><a href="#2-5-2-改进的归并排序" class="headerlink" title="2.5.2 改进的归并排序"></a>2.5.2 改进的归并排序</h2><p>问题的提出：因为空间耗费大是归并排序的一大缺陷，而且这一缺陷是递归造成的。所以在这里，可以将递归优化成迭代。减少空间占用。</p>
 <p>思想：将递归换成迭代，利用新创建的target数组与源数组辗转排序最终完成排序。</p>
 <p>代码：</p>
-<pre><code> /**
+<pre><code>/**
  * 归并排序算法。从最小的间距为2开始，对数组进行迭代排序
  * @param array 待排序序列
  * @return 排好序序列
@@ -733,17 +1109,18 @@ private static int[] modified_m_sort(int[] array) {
     int[] target = new int[length];
 
     // 之所以调用两次。1.非原地排序，需把两个序列来回倒换
-    // 2.即使interval长度超过了序列总长度，也有判断可以避免错误indexOutOfRange
-    while (interval &lt; length - 1) {
+    // 2.即使interval长度超过了序列总厂，也有判断可以避免错误indexOutOfRange
+    while (interval &lt; length) {
         mergePass(array, target, interval, length);
         interval *= 2;
 
-        if (interval &gt; length - 1) {
+        if (interval &gt; length) {
             return target;
         } else {
             mergePass(target, array, interval, length);
             interval *= 2;
         }
+
     }
 
     return array;
@@ -824,16 +1201,182 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 <p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 <p>排序算法优化的原则：<br>1.能用迭代就不要用递归。<br>2.能用替换就不要用交换(swap)<br>3.低级排序并不一定比高级排序差，主要还是要看清楚应用场景</p>
 </blockquote>
+<h3 id="附：内排序性能比较"><a href="#附：内排序性能比较" class="headerlink" title="附：内排序性能比较"></a>附：内排序性能比较</h3><p><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg" alt="Sort Comparision"></p>
 <h1 id="3-外排序"><a href="#3-外排序" class="headerlink" title="3 外排序"></a>3 外排序</h1><ul>
 <li>定义：外排序（External sorting）是指能够处理极大量数据的排序算法。</li>
 </ul>
 <p>通常来说，外排序处理的数据不能一次装入内存，只能放在读写较慢的外存储器（通常是硬盘）上。外排序通常采用的是一种“排序-归并”的策略。在排序阶段，先读入能放在内存中的数据量，将其排序输出到一个临时文件，依此进行，将待排序数据组织为多个有序的临时文件。尔后在归并阶段将这些临时文件组合为一个大的有序文件，也即排序结果。</p>
-<h1 id="附加1：基数排序-amp-桶排序"><a href="#附加1：基数排序-amp-桶排序" class="headerlink" title="附加1：基数排序&amp;桶排序"></a>附加1：基数排序&amp;桶排序</h1><p>待完成</p>
+<h1 id="附加1：内省排序"><a href="#附加1：内省排序" class="headerlink" title="附加1：内省排序"></a>附加1：内省排序</h1><h1 id="附加2：计数排序-amp-基数排序-amp-桶排序"><a href="#附加2：计数排序-amp-基数排序-amp-桶排序" class="headerlink" title="附加2：计数排序&amp;基数排序&amp;桶排序"></a>附加2：计数排序&amp;基数排序&amp;桶排序</h1><p>储备知识：<br>1.基于比较的排序算法是不能突破O(NlogN)的。简单证明如下：<br>N个数有N!个可能的排列情况，也就是说基于比较的排序算法的判定树有N!个叶子结点，比较次数至少为log(N!)=O(NlogN)(斯特林公式)。</p>
+<p>非基于比较的排序：<br>计数排序（counting sort)<br>桶排序 （bucket sort)<br>基数排序（radix sort）</p>
+<p>2.桶排序是一种思想，不是一种实现。故实现了桶排序思想的计数排序和基数排序都不属于比较排序。</p>
+<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><p>预定义：这里有一个预定义，数组里面的所有值都是自然数，也就是非负整数。<br>思想：找到待排序数组中所有数值的范围，根据范围创建一个计数数组，范围(min, max)。<br>      然后求范围内各个数值的出现频率，然后在求其计数和，对数组中存在的数，此计数和即为在有序数组       中的末尾位置+1的值，最后反序根据数组输出有序数组。</p>
+<p>复杂度分析：</p>
+<p>时间复杂度：计数时间复杂度为O(N)，然后整理时间复杂度为O(N)，求计数和的时间复杂度为O(K)，所以总时间复杂度为O(N + k)，看K的大小，如果较小，则趋近O(N)，如果趋近于无穷大，时间复杂度会非常大，此法不再好用。</p>
+<p>空间复杂度：计数数组为O(K)，结果数组O(N)，总空间复杂度为O(N + k)</p>
+<p>从1开始计数版本，代码：</p>
+<pre><code>private static void countingSort(int[] A, int[] B, int k) {
+    int[] C = new int[k];
+    // 计数
+    for (int j = 0; j &lt; A.length; j++) {
+        int a = A[j];
+        C[a] += 1;
+    }
 
+    // 求计数和，此计数和就是数字在有序数组中的（位置+1）
+    for (int i = 1; i &lt; k; i++) {
+        C[i] = C[i] + C[i - 1];
+    }
+
+    // 整理
+    for (int j = A.length - 1; j &gt;= 0; j--) {
+        int a = A[j];
+        B[C[a] - 1] = a;
+        C[a] -= 1;
+    }
+}
+</code></pre><p>优化计数数组版本代码：</p>
+<pre><code> /**
+ * 计数排序。
+ * 先得出待排序数组中最大的数字，根据数字将放进计数数组。
+ * 然后将计数数组依次累加得到数字当前的位置
+ * 最后从待排序数组尾部开始读数字，放入结果数组。
+ * 针对数组大小，优化过的计数排序
+ * @param A 待排序数组
+ * @param n 待排序数组长度
+ * @return 排好序数组
+ */
+public static int[] countingSort(int[] A, int n) {
+    if (n &lt; 2) {
+        return A;
+    }
+
+    // 0.计数数组的长度
+    int max = A[0];
+    int min = A[0];
+    int length;
+
+    for (int i = 1; i &lt; A.length; i++) {
+        if (max &lt; A[i]) {
+            max = A[i];
+        }
+    }
+
+    for (int i = 1; i &lt; A.length; i++) {
+        if (min &gt; A[i]) {
+            min = A[i];
+        }
+    }
+
+    length = max - min + 1;
+    int[] countingArray = new int[length];
+    int[] orderedArray = new int[n];
+
+    int number;
+    // 1.计数。先把每个数字的频率记录下来，放入计数数组
+    for (int i = 0; i &lt; n; i++) {
+        number = A[i];
+        countingArray[number - min]++;
+    }
+
+    // 2.求计数和。再把每个数字的频率累加，放入计数数组，就是当前数字的位置
+    for (int j = 1; j &lt; length; j++) {
+        countingArray[j] = countingArray[j] + countingArray[j - 1];
+    }
+
+    // 3.从最后一位开始，放入结果数组，随着待排序数组数字放入结果数组，计数数组的放入位置应当减1
+    for (int k = n - 1; k &gt;= 0; k--) {
+        number = A[k];
+        // 数组实际位置和个数直接相差1，所以要减1
+        orderedArray[--countingArray[number - min]] = number;
+    }
+
+    return orderedArray;
+}
+</code></pre><h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><p>预定义：集合里面是自然数。<br>思想：仍然是桶排序的思想，但是分进制来，例如基数为十进制的排序，那么就是：<br>1.选取一个长度为10的计数数组，每一个数字分别对应0-9<br>2.然后从高位或者低位开始，分别对每一位进行排序进行排序</p>
+<p>代码实现：<br>1.找到数组最大值的位数<br>2.根据位数决定循环排序次数<br>3.接着每一次排序循环都是一个计数数组为0-9的计数排序</p>
+<p>复杂度分析：<br>时间复杂度：被进制决定，因为这里是10进制，所以是ln，但是别的B进制就logB ，那么这里的时间复杂度是O(lnk * N)<br>空间复杂度：同计数排序，O(N + k)</p>
+<p>代码：</p>
+<pre><code>/**
+ * 基数排序，就是计数排序的多位数版本。桶排序的常见实现。
+ * 有MSD和LSD两种实现，我们这里写的是最为通用的LSD。
+ * 1.先判断数组最大数字的位数
+ * 2.根据位数，进行从低位到高位的循环
+ * @param A 待排序数组
+ * @param n 待排序数组长度
+ * @return 排好序数组
+ */
+public static int[] radixSort(int[] A, int n) {
+    if (n &lt; 2) {
+        return A;
+    }
+
+    // 1.先找出最大位数
+    int maxBit = findMaxBit(A, n);
+    int radix = 1;
+    int i;
+    int j;
+
+    // 临时数组和计数数组，计数数组是十进制的
+    int[] temp = new int[n];
+    int[] count = new int[10];
+
+    // 2.根据位数，进行从低位到高位的循环
+    for (i = 1; i &lt;= maxBit; i++) {
+        // 将技术数组重新初始化为0
+        for (j = 0; j &lt; 10; j++) {
+            count[j] = 0;
+        }
+        // 将待排序数的尾缀数字0-9出现频率放进计数数组
+        for (j = 0; j &lt; n; j++) {
+            int k = (A[j] / radix) % 10;
+            count[k]++;
+        }
+
+        // 求计数和，也就是所有数字的理论位置
+        for (j = 1; j &lt; 10; j++) {
+            count[j] = count[j - 1] + count[j];
+        }
+
+        // 根据数字的实际位置来存放到临时数组
+        for (j = n - 1; j &gt;= 0; j--) {
+            int k = (A[j] / radix) % 10;
+            temp[--count[k]] = A[j];
+        }
+
+        // 将排好序的数字返回给原数组
+        for (j = 0; j &lt; n; j++) {
+            A[j] = temp[j];
+        }
+
+        // 进位
+        radix *= 10;
+    }
+
+    return A;
+}
+
+private static int findMaxBit(int[] A, int n) {
+    int max = A[0];
+    int d = 1;
+    // 先找最大值
+    for (int i = 0; i &lt; n; i++) {
+        if (A[i] &gt; max) {
+            max = A[i];
+        }
+    }
+
+    while (max &gt;= 10) {
+        max /= 10;
+        d++;
+    }
+
+    return d;
+}
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj4hv09sc0003usu9tdm6j7w2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序/" data-id="cj5tei0460000d0u9f8hiejtf" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li></ul>
@@ -871,7 +1414,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/27/查找算法/" data-id="cj4hv09sc0004usu9pg2kcdkg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/27/查找算法/" data-id="cj5tei0460003d0u9be2gyrz1" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -945,7 +1488,7 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj4hv09rg0000usu93b4j9fo4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj5tei04m0008d0u9zkcmcaym" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li></ul>
@@ -1324,7 +1867,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj4hv09sr0007usu9vpro8xxe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj5tei0460004d0u9ejb3duan" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
@@ -1346,7 +1889,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
@@ -1356,7 +1899,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/堆排序-数据结构与算法-完全二叉树/" style="font-size: 10px;">堆排序 数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
@@ -1367,7 +1910,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
     </div>
   </div>
 
@@ -1375,12 +1918,16 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/06/28/排序/">排序</a>
+            <a href="/2017/07/07/经典排序算法有关笔试题/">经典排序算法有关笔试题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/28/排序/">比较排序算法</a>
           </li>
         
           <li>
@@ -1408,7 +1955,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
