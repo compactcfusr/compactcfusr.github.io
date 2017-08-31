@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>DreamWu&#39;s Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title: 疑难算法之动态规划date: 2017-08-21 20:08:43 tags:#引出动态规划问题在这里，我们使用一个硬币找零问题引出动态规划问题。 问题描述：给定一组硬币数，找出一组有多少种组合，来找换零钱N。 比如，可用来找零的硬币为: 1、3、4   待找的钱数为 6。用两个面值为3的硬币找零，最少硬币数为2。而不是 4，1，1 思路解析：本题十分经典，可以使用逐步递进的思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DreamWu&#39;s Archive">
+<meta property="og:url" content="http://yoursite.com/2017/08/21/疑难算法之动态规划/index.html">
+<meta property="og:site_name" content="DreamWu&#39;s Archive">
+<meta property="og:description" content="title: 疑难算法之动态规划date: 2017-08-21 20:08:43 tags:#引出动态规划问题在这里，我们使用一个硬币找零问题引出动态规划问题。 问题描述：给定一组硬币数，找出一组有多少种组合，来找换零钱N。 比如，可用来找零的硬币为: 1、3、4   待找的钱数为 6。用两个面值为3的硬币找零，最少硬币数为2。而不是 4，1，1 思路解析：本题十分经典，可以使用逐步递进的思路">
+<meta property="og:updated_time" content="2017-08-28T08:59:46.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DreamWu&#39;s Archive">
+<meta name="twitter:description" content="title: 疑难算法之动态规划date: 2017-08-21 20:08:43 tags:#引出动态规划问题在这里，我们使用一个硬币找零问题引出动态规划问题。 问题描述：给定一组硬币数，找出一组有多少种组合，来找换零钱N。 比如，可用来找零的硬币为: 1、3、4   待找的钱数为 6。用两个面值为3的硬币找零，最少硬币数为2。而不是 4，1，1 思路解析：本题十分经典，可以使用逐步递进的思路">
+  
+    <link rel="alternate" href="/atom.xml" title="DreamWu&#39;s Archive" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DreamWu&#39;s Archive</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">吴的档案馆</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-疑难算法之动态规划" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/21/疑难算法之动态规划/" class="article-date">
+  <time datetime="2017-08-21T12:08:43.064Z" itemprop="datePublished">2017-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: 疑难算法之动态规划<br>date: 2017-08-21 20:08:43</p>
+<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>#引出动态规划问题<br>在这里，我们使用一个硬币找零问题引出动态规划问题。</p>
+<p>问题描述：<br>给定一组硬币数，找出一组有多少种组合，来找换零钱N。</p>
+<p>比如，可用来找零的硬币为: 1、3、4   待找的钱数为 6。用两个面值为3的硬币找零，最少硬币数为2。而不是 4，1，1</p>
+<p>思路解析：<br>本题十分经典，可以使用逐步递进的思路，来一步一步地改进自己的解法：从<br>暴力搜索法—&gt;记忆搜索法—&gt;动态规划法—&gt;状态继续简化之后的动态规划法<br>，并且可以从其中了解到思考出动态规划方法的过程。</p>
+<h2 id="1-暴力搜索法"><a href="#1-暴力搜索法" class="headerlink" title="1. 暴力搜索法"></a>1. 暴力搜索法</h2><p>arr = {5、10、25、1} ， aim = 1000</p>
+<ol>
+<li>用0张5元货币，让{10、25、1}组成剩下的1000元，最终方法记为—res1</li>
+<li>用1张5元货币，让{10、25、1}组成剩下的995元，最终方法记为—res2</li>
+<li>用2张5元货币，让{10、25、1}组成剩下的990元，最终方法记为—res3<br>….<br>201.用200张5元货币，让{10、25、1}组成剩下的0元，最终方法记为—res201</li>
+</ol>
+<p>所以，最终结果res = res1 + res2 + res3 + … + res201 (累加即是结果)</p>
+<p>定义递归函数：int p1(arr, index, aim)它的含义是用arr[index … N-1]这些面值的钱组成剩下的aim时，所有的方法数，采用递归地方式进行计算，可能对时间复杂度不太友好。</p>
+<p>代码：</p>
+<pre><code>// 暴力搜索
+public int coins1(int[] arr, int aim) {
+    if (arr == null || arr.length == 0 || aim &lt; 0) {
+        return 0;
+    }
+    return process1(arr, 0, aim);
+}
+
+private int process1(int[] arr, int index, int aim) {
+    int res = 0;
+    if (index == arr.length) {
+        res =  aim == 0 ? 1 : 0;
+    } else {
+        for (int i = 0; i * arr[index] &lt;= aim; i++) {
+            res += process1(arr, index + 1, aim - i * arr[index]);
+        }
+    }
+    return res;
+}
+</code></pre><h2 id="2-记忆搜索方法"><a href="#2-记忆搜索方法" class="headerlink" title="2. 记忆搜索方法"></a>2. 记忆搜索方法</h2><p>上面的暴力搜索会有大量重复的计算过程。比如说：当选择0张5元，1张10元，那么接下来的剩余解法过程，与2张5元，0张10元，的剩余的解法数量，是一样，但是暴力搜索不会理解，它会重复进行计算。这样冗余的计算大量存在，使得暴力搜索时间复杂度极高。</p>
+<p>为了优化这一过程，我们可以采用记忆搜索法，使用一个哈希表（数组或者Map）组将计算过的数据进行保存。<br>将递归股构成中变化的部门总结出来，然后进行递归，p(index, aim)。</p>
+<ol>
+<li>每计算完一个p(index, aim)，都将结果放入map中，index和aim组成共同的key，返回结果作为value。</li>
+<li>要进入一个递归过程p(index, aim)，先以index和aim注册的key在map中查询是否已经存在value，如果存在value，则直接取值，如果不存在，才进行递归。</li>
+</ol>
+<p>代码：</p>
+<pre><code>// 记忆搜索
+public int coins2(int[] arr, int aim) {
+    if (arr == null || arr.length == 0 || aim &lt; 0) {
+        return 0;
+    }
+
+    int[][] map = new int[arr.length + 1][aim + 1];
+    return process2(arr, 0, aim, map);
+}
+
+private int process2(int[] arr, int index, int aim, int[][] map) {
+    int res = 0;
+    if (index == arr.length) {
+        res =  aim == 0 ? 1 : 0;
+    } else {
+        int mapValue = 0;
+        for (int i = 0; i * arr[index] &lt;= aim; i++) {
+            mapValue = map[index + 1][aim - i * arr[index]];
+            if (mapValue != 0) {
+                res += mapValue == - 1 ? 0 : mapValue;
+            } else {
+                res += process2(arr, index + 1, aim - i * arr[index], map);
+            }
+        }
+        // 每次计算完，将计算结果存入上一位相应位置，进行保存结果， -1代表没有这种解法
+        map[index][aim] = res == 0 ? - 1 : res;
+    }
+    return res;
+}
+</code></pre><h2 id="3-经典动态规划"><a href="#3-经典动态规划" class="headerlink" title="3. 经典动态规划"></a>3. 经典动态规划</h2><p>如果arr长度为N，生成行数为N，列数为aim + 1的矩阵dp[i][j]的含义就是在使用arr[0…i]货币的情况下，组成钱数有多少种方法。</p>
+<p>（Pic Here）</p>
+<p>其实：</p>
+<ol>
+<li>记忆化搜索法就是某种形态的动态规划法 </li>
+<li>记忆化搜索法不关心到达某个递归过程的路径，而只是单纯地对计算过的递归规程进行记录，避免重复地递归过程。</li>
+<li>动态规划的方法是规定好每一个递归过程的计算顺序，依次进行计算，后面的计算严格依赖前面的计算过程。</li>
+<li>两者都是空间换时间的方法，也都是枚举的过程，区别就是动态规划规定了计算顺序。</li>
+</ol>
+<p>dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]  </p>
+<p>什么是动态规划？</p>
+<ol>
+<li>其本质就是申请空间记录每一个暴力搜索的结果，下次要用结果的时候直接使用，而不再重复地递归</li>
+<li>动态规划规定每一种递归状态的计算顺序，依次进行顺序</li>
+<li>动态规划相比记忆搜索法有计算顺序，这样就有了进一步优化的可能性</li>
+</ol>
+<p>这里的这里可有优化为：</p>
+<p>dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]   = dp[i - 1][j] +  （dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]） = dp[i - 1][j] + dp[i][j - arr[i]]</p>
+<p>以后遇到暴力递归问题思路：</p>
+<ol>
+<li>实现暴力递归方法</li>
+<li>在暴力递归方法中找到递归过程</li>
+<li>找到递归过程的参数之后，记忆化搜索方法很好找到</li>
+<li>通过分析记忆化搜索的依赖路径，进而实现动态规划</li>
+<li>通过记忆化搜索改出动态规划，进而看看能否进行化简，如果能化简，还能实现时间复杂度更低的动态规划方法。</li>
+</ol>
+<p>这里优化过后的实现代码如下：</p>
+<pre><code>// 刚优化的动态规划
+public int countWays(int[] penny, int n, int aim) {
+    if (penny == null || n == 0 || aim &lt;= 0) {
+        return 0;
+    }
+    // 使用dp
+    int[][] dp = new int[n][aim + 1];
+
+    // 将第一行的值设置出来。后面的值就好求算了，dp[i][j]代表了当使用i + 1种货币时，
+    // 表示j元钱的所有情况：
+    // 1. 如果j小于当前面额的时候，那么只能用除了第i + 1外的所有货币表示j元，值为dp[i - 1][j]
+    // 2. 如果j大于当前面额的penny[i]时，那么可以用除了第i + 1外的所有货币表示j元，
+    //    也可以使用1张penny[i]，然后剩余的j-penny[i]就由剩余i中货币表示；也可以使用2张penn          //    y[i]，然后剩余的j-penny[i]就由剩余i种货币表示；...（一直到到j-k*penny[i]位置结束）
+    //    根据我们的定义，dp[i-1][j-1*penny[i]] + dp[i - 1][j-2*penny[i]]+... =   
+    //    dp[i][j-penny[i]]
+    // 综上所述，动态规划转移方程： dp[i][j] = dp[i - 1][j] + j &lt; penny[i] ？ 0 ：
+    //                              dp[i][j-penny[i]];
+    for (int i = 0; i &lt; aim + 1; i++) {
+        if (i % penny[0] == 0) {
+            dp[0][i] = 1;
+        }
+    }
+
+    // 从第一行开始，执行严格的计算顺序
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 0; j &lt; aim + 1; j++) {
+            if (j &lt; penny[i]) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - penny[i]];
+            }
+        }
+    }
+
+    return dp[n - 1][aim];
+}
+</code></pre><p>对代码进行优化：<br>    // 最终版动态规划<br>    // 综上所述，动态规划转移方程： dp[i][j] = dp[i - 1][j] + j &lt; penny[i] ？ 0 ：<br>    //                              dp[i][j-penny[i]];<br>    // 这里使用顺序遍历，第i次遍历的数组dp[j-penny[i]]是第i次得出的结果,所以也是没有问题的<br>    public int countWays1(int[] penny, int n, int aim) {<br>        if (penny == null || n == 0 || aim &lt;= 0) {<br>            return 0;<br>        }<br>        // 使用dp<br>        int[] dp = new int[aim + 1];</p>
+<pre><code>    for (int i = 0; i &lt; aim + 1; i++) {
+        if (i % penny[0] == 0) {
+            dp[i] = 1;
+        }
+    }
+
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 0; j &lt; aim + 1; j++) {
+            if (j &gt; penny[i]) {
+                dp[j] += dp[j - penny[i]];
+            }
+        }
+    }
+
+    return dp[aim];
+}
+</code></pre><p>动态规划关键点：</p>
+<ol>
+<li>最优化原理。</li>
+<li>无后效性。</li>
+<li>子问题的重叠性（解决冗余）</li>
+</ol>
+<p>注释：每次在动态规划中都需要初始化一些显而易见的值，比如说零钱问题里面的</p>
+<hr>
+<p> 下面是一些经典问题：</p>
+<h2 id="1-矩阵最小路径问题"><a href="#1-矩阵最小路径问题" class="headerlink" title="1.矩阵最小路径问题"></a>1.矩阵最小路径问题</h2><blockquote>
+<p> 题目：有一个矩阵map，它每个格子有一个权值。从左上角的格子开始每次只能向右或者向下走，最后到达右下角的位置，路径上所有的数字累加起来就是路径和，返回所有的路径中最小的路径和。</p>
+<p>给定一个矩阵map及它的行数n和列数m，请返回最小路径和。保证行列数均小于等于100.</p>
+<p>测试样例： [[1,2,3],[1,1,1]],2,3<br>返回：4</p>
+</blockquote>
+<p>思路：dp[i][j]代表到达第i行第j列时的的路径总和，因为每次只能往下走或者往右走，所以非第一行或者第一列递推公式为： dp[i][j] = max{dp[i - 1][j] , dp[i][j - 1]} + map[i][j];</p>
+<p>代码如下：</p>
+<pre><code>public class MinimumPath {
+public int getMin(int[][] map, int n, int m) {
+    // write code here
+    // 使用dp，dp[i][j]代表到达第i行第j列时的的路径总和
+    int[][] dp = new int[n][m];
+
+    dp[0][0] = map[0][0];
+    // 先初始化
+    for (int i = 1; i &lt; n; i++) {
+        dp[i][0] = dp[i - 1][0] + map[i][0];
+    }
+    for (int i = 1; i &lt; m; i++) {
+        dp[0][i] = dp[0][i - 1] + map[0][i];
+    }
+
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 1; j &lt; m; j++) {
+            dp[i][j] = dp[i - 1][j] &lt; dp[i][j - 1] ? 
+                    dp[i -1][j] + map[i][j] : dp[i][j - 1] + map[i][j];
+        }
+    }
+
+    return dp[n - 1][m - 1];
+}
+}
+</code></pre><hr>
+<h2 id="2-经典问题（最长递增子序列—LIS）"><a href="#2-经典问题（最长递增子序列—LIS）" class="headerlink" title="2.经典问题（最长递增子序列—LIS）"></a>2.经典问题（最长递增子序列—LIS）</h2><blockquote>
+<p>问题:这是一个经典的LIS(即最长上升子序列)问题，请设计一个尽量优的解法求出序列的最长上升子序列的长度。</p>
+<p>给定一个序列A及它的长度n(长度小于等于500)，请返回LIS的长度。</p>
+<p>测试样例： [1,4,2,5,3],5<br>返回：3</p>
+</blockquote>
+<p>思路：使用一个状态数组dp[n]来盛放遍历到位置i时的LIS的值，对i的每一次循环维护一个<br>      max = 0值，状态转移方程式：dp[i] = A[i] &gt; A[j] ? max{dp[j], max} + 1 : max + 1;<br>      然后从dp[i]中找出最大的值即为结果</p>
+<p>代码：</p>
+<pre><code>public class LongestIncreasingSubsequence {
+    public static int getLIS(int[] A, int n) {
+        // write code here
+        // 代表在i处的最长上升子序列
+        int[] dp = new int[n];
+        dp[0] = 1;
+
+        int res = Integer.MIN_VALUE;
+        for (int i = 1; i &lt; n; i++) {
+            int max = 0;
+            for (int j = 0; j &lt; i; j++) {
+                if (A[j] &lt; A[i]) {
+                    max = max &gt; dp[j] ? max : dp[j];
+                }
+            }
+            dp[i] = max + 1;
+            res = res &gt; dp[i] ? res : dp[i];
+        }
+
+        return res;
+    }
+}
+</code></pre><hr>
+<h2 id="3-经典问题（最长公共子序列—LIS）"><a href="#3-经典问题（最长公共子序列—LIS）" class="headerlink" title="3.经典问题（最长公共子序列—LIS）"></a>3.经典问题（最长公共子序列—LIS）</h2><blockquote>
+<p>问题：给定两个字符串A和B，返回两个字符串的最长公共子序列的长度。</p>
+<p> 例如，A=”1A2C3D4B56”，B=”B1D23CA45B6A”，”123456”或者”12C4B6”都是最长公共子序列。</p>
+<p> 给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。</p>
+<p> 保证两串长度均小于等于300。</p>
+<p> 测试样例：  “1A2C3D4B56”,10,”B1D23CA45B6A”,12</p>
+<p> 返回：6</p>
+</blockquote>
+<p>思路：构造一个二维数组dp[n][m]，dp[i][j]代表字符串A的0…i-1，匹配字符串B的0…j-1时的最长公共子<br>      序列，对于dp[i][j]，最长公共子序列只有三种情况：</p>
+<pre><code>1. 字符串A的0...i-2与B的0...j-1的最长公共子串（字符串A的位置i-1与B的位置j-1字符不相等）
+2. 字符串A的0...i-1与B的0...j-2的最长公共子串（字符串A的位置i-1与B的位置j-1字符不相等）
+3. 字符串A的位置i-1与B的位置j-1字符相等，等于A的0...i-2与B的0...j-2的最长公共子串加一
+</code></pre><p>注释：这里构造第一行和第一列的时候需要注意，当第一次出现字符相等得时候，之后的最长公共子序列就不用判断，直接赋值1。</p>
+<p>代码：</p>
+<pre><code>public class LCS {
+    public static void main(String[] args) {
+        String a = &quot;1A2C3D4B56&quot;;
+        String b = &quot;B1D23CA45B6A&quot;;
+        System.out.println(findLCS(a, a.length(), b, b.length()));
+    }
+
+    public static int findLCS(String A, int n, String B, int m) {
+        int[][] dp = new int[n][m];
+
+        boolean flag = false;
+        for (int i = 0; i &lt; n; i++) {
+            if (!flag) {
+                if (A.charAt(i) == B.charAt(0)) {
+                    dp[i][0] = 1;
+                    flag = true;
+                }
+            } else {
+                dp[i][0] = 1;
+            }
+        }
+
+        flag = false;
+        for (int i = 0; i &lt; m; i++) {
+            if (!flag) {
+                if (B.charAt(i) == A.charAt(0)) {
+                    dp[0][i] = 1;
+                    flag = true;
+                }
+            } else {
+                dp[0][i] = 1;
+            }
+        }
+
+
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 1; j &lt; m; j++) {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                if (A.charAt(i) == B.charAt(j)) {
+                    dp[i][j] = Math.max(dp[i - 1][j - 1] + 1, dp[i][j]);
+                }
+            }
+        }
+        return dp[n - 1][m - 1];
+    }
+}
+</code></pre><hr>
+<h2 id="4-经典问题（0-1背包）"><a href="#4-经典问题（0-1背包）" class="headerlink" title="4.经典问题（0-1背包）"></a>4.经典问题（0-1背包）</h2><blockquote>
+<p>问题：一个背包有一定的承重cap，有N件物品，每件都有自己的价值，记录在数组v中，也都有自己的重量，记录在数组w中，每件物品只能选择要装入背包还是不装入背包，要求在不超过背包承重的前提下，选出物品的总价值最大。</p>
+<p>给定物品的重量w价值v及物品数n和承重cap。请返回最大总价值。</p>
+<p>测试样例： [1,2,3],[1,2,3],3,6<br>返回：6</p>
+</blockquote>
+<p>思路：根据递归公式：创建一个二维数组dp[n][cap+1]，dp[i][j]代表当0…i-1 + 1件物品被选择<br>      放在一个承重为j的背包中，最大价值0…cap，那么对于dp[i][j]，有多种情况：<br>      1.对于一个背包承重的重量不足以存放第i个物品，即为j &lt; w[i]，那么就用剩余的0 .. i-1来完成背包<br>      2.对于一个背包承重的重量足以存放第i个物品，即为j &gt; w[i]，那么就从两种情况里面取最大值：</p>
+<pre><code>    - 剩余的0 .. i-1来完成背包的重量，此时的总价值
+    - 放下w[i]之后，在把剩余的j-w[i]用来0 .. i-1来完成背包剩余的重量，此时的总价值。
+状态转移方程： dp[i][j] = j &gt; w[i] ? max(dp[i-1][j-w[i]] + v[i], dp[i-1][j]) : dp[i-1][j];
+</code></pre><p>代码：</p>
+<pre><code>public class Backpack {
+    public static int maxValue(int[] w, int[] v, int n, int cap) {
+    int[][] dp = new int[n][cap + 1];
+    // 初始化第一列，dp[i][0]，代表选择总质量为0的时候，选择的物品总价值
+    // 初始化第一行，dp[0][i]，代表选择第1件物品时，总重量为y的时候，选择物品最大价值
+    for (int i = 0; i &lt; cap + 1; i++) {
+        if (i &gt;= w[0]) {
+            dp[0][i] = v[0];
+        }
+    }
+
+    // dp数组初始化，当i==0或者j==0时，结果为0
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 1; j &lt;= cap; j++) {
+            if (w[i] &gt; j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j - w[i]] + v[i], dp[i - 1][j]);
+            }
+        }
+
+    }
+    return dp[n - 1][cap];
+}
+</code></pre><p>优化：动态规划的思路就是用空间换时间。但是有时候经典动态规划的空间复杂度可以优化。<br>      相比记忆搜索法，这是动态规划严格按照步骤来递推的好处。<br>      在此我们观察到：</p>
+<pre><code>  1. 每一轮的第i个行的值一定来自第i-1行第j列当前位置dp[i - 1][j]
+  和前面的值(dp[i - 1][j - w[i]])的，那么我们可以每一轮从尾到头(cap...0)依次进行计算，
+  2. 这样保证了每次dp[i][j]的整行的候选值都是上一轮dp[i-1][]的候选值，那么数组空间直接去掉行
+  优化的算法如下：
+
+public class Backpack {
+    public static int maxValue(int[] w, int[] v, int n, int cap) {
+        // write code here
+
+        int[] dp = new int[cap + 1];
+
+        dp[0] = 0;
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = cap; j &gt;= w[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - w[i]] + v[i]);
+            }
+        }
+
+        return dp[cap];
+    }
+}
+</code></pre><h2 id="总结：1-动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2-动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。"><a href="#总结：1-动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2-动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。" class="headerlink" title="总结：1. 动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2.动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。"></a>总结：1. 动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2.动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/21/疑难算法之动态规划/" data-id="cj6zrtpmg000da8u9i1xootfl" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/07/快速排序算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/堆排序-数据结构与算法-完全二叉树/" style="font-size: 10px;">堆排序 数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/08/21/疑难算法之动态规划/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/07/快速排序算法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/28/排序算法/">比较排序算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/04/堆排序/">堆排序</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/27/子网分配算法/">子网分配算法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Dream Wu<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

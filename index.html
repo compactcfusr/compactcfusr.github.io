@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -68,33 +68,984 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-经典排序算法有关笔试题" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-疑难算法之动态规划" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/07/经典排序算法有关笔试题/" class="article-date">
-  <time datetime="2017-07-07T01:52:16.000Z" itemprop="datePublished">2017-07-07</time>
+    <a href="/2017/08/21/疑难算法之动态规划/" class="article-date">
+  <time datetime="2017-08-21T12:08:43.064Z" itemprop="datePublished">2017-08-21</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/07/经典排序算法有关笔试题/">经典排序算法有关笔试题</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <hr>
+<p>title: 疑难算法之动态规划<br>date: 2017-08-21 20:08:43</p>
+<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>#引出动态规划问题<br>在这里，我们使用一个硬币找零问题引出动态规划问题。</p>
+<p>问题描述：<br>给定一组硬币数，找出一组有多少种组合，来找换零钱N。</p>
+<p>比如，可用来找零的硬币为: 1、3、4   待找的钱数为 6。用两个面值为3的硬币找零，最少硬币数为2。而不是 4，1，1</p>
+<p>思路解析：<br>本题十分经典，可以使用逐步递进的思路，来一步一步地改进自己的解法：从<br>暴力搜索法—&gt;记忆搜索法—&gt;动态规划法—&gt;状态继续简化之后的动态规划法<br>，并且可以从其中了解到思考出动态规划方法的过程。</p>
+<h2 id="1-暴力搜索法"><a href="#1-暴力搜索法" class="headerlink" title="1. 暴力搜索法"></a>1. 暴力搜索法</h2><p>arr = {5、10、25、1} ， aim = 1000</p>
+<ol>
+<li>用0张5元货币，让{10、25、1}组成剩下的1000元，最终方法记为—res1</li>
+<li>用1张5元货币，让{10、25、1}组成剩下的995元，最终方法记为—res2</li>
+<li>用2张5元货币，让{10、25、1}组成剩下的990元，最终方法记为—res3<br>….<br>201.用200张5元货币，让{10、25、1}组成剩下的0元，最终方法记为—res201</li>
+</ol>
+<p>所以，最终结果res = res1 + res2 + res3 + … + res201 (累加即是结果)</p>
+<p>定义递归函数：int p1(arr, index, aim)它的含义是用arr[index … N-1]这些面值的钱组成剩下的aim时，所有的方法数，采用递归地方式进行计算，可能对时间复杂度不太友好。</p>
+<p>代码：</p>
+<pre><code>// 暴力搜索
+public int coins1(int[] arr, int aim) {
+    if (arr == null || arr.length == 0 || aim &lt; 0) {
+        return 0;
+    }
+    return process1(arr, 0, aim);
+}
+
+private int process1(int[] arr, int index, int aim) {
+    int res = 0;
+    if (index == arr.length) {
+        res =  aim == 0 ? 1 : 0;
+    } else {
+        for (int i = 0; i * arr[index] &lt;= aim; i++) {
+            res += process1(arr, index + 1, aim - i * arr[index]);
+        }
+    }
+    return res;
+}
+</code></pre><h2 id="2-记忆搜索方法"><a href="#2-记忆搜索方法" class="headerlink" title="2. 记忆搜索方法"></a>2. 记忆搜索方法</h2><p>上面的暴力搜索会有大量重复的计算过程。比如说：当选择0张5元，1张10元，那么接下来的剩余解法过程，与2张5元，0张10元，的剩余的解法数量，是一样，但是暴力搜索不会理解，它会重复进行计算。这样冗余的计算大量存在，使得暴力搜索时间复杂度极高。</p>
+<p>为了优化这一过程，我们可以采用记忆搜索法，使用一个哈希表（数组或者Map）组将计算过的数据进行保存。<br>将递归股构成中变化的部门总结出来，然后进行递归，p(index, aim)。</p>
+<ol>
+<li>每计算完一个p(index, aim)，都将结果放入map中，index和aim组成共同的key，返回结果作为value。</li>
+<li>要进入一个递归过程p(index, aim)，先以index和aim注册的key在map中查询是否已经存在value，如果存在value，则直接取值，如果不存在，才进行递归。</li>
+</ol>
+<p>代码：</p>
+<pre><code>// 记忆搜索
+public int coins2(int[] arr, int aim) {
+    if (arr == null || arr.length == 0 || aim &lt; 0) {
+        return 0;
+    }
+
+    int[][] map = new int[arr.length + 1][aim + 1];
+    return process2(arr, 0, aim, map);
+}
+
+private int process2(int[] arr, int index, int aim, int[][] map) {
+    int res = 0;
+    if (index == arr.length) {
+        res =  aim == 0 ? 1 : 0;
+    } else {
+        int mapValue = 0;
+        for (int i = 0; i * arr[index] &lt;= aim; i++) {
+            mapValue = map[index + 1][aim - i * arr[index]];
+            if (mapValue != 0) {
+                res += mapValue == - 1 ? 0 : mapValue;
+            } else {
+                res += process2(arr, index + 1, aim - i * arr[index], map);
+            }
+        }
+        // 每次计算完，将计算结果存入上一位相应位置，进行保存结果， -1代表没有这种解法
+        map[index][aim] = res == 0 ? - 1 : res;
+    }
+    return res;
+}
+</code></pre><h2 id="3-经典动态规划"><a href="#3-经典动态规划" class="headerlink" title="3. 经典动态规划"></a>3. 经典动态规划</h2><p>如果arr长度为N，生成行数为N，列数为aim + 1的矩阵dp[i][j]的含义就是在使用arr[0…i]货币的情况下，组成钱数有多少种方法。</p>
+<p>（Pic Here）</p>
+<p>其实：</p>
+<ol>
+<li>记忆化搜索法就是某种形态的动态规划法 </li>
+<li>记忆化搜索法不关心到达某个递归过程的路径，而只是单纯地对计算过的递归规程进行记录，避免重复地递归过程。</li>
+<li>动态规划的方法是规定好每一个递归过程的计算顺序，依次进行计算，后面的计算严格依赖前面的计算过程。</li>
+<li>两者都是空间换时间的方法，也都是枚举的过程，区别就是动态规划规定了计算顺序。</li>
+</ol>
+<p>dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]  </p>
+<p>什么是动态规划？</p>
+<ol>
+<li>其本质就是申请空间记录每一个暴力搜索的结果，下次要用结果的时候直接使用，而不再重复地递归</li>
+<li>动态规划规定每一种递归状态的计算顺序，依次进行顺序</li>
+<li>动态规划相比记忆搜索法有计算顺序，这样就有了进一步优化的可能性</li>
+</ol>
+<p>这里的这里可有优化为：</p>
+<p>dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]   = dp[i - 1][j] +  （dp[i - 1][j - 1 <em> arr[i]] + dp[i - 1][j - 2 </em> arr[i]]  + … + dp[i - 1][0]） = dp[i - 1][j] + dp[i][j - arr[i]]</p>
+<p>以后遇到暴力递归问题思路：</p>
+<ol>
+<li>实现暴力递归方法</li>
+<li>在暴力递归方法中找到递归过程</li>
+<li>找到递归过程的参数之后，记忆化搜索方法很好找到</li>
+<li>通过分析记忆化搜索的依赖路径，进而实现动态规划</li>
+<li>通过记忆化搜索改出动态规划，进而看看能否进行化简，如果能化简，还能实现时间复杂度更低的动态规划方法。</li>
+</ol>
+<p>这里优化过后的实现代码如下：</p>
+<pre><code>// 刚优化的动态规划
+public int countWays(int[] penny, int n, int aim) {
+    if (penny == null || n == 0 || aim &lt;= 0) {
+        return 0;
+    }
+    // 使用dp
+    int[][] dp = new int[n][aim + 1];
+
+    // 将第一行的值设置出来。后面的值就好求算了，dp[i][j]代表了当使用i + 1种货币时，
+    // 表示j元钱的所有情况：
+    // 1. 如果j小于当前面额的时候，那么只能用除了第i + 1外的所有货币表示j元，值为dp[i - 1][j]
+    // 2. 如果j大于当前面额的penny[i]时，那么可以用除了第i + 1外的所有货币表示j元，
+    //    也可以使用1张penny[i]，然后剩余的j-penny[i]就由剩余i中货币表示；也可以使用2张penn          //    y[i]，然后剩余的j-penny[i]就由剩余i种货币表示；...（一直到到j-k*penny[i]位置结束）
+    //    根据我们的定义，dp[i-1][j-1*penny[i]] + dp[i - 1][j-2*penny[i]]+... =   
+    //    dp[i][j-penny[i]]
+    // 综上所述，动态规划转移方程： dp[i][j] = dp[i - 1][j] + j &lt; penny[i] ？ 0 ：
+    //                              dp[i][j-penny[i]];
+    for (int i = 0; i &lt; aim + 1; i++) {
+        if (i % penny[0] == 0) {
+            dp[0][i] = 1;
+        }
+    }
+
+    // 从第一行开始，执行严格的计算顺序
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 0; j &lt; aim + 1; j++) {
+            if (j &lt; penny[i]) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - penny[i]];
+            }
+        }
+    }
+
+    return dp[n - 1][aim];
+}
+</code></pre><p>对代码进行优化：<br>    // 最终版动态规划<br>    // 综上所述，动态规划转移方程： dp[i][j] = dp[i - 1][j] + j &lt; penny[i] ？ 0 ：<br>    //                              dp[i][j-penny[i]];<br>    // 这里使用顺序遍历，第i次遍历的数组dp[j-penny[i]]是第i次得出的结果,所以也是没有问题的<br>    public int countWays1(int[] penny, int n, int aim) {<br>        if (penny == null || n == 0 || aim &lt;= 0) {<br>            return 0;<br>        }<br>        // 使用dp<br>        int[] dp = new int[aim + 1];</p>
+<pre><code>    for (int i = 0; i &lt; aim + 1; i++) {
+        if (i % penny[0] == 0) {
+            dp[i] = 1;
+        }
+    }
+
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 0; j &lt; aim + 1; j++) {
+            if (j &gt; penny[i]) {
+                dp[j] += dp[j - penny[i]];
+            }
+        }
+    }
+
+    return dp[aim];
+}
+</code></pre><p>动态规划关键点：</p>
+<ol>
+<li>最优化原理。</li>
+<li>无后效性。</li>
+<li>子问题的重叠性（解决冗余）</li>
+</ol>
+<p>注释：每次在动态规划中都需要初始化一些显而易见的值，比如说零钱问题里面的</p>
+<hr>
+<p> 下面是一些经典问题：</p>
+<h2 id="1-矩阵最小路径问题"><a href="#1-矩阵最小路径问题" class="headerlink" title="1.矩阵最小路径问题"></a>1.矩阵最小路径问题</h2><blockquote>
+<p> 题目：有一个矩阵map，它每个格子有一个权值。从左上角的格子开始每次只能向右或者向下走，最后到达右下角的位置，路径上所有的数字累加起来就是路径和，返回所有的路径中最小的路径和。</p>
+<p>给定一个矩阵map及它的行数n和列数m，请返回最小路径和。保证行列数均小于等于100.</p>
+<p>测试样例： [[1,2,3],[1,1,1]],2,3<br>返回：4</p>
+</blockquote>
+<p>思路：dp[i][j]代表到达第i行第j列时的的路径总和，因为每次只能往下走或者往右走，所以非第一行或者第一列递推公式为： dp[i][j] = max{dp[i - 1][j] , dp[i][j - 1]} + map[i][j];</p>
+<p>代码如下：</p>
+<pre><code>public class MinimumPath {
+public int getMin(int[][] map, int n, int m) {
+    // write code here
+    // 使用dp，dp[i][j]代表到达第i行第j列时的的路径总和
+    int[][] dp = new int[n][m];
+
+    dp[0][0] = map[0][0];
+    // 先初始化
+    for (int i = 1; i &lt; n; i++) {
+        dp[i][0] = dp[i - 1][0] + map[i][0];
+    }
+    for (int i = 1; i &lt; m; i++) {
+        dp[0][i] = dp[0][i - 1] + map[0][i];
+    }
+
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 1; j &lt; m; j++) {
+            dp[i][j] = dp[i - 1][j] &lt; dp[i][j - 1] ? 
+                    dp[i -1][j] + map[i][j] : dp[i][j - 1] + map[i][j];
+        }
+    }
+
+    return dp[n - 1][m - 1];
+}
+}
+</code></pre><hr>
+<h2 id="2-经典问题（最长递增子序列—LIS）"><a href="#2-经典问题（最长递增子序列—LIS）" class="headerlink" title="2.经典问题（最长递增子序列—LIS）"></a>2.经典问题（最长递增子序列—LIS）</h2><blockquote>
+<p>问题:这是一个经典的LIS(即最长上升子序列)问题，请设计一个尽量优的解法求出序列的最长上升子序列的长度。</p>
+<p>给定一个序列A及它的长度n(长度小于等于500)，请返回LIS的长度。</p>
+<p>测试样例： [1,4,2,5,3],5<br>返回：3</p>
+</blockquote>
+<p>思路：使用一个状态数组dp[n]来盛放遍历到位置i时的LIS的值，对i的每一次循环维护一个<br>      max = 0值，状态转移方程式：dp[i] = A[i] &gt; A[j] ? max{dp[j], max} + 1 : max + 1;<br>      然后从dp[i]中找出最大的值即为结果</p>
+<p>代码：</p>
+<pre><code>public class LongestIncreasingSubsequence {
+    public static int getLIS(int[] A, int n) {
+        // write code here
+        // 代表在i处的最长上升子序列
+        int[] dp = new int[n];
+        dp[0] = 1;
+
+        int res = Integer.MIN_VALUE;
+        for (int i = 1; i &lt; n; i++) {
+            int max = 0;
+            for (int j = 0; j &lt; i; j++) {
+                if (A[j] &lt; A[i]) {
+                    max = max &gt; dp[j] ? max : dp[j];
+                }
+            }
+            dp[i] = max + 1;
+            res = res &gt; dp[i] ? res : dp[i];
+        }
+
+        return res;
+    }
+}
+</code></pre><hr>
+<h2 id="3-经典问题（最长公共子序列—LIS）"><a href="#3-经典问题（最长公共子序列—LIS）" class="headerlink" title="3.经典问题（最长公共子序列—LIS）"></a>3.经典问题（最长公共子序列—LIS）</h2><blockquote>
+<p>问题：给定两个字符串A和B，返回两个字符串的最长公共子序列的长度。</p>
+<p> 例如，A=”1A2C3D4B56”，B=”B1D23CA45B6A”，”123456”或者”12C4B6”都是最长公共子序列。</p>
+<p> 给定两个字符串A和B，同时给定两个串的长度n和m，请返回最长公共子序列的长度。</p>
+<p> 保证两串长度均小于等于300。</p>
+<p> 测试样例：  “1A2C3D4B56”,10,”B1D23CA45B6A”,12</p>
+<p> 返回：6</p>
+</blockquote>
+<p>思路：构造一个二维数组dp[n][m]，dp[i][j]代表字符串A的0…i-1，匹配字符串B的0…j-1时的最长公共子<br>      序列，对于dp[i][j]，最长公共子序列只有三种情况：</p>
+<pre><code>1. 字符串A的0...i-2与B的0...j-1的最长公共子串（字符串A的位置i-1与B的位置j-1字符不相等）
+2. 字符串A的0...i-1与B的0...j-2的最长公共子串（字符串A的位置i-1与B的位置j-1字符不相等）
+3. 字符串A的位置i-1与B的位置j-1字符相等，等于A的0...i-2与B的0...j-2的最长公共子串加一
+</code></pre><p>注释：这里构造第一行和第一列的时候需要注意，当第一次出现字符相等得时候，之后的最长公共子序列就不用判断，直接赋值1。</p>
+<p>代码：</p>
+<pre><code>public class LCS {
+    public static void main(String[] args) {
+        String a = &quot;1A2C3D4B56&quot;;
+        String b = &quot;B1D23CA45B6A&quot;;
+        System.out.println(findLCS(a, a.length(), b, b.length()));
+    }
+
+    public static int findLCS(String A, int n, String B, int m) {
+        int[][] dp = new int[n][m];
+
+        boolean flag = false;
+        for (int i = 0; i &lt; n; i++) {
+            if (!flag) {
+                if (A.charAt(i) == B.charAt(0)) {
+                    dp[i][0] = 1;
+                    flag = true;
+                }
+            } else {
+                dp[i][0] = 1;
+            }
+        }
+
+        flag = false;
+        for (int i = 0; i &lt; m; i++) {
+            if (!flag) {
+                if (B.charAt(i) == A.charAt(0)) {
+                    dp[0][i] = 1;
+                    flag = true;
+                }
+            } else {
+                dp[0][i] = 1;
+            }
+        }
+
+
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 1; j &lt; m; j++) {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                if (A.charAt(i) == B.charAt(j)) {
+                    dp[i][j] = Math.max(dp[i - 1][j - 1] + 1, dp[i][j]);
+                }
+            }
+        }
+        return dp[n - 1][m - 1];
+    }
+}
+</code></pre><hr>
+<h2 id="4-经典问题（0-1背包）"><a href="#4-经典问题（0-1背包）" class="headerlink" title="4.经典问题（0-1背包）"></a>4.经典问题（0-1背包）</h2><blockquote>
+<p>问题：一个背包有一定的承重cap，有N件物品，每件都有自己的价值，记录在数组v中，也都有自己的重量，记录在数组w中，每件物品只能选择要装入背包还是不装入背包，要求在不超过背包承重的前提下，选出物品的总价值最大。</p>
+<p>给定物品的重量w价值v及物品数n和承重cap。请返回最大总价值。</p>
+<p>测试样例： [1,2,3],[1,2,3],3,6<br>返回：6</p>
+</blockquote>
+<p>思路：根据递归公式：创建一个二维数组dp[n][cap+1]，dp[i][j]代表当0…i-1 + 1件物品被选择<br>      放在一个承重为j的背包中，最大价值0…cap，那么对于dp[i][j]，有多种情况：<br>      1.对于一个背包承重的重量不足以存放第i个物品，即为j &lt; w[i]，那么就用剩余的0 .. i-1来完成背包<br>      2.对于一个背包承重的重量足以存放第i个物品，即为j &gt; w[i]，那么就从两种情况里面取最大值：</p>
+<pre><code>    - 剩余的0 .. i-1来完成背包的重量，此时的总价值
+    - 放下w[i]之后，在把剩余的j-w[i]用来0 .. i-1来完成背包剩余的重量，此时的总价值。
+状态转移方程： dp[i][j] = j &gt; w[i] ? max(dp[i-1][j-w[i]] + v[i], dp[i-1][j]) : dp[i-1][j];
+</code></pre><p>代码：</p>
+<pre><code>public class Backpack {
+    public static int maxValue(int[] w, int[] v, int n, int cap) {
+    int[][] dp = new int[n][cap + 1];
+    // 初始化第一列，dp[i][0]，代表选择总质量为0的时候，选择的物品总价值
+    // 初始化第一行，dp[0][i]，代表选择第1件物品时，总重量为y的时候，选择物品最大价值
+    for (int i = 0; i &lt; cap + 1; i++) {
+        if (i &gt;= w[0]) {
+            dp[0][i] = v[0];
+        }
+    }
+
+    // dp数组初始化，当i==0或者j==0时，结果为0
+    for (int i = 1; i &lt; n; i++) {
+        for (int j = 1; j &lt;= cap; j++) {
+            if (w[i] &gt; j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j - w[i]] + v[i], dp[i - 1][j]);
+            }
+        }
+
+    }
+    return dp[n - 1][cap];
+}
+</code></pre><p>优化：动态规划的思路就是用空间换时间。但是有时候经典动态规划的空间复杂度可以优化。<br>      相比记忆搜索法，这是动态规划严格按照步骤来递推的好处。<br>      在此我们观察到：</p>
+<pre><code>  1. 每一轮的第i个行的值一定来自第i-1行第j列当前位置dp[i - 1][j]
+  和前面的值(dp[i - 1][j - w[i]])的，那么我们可以每一轮从尾到头(cap...0)依次进行计算，
+  2. 这样保证了每次dp[i][j]的整行的候选值都是上一轮dp[i-1][]的候选值，那么数组空间直接去掉行
+  优化的算法如下：
+
+public class Backpack {
+    public static int maxValue(int[] w, int[] v, int n, int cap) {
+        // write code here
+
+        int[] dp = new int[cap + 1];
+
+        dp[0] = 0;
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = cap; j &gt;= w[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - w[i]] + v[i]);
+            }
+        }
+
+        return dp[cap];
+    }
+}
+</code></pre><h2 id="总结：1-动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2-动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。"><a href="#总结：1-动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2-动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。" class="headerlink" title="总结：1. 动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2.动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。"></a>总结：1. 动态规划问题基本上就是对于暴力递归方法进行时间复杂度的优化，采取空间换时间的思路，但是每一步都按照指定逻辑严格执行。2.动态规划的初始化以及优化也是比较基础但是很重要的一点，每次使用动态规划时都需要注意。</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/07/经典排序算法有关笔试题/" data-id="cj5teof8w00031wu961yfa96a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/08/21/疑难算法之动态规划/" data-id="cj6zrtpmg000da8u9i1xootfl" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-快速排序算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/07/快速排序算法/" class="article-date">
+  <time datetime="2017-08-07T12:41:41.632Z" itemprop="datePublished">2017-08-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: 快速排序算法<br>date: 2017-08-07 20:41:41<br>tags: 快速排序 优化 非递归</p>
+<hr>
+<h1 id="1-传统的快速排序"><a href="#1-传统的快速排序" class="headerlink" title="1 传统的快速排序"></a>1 传统的快速排序</h1><h2 id="1-1-基本概念"><a href="#1-1-基本概念" class="headerlink" title="1.1 基本概念"></a>1.1 基本概念</h2><p><strong>前言：</strong>因为快速排序是排序算法中最为重要，泛用性极高的算法。而且变体和改进还特别多，在此我就单独成章，把它拿出来说一说。</p>
+<p><strong>定义：快速排序是对冒泡排序的改进。因为他们都是通过扩大（升序排序中）数组的一半确定小于（冒泡排序是大于）另一半，来完成排序的。</strong></p>
+<p><strong>思想：通过一趟排序实现将记录分割成独立的两部分，其中一部分记录的关键字均比另一部分记录的关键字小。则可分别对两部分记录进行排序，已达到整体有序的。</strong></p>
+<p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，第一次划分比较的次数，每一组是n/2，那么两组就是n次，而递归地次数是O([long2n]+ 1)，设时间复杂度函数为T(x)，可得推导式：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤n（2T（1） + n）+（log2n - 1）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
+<p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)。</p>
+<p>最坏情况：<br>时间复杂度：最坏情况下，序列是反序的，每次分组都是比上一次少划分一个记录的子序列，另一边则为空，这样就需要进行n-1次分组，递归树深度为n-1，每次比较了n-i次，一共比较了n*(n-1)/2次，所以时间复杂度为O(n^2)</p>
+<p>稳定性：因为不是相邻交换了，所以快速排序是不稳定的。</p>
+<p>评价：快速排序，大家说好，就是真的好。</p>
+<h2 id="1-2-代码实现"><a href="#1-2-代码实现" class="headerlink" title="1.2 代码实现"></a>1.2 代码实现</h2><p>代码实现：</p>
+<ul>
+<li>找到枢纽位置pivot是关键步骤，取低位元素作为枢纽值，进行循环分组。</li>
+<li>每一趟分组，先从高位进行分组，选出比枢纽值小的值，与枢纽原位置进行交换（枢纽值处于高位）；接着低位开始进行分组，选出比枢纽值大的元素，与枢纽值进行交换（枢纽值处于低位），一趟结束。</li>
+<li>若低位仍然小于高位，就继续循环，直到低位与高位相等，循环结束</li>
+</ul>
+<p>代码：</p>
+<pre><code>/**
+ * 快速排序。分治法的应用，先将数组根据第一个元素大小分成两边。
+ * 一边小，一边大。再对将两边的数组分别进行同样的划分。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 排好序数组
+ */
+public static int[] quick_sort(int[] array, int low, int high) {
+    int pivot;
+
+    if (low &lt; high) {
+        pivot = getPartition(array, low, high);
+        quick_sort(array, low, pivot - 1);
+        quick_sort(array, pivot + 1, high);
+    }
+
+    return array;
+}
+
+/**
+ * 分组。根据第一个元素大小分成两边的数组，一边小，一边大。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 划分好的数组
+ */
+private static int getPartition(int[] array, int low, int high) {
+    int pivot_key = array[low];
+
+    // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+
+        swap(array, low, high);
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        swap(array, low, high);
+    }
+
+    return low;
+}
+
+private static void swap(int[] array, int i, int j) {
+    if (i != j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+</code></pre><p>关键代码：</p>
+<pre><code>    if (low &lt; high) {
+        pivot = getPartition(array, low, high);
+        quick_sort(array, low, pivot - 1);
+        quick_sort(array, pivot + 1, high);
+    }
+注释：先分组，再各组递归排序
+
+ // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+
+        swap(array, low, high);
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        swap(array, low, high);
+    }
+
+注释：交替扫描    
+</code></pre><h1 id="2-改进的快速排序"><a href="#2-改进的快速排序" class="headerlink" title="2. 改进的快速排序"></a>2. 改进的快速排序</h1><h2 id="2-1-快速排序的问题"><a href="#2-1-快速排序的问题" class="headerlink" title="2.1 快速排序的问题"></a>2.1 快速排序的问题</h2><p><strong>问题:最直观的快排的问题出在它的递归实现上面，一旦数据量上去之后，而枢纽值选取不合理的话，很有可能出现线性次数的递归，然后产生爆栈（栈溢出异常）。次要问题是，在数据量太小的时候又性能一般，不如插入排序等等这些基础排序算法</strong>。</p>
+<p>以上这些内容细分可以分为四个问题，我在这里一个一个解决：</p>
+<p>1) 枢轴值选取不合理。<br>&emsp;问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>&emsp;答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
+<p>2) 递归交换的复杂度较高<br>&emsp;问：这里面的分组函数getPartition每次调用swap都会进行3次操作，能不能改成替换，只进行一次操作？<br>&emsp;答：可以。</p>
+<p>3) 性能问题（小数据样本时）<br>&emsp;问：当数组数量低于7个（资料显示）的时候，采用插入排序反而效率较高？<br>&emsp;答：博士生去小学教“1+1=2”也不见得比本科生教得好。快速排序对于基本有序，或者样本极少的数组排序的确效率不高。插入排序反而比较适合基本有序的小样本排序。</p>
+<p>4) 递归占用太多栈空间<br>&emsp;问：大家知道，递归对性能是有一定影响的，quick_sort函数在其尾部有两次递归操作。如果待排序的序列划分极端不平衡（正序或反序），递归深度将趋近于n，而不是平衡时的log2n，栈的空间是极其有限的，如何减少递归？<br>&emsp;答：解决递归地最好方法就是使用迭代。所以我们需要优化这里面不必要的递归交换。甚至直接采用非递归的方法实现快速排序。</p>
+<h2 id="2-2-快速排序的改进方案"><a href="#2-2-快速排序的改进方案" class="headerlink" title="2.2 快速排序的改进方案"></a>2.2 快速排序的改进方案</h2><p><strong>1)  枢轴值不合理解决方案</strong><br>修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
+<pre><code>/**
+ * 分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 划分好的数组
+ */
+private static int getPartition1(int[] array, int low, int high) {
+    int pivot_key;
+    // 进行三数取中
+    int mid = low + (high - low) / 2;
+    // 先确保左边是比右边小
+    if (array[low] &gt; array[high]) {
+        swap(array, low, high);
+    }
+    // 再确保中间比右边小
+    if (array[mid] &gt; array[high]) {
+        swap(array, mid, high);
+    }
+    // 最后确保左边比中间小
+    if (array[low] &gt; array[mid]) {
+        swap(array, low, mid);
+    }
+    pivot_key = array[low];
+
+    // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+
+        swap(array, low, high);
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        swap(array, low, high);
+    }
+
+    return low;
+}
+</code></pre><p><strong>2.1)递归交换的复杂度较高解决方案1</strong><br>    修改getPartition函数。交换换成替换就可以了。</p>
+<pre><code>/**
+ * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 划分好的数组
+ */
+private static int getPartition2(int[] array, int low, int high) {
+    int pivot_key;
+    // 进行三数取中
+    int mid = low + (high - low) / 2;
+    // 先确保左边是比右边小
+    if (array[low] &gt; array[high]) {
+        swap(array, low, high);
+    }
+    // 再确保中间比右边小
+    if (array[mid] &gt; array[high]) {
+        swap(array, mid, high);
+    }
+    // 最后确保左边比中间小
+    if (array[low] &gt; array[mid]) {
+        swap(array, low, mid);
+    }
+    pivot_key = array[low];
+    // 临时数字保存枢轴
+    int temp = array[low];
+    // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+        array[low] = array[high];
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+
+        array[high] = array[low];
+    }
+    array[low] = temp;
+
+    return low;
+}
+</code></pre><p><strong>2.2)递归交换的复杂度较高解决方案1（左老师方法—哨兵法）</strong><br>    或者换一种思路，设计一个小于等于枢轴值的区域，先将取出的枢轴与数组末尾进行交换，设为哨兵。然后将所有小于等于枢轴值的数字都放进区域，并将区域末尾指针相应右移，直到整个数组末尾。</p>
+<pre><code>     // 每次通过划分函数确定一个位置，然后让剩余的数组分为两边，又继续确定位置，直到所有位置都确定下来
+    public static int[] quick_sort(int[] array, int low, int high) {
+    int pivot;
+
+    // 不同于普通快排的是，此方法会将要确定位置的中枢值先置于数组尾部，成为哨兵
+    // 排序对比的时候从头部开始，每个值大小和哨兵比较，而在比较数组尾部之前，都不用移动哨兵
+    if (low &lt; high) {
+        pivot = getPartition(array, low, high);
+
+        quick_sort(array, low, pivot - 1);
+        quick_sort(array, pivot + 1, high);
+    }
+
+    return array;
+}
+
+/**
+ * 划分方法。完全按照左老师的方法来。
+ * 1.交换枢划分值和数组高位（尾部）值，让划分值成为哨兵
+ * 2.先在规定区域(high, low)的低位前一位规定一个小于等于划分值区域，初始长度为0
+ * 3.移动index指针，遇到满足条件的数，就放在小于等于划分值区域的下一位（就是交换），区域长度          增加1，直到指针走到高位
+ *
+ * 虽然较好的去划分值的方法是三数取中，但是随机数也是可以的。
+ * @param A 待排序数组
+ * @param low 低位指针
+ * @param high 高位指针
+ * @return 划分值在数组中位置以及一个划分过的数组
+ */
+private static int getPartition(int[] array, int low, int high) {
+    // 1.交换枢划分值和数组高位（尾部）值，让划分值成为哨兵
+    swap(array, low, high);
+    // 2.先在规定区域(high, low)的低位前一位规定一个小于等于划分值区域，初始长度为0
+    int smallerTail = low - 1;
+    int current = low;
+    // 3.移动index指针，遇到满足条件的数，就放在小于等于划分值区域的下一位（就是交换），区域         // 长度增加1，直到指针走到高位
+    while (current &lt;= high) {
+        if (array[current] &lt;= array[high]) {
+            swap(array, ++smallerTail, current);
+        }
+        current++;
+    }
+    return smallerTail;
+}
+</code></pre><p><strong>3)性能问题（小数据样本时）解决方案</strong><br>    修改quick_sort函数。那就加入判断，小于等于7个的时候调用插入排序，大于7个采用快速排序。</p>
+<pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
+/**
+ * 改进的快速排序。在数据较少时采用递归。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 排好序数组
+ */
+public static int[] modified_quick_sort1(int[] array, int low, int high) {
+    int pivot;
+
+    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
+        if (low &lt; high) {
+            pivot = getPartition(array, low, high);
+            quick_sort(array, low, pivot - 1);
+            quick_sort(array, pivot + 1, high);
+        }
+    } else {
+        // 调用直接插入排序
+        DirectlyInsertSort.directly_insert_sort(array);
+    }
+
+    return array;
+}
+</code></pre><p><strong>4.1) 爆栈或者内存溢出问题解决方案1</strong><br>    修改quick_sort函数。将if改成while，使用迭代，删除第二次递归，然后将之前荒废掉的low利用起来，作为指针使用。</p>
+<pre><code>/**
+ * 改进的快速排序。优化了递归。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 排好序数组
+ */
+public static int[] modified_quick_sort2(int[] array, int low, int high) {
+    int pivot;
+
+    // 将递归换成迭代，减少对栈的使用
+    while (low &lt; high) {
+        pivot = getPartition(array, low, high);
+        quick_sort(array, low, pivot - 1);
+        low = pivot + 1;
+    }
+
+    return array;
+}
+</code></pre><p> <strong>4.2) 爆栈或者内存溢出问题解决方案2</strong>：<br> 使用非递归方法即可解决。这里的非递归就是把系统函数栈换成我们自己申请的额外空间栈。实现一样的算法，具体代码如下：</p>
+<pre><code>/**
+ * 非递归实现，使用一个栈，用每次划分区域得出的中枢值将区域进行再次划分，
+ * 直到中枢值等于区域的头或者尾部为止
+ * @param array 待排序数组
+ * @param head 数组头部
+ * @param tail 数组尾部
+ * @return 一个排好序的升序数组
+ */
+public static int[] quick_sort2(int[] array, int head, int tail) {
+    int pivot;
+    // 用一个栈来实现，每次划分只排一个数的序，就是pivot中枢值，当局部头尾等于pivot，
+    // 就将其出栈，当得出的中枢 值和局部的头尾值不相等时，就将不等部分入栈，
+    // 直到全部数字都出栈为止
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+    pivot = getPartition(array, head, tail);
+
+    if (head &lt; pivot - 1) {
+        stack.push(head);
+        stack.push(pivot);
+    }
+    if (tail &gt; pivot + 1) {
+        stack.push(pivot + 1);
+        stack.push(tail);
+    }
+
+    while (!stack.isEmpty()) {
+        int high = stack.pop();
+        int low = stack.pop();
+
+        pivot = getPartition(array, low, high);
+        if (low &lt; pivot - 1) {
+            stack.push(low);
+            stack.push(pivot - 1);
+        }
+        if (high &gt; pivot + 1) {
+            stack.push(pivot + 1);
+            stack.push(high);
+        }
+    }
+
+    return array;
+}
+
+// 分隔算法也做了小小的改动
+private static int getPartition(int[] array, int low, int high) {
+    int smallerTail = low - 1;
+    int current = low;
+    // 就是这一句，将分隔值与数组高位进行交换
+    swap(array, low, high);
+    // 如果找到小于中枢值的数，放到较小区域
+    while (current &lt;= high) {
+        if (array[current] &lt;= array[high]) {
+            swap(array, ++smallerTail, current);
+        }
+        current++;
+    }
+    return smallerTail;
+}
+</code></pre><h2 id="2-3-最终优化版快速排序"><a href="#2-3-最终优化版快速排序" class="headerlink" title="2.3 最终优化版快速排序"></a>2.3 最终优化版快速排序</h2><p><strong>1) 最终优化版快速排序（非递归）</strong></p>
+<pre><code>/**
+ * 非递归实现，使用一个栈，用每次划分区域得出的中枢值将区域进行再次划分，
+ * 直到中枢值等于区域的头或者尾部为止
+ * @param array 待排序数组
+ * @param head 数组头部
+ * @param tail 数组尾部
+ * @return 一个排好序的升序数组
+ */
+public static int[] quick_sort2(int[] array, int head, int tail) {
+    int pivot;
+
+    // 用一个栈来实现，每次划分只排一个数的序，就是pivot中枢值，当局部头尾等于pivot，
+    // 就将其出栈，当得出的中枢 值和局部的头尾值不相等时，就将不等部分入栈，
+    // 直到全部数字都出栈为止
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+    pivot = getPartition(array, head, tail);
+
+    if (head &lt; pivot - 1) {
+        stack.push(head);
+        stack.push(pivot);
+    }
+    if (tail &gt; pivot + 1) {
+        stack.push(pivot + 1);
+        stack.push(tail);
+    }
+
+    while (!stack.isEmpty()) {
+        int high = stack.pop();
+        int low = stack.pop();
+
+        pivot = getPartition(array, low, high);
+        if (low &lt; pivot - 1) {
+            stack.push(low);
+            stack.push(pivot - 1);
+        }
+        if (high &gt; pivot + 1) {
+            stack.push(pivot + 1);
+            stack.push(high);
+        }
+    }
+
+    return array;
+}
+
+private static int getPartition(int[] array, int low, int high) {
+    //1.先三数取中选好枢轴值
+    int pivot_key;
+    // 进行三数取中
+    int mid = low + (high - low) / 2;
+    // 先确保左边是比右边小
+    if (array[low] &gt; array[high]) {
+        swap(array, low, high);
+    }
+    // 再确保中间比右边小
+    if (array[mid] &gt; array[high]) {
+        swap(array, mid, high);
+    }
+    // 最后确保左边比中间小
+    if (array[low] &gt; array[mid]) {
+        swap(array, low, mid);
+    }
+    pivot_key = array[low];
+    swap(array, pivot_key, high);
+
+    // 2.划分出一块默认长度为0，指针指向数组区域前前一项的空间作为存放小于枢轴值的区域
+    int smallerTail = low - 1;
+    int current = low;
+    // 3.一直比较，直到最后一个枢轴值被比较，完成分割
+    while (current &lt;= high) {
+        if (array[current] &lt;= array[high]) {
+            swap(array, ++smallerTail, current);
+        }
+        current++;
+    }
+    return smallerTail;
+}
+</code></pre><p><strong>2) 最终优化版快速排序（递归）</strong><br>    private static final int MAX_LENGTH_INSERT_SORT = 7;<br>    /**</p>
+<pre><code> * 最终版的快速排序。优化了递归和小样本情况采用了插入排序。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 排好序数组
+ */
+public static int[] ultimate_quick_sort(int[] array, int low, int high) {
+    int pivot;
+
+    // 将递归换成迭代，减少对栈的使用
+    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
+        while (low &lt; high) {
+            pivot = getPartition(array, low, high);
+            quick_sort(array, low, pivot - 1);
+            low = pivot + 1;
+        }
+    } else {
+        DirectlyInsertSort.directly_insert_sort(array);
+    }
+
+    return array;
+}
+
+/**
+ * 最终版分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
+ * @param array 待排序数组
+ * @param low 低位下标
+ * @param high 高位下标
+ * @return 划分好的数组
+ */
+private static int getPartitionUltimate(int[] array, int low, int high) {
+    int pivot_key;
+    // 进行三数取中
+    int mid = low + (high - low) / 2;
+    // 先确保左边是比右边小
+    if (array[low] &gt; array[high]) {
+        swap(array, low, high);
+    }
+    // 再确保中间比右边小
+    if (array[mid] &gt; array[high]) {
+        swap(array, mid, high);
+    }
+    // 最后确保左边比中间小
+    if (array[low] &gt; array[mid]) {
+        swap(array, low, mid);
+    }
+    pivot_key = array[low];
+    // 临时数字保存枢轴
+    int temp = array[low];
+    // 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+        array[low] = array[high];
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+        array[high] = array[low];
+    }
+    array[low] = temp;
+
+    return low;
+}
+</code></pre><p>关键代码：</p>
+<pre><code>// 将递归换成迭代，减少对栈的使用
+    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
+        while (low &lt; high) {
+            pivot = getPartition(array, low, high);
+            quick_sort(array, low, pivot - 1);
+            low = pivot + 1;
+        }
+    }
+
+// 从表的两端交替向中间扫描
+    while (low &lt; high) {
+        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
+            high--;
+        }
+        array[low] = array[high];
+
+        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
+            low++;
+        }
+        array[high] = array[low];
+    }
+    array[low] = temp;
+
+注释：这里用到了插入排序的思想
+</code></pre><h3 id="2-3-7-快速排序的单链表实现（C语言版）"><a href="#2-3-7-快速排序的单链表实现（C语言版）" class="headerlink" title="2.3.7 快速排序的单链表实现（C语言版）"></a>2.3.7 快速排序的单链表实现（C语言版）</h3><p>背景：因为看到有的阿里面试面经里面写到了，觉得很有趣，所以就在这里收录下来了。</p>
+<p>思路：C里面都是操作指针，快排也有操作指针实现的方法。但是这里用改变值得方法来排序，会不会更接近Java程序员的思维？对于初始版本，选择，采用两个指针，一快一慢。快指针负责比较，慢指针负责记录比枢轴小的序列的末尾位置，这个位置后来会存放枢轴。一直循环直到快指针指向数组末尾指针的next—NULL。</p>
+<p>具体实例：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG" alt="Quick Sort"><br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F_%E7%BB%AD.JPG" alt="Quick Sort"></p>
+<pre><code>/**
+ * 最优解：将链表分成两个个部分，小于等于，大于，然后依次链接上去
+ * @param head
+ * @param val
+ * @return
+ */
+public ListNode getPartition(ListNode head, int val) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+
+    ListNode smallerHead = new ListNode(-1);
+    ListNode smallerTail = smallerHead;
+    // 这里指向head是为了避免小于值链表为空的时候，链表smallerHead.next为空，需要对返回结果进行分类讨论
+    smallerTail.next = head;
+
+    ListNode largerHead = new ListNode(-1);
+    ListNode largerTail = largerHead;
+
+    ListNode cur = head;
+    while (cur != null) {
+        if (cur.val &gt; val) {
+            largerTail.next = cur;
+            largerTail = largerTail.next;
+            // 处理小于值的链表，让小于指针next始终保持在链表current一致
+            smallerTail.next = cur.next;
+        } else {
+            // 这里有奇效，只需要移动过去就可以了，且最后一位会自动置空
+            smallerTail = cur;
+        }
+        cur = cur.next;
+    }
+
+    // 大于值的链表需要置空
+    largerTail.next = null;
+    smallerTail.next = largerHead.next;
+    return smallerHead.next;
+}
+</code></pre><p>实际应用：TOP-K问题<br>对于TOP-K问题，之前只是觉得这是个简单的快排取编号的问题，上网一搜才发现这个问题不仅仅有至少7种解法，而且还有可以用来处理海量数据。<br>题目1：设计一组N个数，确定其中第k个最大值。<br>解法：</p>
+<p>// 递归解法，调用了已有的快排的分隔函数getPartition，十分简洁</p>
+<pre><code>public static int findkMax(int[] arr, int l, int r, int k) {
+    int pivot = QuickSortMod.getPartition(arr, l, r);
+    if (pivot &lt; k) {
+        return findkMax(arr, pivot + 1, r, k);
+    } else if (pivot &gt; k){
+        return findkMax(arr, l, pivot - 1, k);
+    }
+
+    return k;
+</code></pre><p>}</p>
+<p>// 非递归解法，直接得出最终结果值，但是步骤较多</p>
+<pre><code>   public static int findKMax2(int[] arr, int l, int r, int k) {
+
+    int pivot = QuickSortMod.getPartition(arr, l, r);
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    if (k &lt; pivot) {
+        stack.push(l);
+        stack.push(pivot - 1);
+    }
+    if (k &gt; pivot) {
+        stack.push(pivot + 1);
+        stack.push(r);
+    }
+
+    while (pivot != k || !stack.isEmpty()) {
+        int high = stack.pop();
+        int low = stack.pop();
+
+        pivot = QuickSortMod.getPartition(arr, low, high);
+        if (k &lt; pivot) {
+            stack.push(low);
+            stack.push(pivot - 1);
+        } else if (k &gt; pivot) {
+            stack.push(pivot + 1);
+            stack.push(high);
+        }
+    }
+
+    return arr[k];
+}
+</code></pre><p>题目2：海量数据处理的 Top K算法(问题) 小顶堆实现<br>问题描述：有N(N&gt;&gt;10000)个整数,求出其中的前K个最大的数。（称作Top k或者Top 10）</p>
+<p>　　问题分析：由于(1)输入的大量数据；(2)只要前K个，对整个输入数据的保存和排序是相当的不可取的。</p>
+<p>　　　　　　　 可以利用数据结构的最小堆来处理该问题。</p>
+<p>　　　　　　　 最小堆如图所示，对于每个非叶子节点的数值，一定不大于孩子节点的数值。这样可用含有K个节点的最小堆来保存K个目前的最大值(当然根节点是其中的最小数值)。</p>
+<p>　　　　　　每次有数据输入的时候可以先与根节点比较。若不大于根节点，则舍弃；否则用新数值替换根节点数值。并进行最小堆的调整。
+　　　　　　</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/07/快速排序算法/" data-id="cj6zrtpll0004a8u9bq07rh7w" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -118,7 +1069,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/28/排序算法/">排序算法</a>
+      <a class="article-title" href="/2017/06/28/排序算法/">比较排序算法</a>
     </h1>
   
 
@@ -126,10 +1077,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。</p>
-<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>&emsp;&emsp;根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
 <p>常见的内外排序有哪些？<br>内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法<br>外排序：外归并排序算法</p>
-<p>比较排序算法有哪些？性能表现又是如何？<br>(Pic here)<br>注1：关于 Memory，如果算法为 “in place”（原地） 排序，则仅需要 O(1) 内存；有时对于额外的 O(log(n)) 内存也可以称为 “in place”（原地）。</p>
+<p>比较排序算法有哪些？性能表现又是如何？<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg" alt="Sort Comparision"></p>
+<p>注1：关于 Memory，如果算法为 “in place”（原地） 排序，则仅需要 O(1) 内存；有时对于额外的 O(log(n)) 内存也可以称为 “in place”（原地）。</p>
 <p>注2：Microsoft .Net Framework中Array.Sort方法就是实现了内省排序算法。</p>
 <hr>
 <h1 id="2-内排序"><a href="#2-内排序" class="headerlink" title="2.内排序"></a>2.内排序</h1><h2 id="2-1插入排序-（Insertion-Sorts）"><a href="#2-1插入排序-（Insertion-Sorts）" class="headerlink" title="2.1插入排序 （Insertion Sorts）"></a>2.1插入排序 （Insertion Sorts）</h2><h3 id="2-1-1-直接插入排序-Directly-Insertion-Sort"><a href="#2-1-1-直接插入排序-Directly-Insertion-Sort" class="headerlink" title="2.1.1 直接插入排序 (Directly Insertion Sort)"></a>2.1.1 直接插入排序 (Directly Insertion Sort)</h3><p>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
@@ -476,410 +1427,8 @@ private static void swap(int[] array, int i, int j) {
 2.因为排序都是先奇数，再偶数，要等两轮排序就等于冒泡排序的从头到尾的一轮排序
 </code></pre><h3 id="2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法"><a href="#2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法" class="headerlink" title="2.2.5 快速排序（Quick Sort） — 最重要的排序算法"></a>2.2.5 快速排序（Quick Sort） — 最重要的排序算法</h3><p>定义：对冒泡排序的改进。</p>
 <p>思想：通过一趟排序实现对记录的分割，其中一部分记录的关键字均比另一部分记录的关键字小。则可分别对两部分记录进行排序，已达到整体有序的。</p>
-<p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，所以最后分出来的递归树的深度就是：[log2n]+1（[x]表示不大于x的最大整数），仅需要递归.log2n.次，每次比较的次数为n次，交换的次数是n-1次，每次的时间复杂度为O(n)，每次除了比较，交换之外，还需要对其他两个子树进行排序，根据推导：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤nT（1）+（log2n）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
-<p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)，</p>
-<p>最坏情况：<br>时间复杂度：最坏情况下，序列是反序的，每次分组都是比上一次少划分一个记录的子序列，另一边则为空，这样就需要进行n-1次分组，递归树深度为n-1，每次比较了n-i次，一共比较了n*(n-1)/2次，所以时间复杂度为O(n^2)</p>
-<p>稳定性：因为不是相邻交换了，所以快速排序是不稳定的。</p>
-<p>评价：快速排序，大家说好，就是真的好。</p>
-<p>代码实现：</p>
-<ul>
-<li>找到枢纽位置pivot是关键步骤，取低位元素作为枢纽值，进行循环分组。</li>
-<li>每一趟分组，先从高位进行分组，选出比枢纽值小的值，与枢纽原位置进行交换（枢纽值处于高位）；接着低位开始进行分组，选出比枢纽值大的元素，与枢纽值进行交换（枢纽值处于低位），一趟结束。</li>
-<li>若低位仍然小于高位，就继续循环，直到低位与高位相等，循环结束</li>
-</ul>
-<p>代码：</p>
-<pre><code>/**
- * 快速排序。分治法的应用，先将数组根据第一个元素大小分成两边。
- * 一边小，一边大。再对将两边的数组分别进行同样的划分。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] quick_sort(int[] array, int low, int high) {
-    int pivot;
-
-    if (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        quick_sort(array, pivot + 1, high);
-    }
-
-    return array;
-}
-
-/**
- * 分组。根据第一个元素大小分成两边的数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition(int[] array, int low, int high) {
-    int pivot_key = array[low];
-
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-    return low;
-}
-
-private static void swap(int[] array, int i, int j) {
-    if (i != j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
-</code></pre><p>关键代码：</p>
-<pre><code>    if (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        quick_sort(array, pivot + 1, high);
-    }
-注释：先分组，再各组递归排序
-
- // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-注释：交替扫描    
-</code></pre><h3 id="2-2-6-改进的快速排序"><a href="#2-2-6-改进的快速排序" class="headerlink" title="2.2.6 改进的快速排序"></a>2.2.6 改进的快速排序</h3><ul>
-<li>问题:快速排序存在四个问题：</li>
-</ul>
-<p>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
-<p>2) 递归交换<br>  问：这里面的分组函数getPartition每次调用swap都会进行3次操作，能不能改成替换，只进行一次操作？<br>  答：可以。</p>
-<p>3) 性能问题（小数据样本时）<br>  问：当数组数量低于7个（资料显示）的时候，采用插入排序反而效率较高？<br>  答：博士生去小学教“1+1=2”也不见得比本科生教得好。快速排序对于基本有序，或者样本极少的数组排序的确效率不高。插入排序反而比较适合基本有序的小样本排序。</p>
-<p>4) 递归交换<br>  问：大家知道，递归对性能是有一定影响的，quick_sort函数在其尾部有两次递归操作。如果待排序的序列划分极端不平衡（正序或反序），递归深度将趋近于n，而不是平衡时的log2n，栈的空间是极其有限的，如何减少递归？<br>  答：解决递归地最好方法就是使用迭代。所以我们需要优化这里面不必要的递归交换。</p>
-<ul>
-<li>改进</li>
-</ul>
-<p>1)问题1解决方案：<br>修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
-<pre><code>/**
- * 分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition1(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-    return low;
-}
-</code></pre><p>2)问题2解决方案1：<br>    修改getPartition函数。交换换成替换就可以了。</p>
-<pre><code>/**
- * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition2(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-    // 临时数字保存枢轴
-    int temp = array[low];
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-    return low;
-}
-</code></pre><p>2)问题2解决方案1：<br>    或者换一种思路，设计一个小于等于枢轴值的区域，先将取出的枢轴与数组末尾进行交换，设为哨兵。然后将所有小于等于枢轴值的数字都放进区域，并将区域末尾指针相应右移，直到整个数组末尾。</p>
-<pre><code>/**
-    * 划分方法。完全按照左老师的方法来。
-    * 1.交换枢划分值和数组高位值，让划分值成为哨兵
-    * 2.先在规定区域(high, low)的低位前一位规定一个小于等于划分值区域，初始长度为0
-    * 3.移动index指针，遇到满足条件的数，就放在小于等于划分值区域的下一位（就是交换），区域长度增加1，直到指针走到高位
-    *
-    * 虽然较好的去划分值的方法是三数取中，但是随机数也是可以的。
-    * @param A 待排序数组
-    * @param low 低位指针
-    * @param high 高位指针
-    * @return 划分值在数组中位置以及一个划分过的数组
-    */
-   public static int getPartition3(int[] A, int low, int high) {
-       //随机法取划分值
-       int random = low + (int)((high - low) * Math.random());
-
-       // 交换划分值和数组高位值，让它成为哨兵
-       swap(A, random, high);
-
-       // 划分小于等于划分值区域，刚开始为低位的左边区域的前一位
-       int pivot = low - 1;
-       // 区域指针
-       int index = low;
-       // 移动低位指针，不移动高位指针
-       while (index &lt;= high) {
-           if (A[index] &lt;= A[high]) {
-               // 将小于等于划分值区域的下一个与较小值交换,并将小于等于划分值区域长度加1
-               swap(A, ++pivot, index);
-           }
-
-           index++;
-       }
-
-       return pivot;
-   }
-</code></pre><p>3)问题3解决方案：<br>    修改quick_sort函数。那就加入判断，小于等于7个的时候调用插入排序，大于7个采用快速排序。</p>
-<pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
-/**
- * 改进的快速排序。在数据较少时采用递归。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] modified_quick_sort1(int[] array, int low, int high) {
-    int pivot;
-
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        if (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            quick_sort(array, pivot + 1, high);
-        }
-    } else {
-        // 调用直接插入排序
-        DirectlyInsertSort.directly_insert_sort(array);
-    }
-
-    return array;
-}
-</code></pre><p>4)问题4解决方案：<br>    修改quick_sort函数。将if改成while，使用迭代，删除第二次递归，然后将之前荒废掉的low利用起来，作为指针使用。</p>
-<pre><code>/**
- * 改进的快速排序。优化了递归。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] modified_quick_sort2(int[] array, int low, int high) {
-    int pivot;
-
-    // 将递归换成迭代，减少对栈的使用
-    while (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        low = pivot + 1;
-    }
-
-    return array;
-}
-</code></pre><p>最终版：</p>
-<pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
-/**
- * 最终版的快速排序。优化了递归和小样本情况采用了插入排序。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] ultimate_quick_sort(int[] array, int low, int high) {
-    int pivot;
-
-    // 将递归换成迭代，减少对栈的使用
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        while (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            low = pivot + 1;
-        }
-    } else {
-        DirectlyInsertSort.directly_insert_sort(array);
-    }
-
-    return array;
-}
-
-/**
- * 最终版分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartitionUltimate(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-    // 临时数字保存枢轴
-    int temp = array[low];
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-    return low;
-}
-</code></pre><p>关键代码：</p>
-<pre><code>// 将递归换成迭代，减少对栈的使用
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        while (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            low = pivot + 1;
-        }
-    }
-
-// 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-注释：这里用到了插入排序的思想
-</code></pre><h3 id="2-3-7-快速排序的单链表实现（C语言版）"><a href="#2-3-7-快速排序的单链表实现（C语言版）" class="headerlink" title="2.3.7 快速排序的单链表实现（C语言版）"></a>2.3.7 快速排序的单链表实现（C语言版）</h3><p>背景：因为看到有的阿里面试面经里面写到了，觉得很有趣，所以就在这里收录下来了。</p>
-<p>思路：C里面都是操作指针，快排也有操作指针实现的方法。但是这里用改变值得方法来排序，会不会更接近Java程序员的思维？对于初始版本，选择，采用两个指针，一快一慢。快指针负责比较，慢指针负责记录比枢轴小的序列的末尾位置，这个位置后来会存放枢轴。一直循环直到快指针指向数组末尾指针的next—NULL。</p>
-<p>具体实例：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG" alt="Quick Sort"><br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F_%E7%BB%AD.JPG" alt="Quick Sort"></p>
-<p>代码：</p>
-<pre><code>struct Node
-{
-    int key;
-    Node* next;
-};
-
-Node* getPartition(Node* pBegin, Node* pEnd) {
-    int key = pBegin-&gt;key;
-    Node* p = pBegin;
-    Node* q = p-&gt;next;
-
-    while(q != pEnd) {
-        if (q-&gt;key &lt; key) {
-            p = p-&gt;next;
-            swap(p, q);
-        }
-        q = q-&gt;next;
-    }
-
-    swap(p, pBegin);
-}
-
-void QuickSort(Node* pBegin, Node* pEnd) {
-    if (pBegin != pEnd) {
-        Node* pivot = getPartition(pBegin, pEnd);
-        QuickSort(pBegin, pivot);
-        QuickSort(pivot, pEnd);
-    }
-}
-
-void swap(Node* a, Node* b) {
-    if (a-&gt;key != b-&gt;key) {
-        int temp = b-&gt;key;
-        b-&gt;key = a-&gt;key;
-        a-&gt;key = temp;
-    }
-}
-</code></pre><hr>
+<p><strong>注释：对于快速排序，因为它和它的拓展内容十分丰富，我单独开了一篇来讲它。下面是直通车：</strong></p>
+<hr>
 <h1 id="2-3-选择排序"><a href="#2-3-选择排序" class="headerlink" title="2.3 选择排序"></a>2.3 选择排序</h1><h2 id="2-3-1-简单选择排序"><a href="#2-3-1-简单选择排序" class="headerlink" title="2.3.1 简单选择排序"></a>2.3.1 简单选择排序</h2><p>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
 <p>复杂度分析：<br>时间复杂度：最好，最坏比较都是(N-1)*(N+1)/2,交换是N-1次，所以时间复杂度是O(n^2)<br>空间复杂度：原地排序，一个临时变量，所以是常数级别的O(1)<br>稳定性:因为是相邻元素的比较，而且中途没有交换，所以是稳定的，而且是特别稳定，任何情况的比较和交换（不算赋值过程）都是一样的</p>
 <p>评价：交换的次数较少，但是比较的次数较多，普通性能的排序。</p>
@@ -1201,7 +1750,6 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 <p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 <p>排序算法优化的原则：<br>1.能用迭代就不要用递归。<br>2.能用替换就不要用交换(swap)<br>3.低级排序并不一定比高级排序差，主要还是要看清楚应用场景</p>
 </blockquote>
-<h3 id="附：内排序性能比较"><a href="#附：内排序性能比较" class="headerlink" title="附：内排序性能比较"></a>附：内排序性能比较</h3><p><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg" alt="Sort Comparision"></p>
 <h1 id="3-外排序"><a href="#3-外排序" class="headerlink" title="3 外排序"></a>3 外排序</h1><ul>
 <li>定义：外排序（External sorting）是指能够处理极大量数据的排序算法。</li>
 </ul>
@@ -1376,47 +1924,11 @@ private static int findMaxBit(int[] A, int n) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序算法/" data-id="cj5teof9c00081wu9k06d5dw4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序算法/" data-id="cj6zrtpll0006a8u90dne0vyq" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-查找算法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/06/27/查找算法/" class="article-date">
-  <time datetime="2017-06-27T06:06:15.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/查找算法/">查找算法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/27/查找算法/" data-id="cj5teof8w00041wu9wsu6swno" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -1488,7 +2000,7 @@ private static int findMaxBit(int[] A, int n) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj5teof8w00001wu9771ft6cu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/04/堆排序/" data-id="cj6zrtpm0000aa8u9xgr2jjbz" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li></ul>
@@ -1867,7 +2379,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj5teof8w00011wu9kbj11cur" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/05/27/子网分配算法/" data-id="cj6zrtpll0003a8u9p4ci8bwl" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
@@ -1889,7 +2401,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
@@ -1899,7 +2411,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/堆排序-数据结构与算法-完全二叉树/" style="font-size: 10px;">堆排序 数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
@@ -1910,7 +2422,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
     </div>
   </div>
 
@@ -1918,20 +2430,20 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/07/07/经典排序算法有关笔试题/">经典排序算法有关笔试题</a>
+            <a href="/2017/08/21/疑难算法之动态规划/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2017/06/28/排序算法/">排序算法</a>
+            <a href="/2017/08/07/快速排序算法/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2017/06/27/查找算法/">查找算法</a>
+            <a href="/2017/06/28/排序算法/">比较排序算法</a>
           </li>
         
           <li>
@@ -1955,7 +2467,7 @@ private static String ipToSubnet(String allocatedIp, Integer subnetMask) {
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

@@ -3,28 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>排序算法 | DreamWu&#39;s Archive</title>
+  <title>比较排序算法 | DreamWu&#39;s Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
+  <meta name="description" content="1.前言&amp;emsp;&amp;emsp;根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序算法 比较排序算法有哪些？性能表现又是如何？ 注1：关于 Memo">
 <meta name="keywords" content="内外排序 数据结构 算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="排序算法">
+<meta property="og:title" content="比较排序算法">
 <meta property="og:url" content="http://yoursite.com/2017/06/28/排序算法/index.html">
 <meta property="og:site_name" content="DreamWu&#39;s Archive">
-<meta property="og:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
-<meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG">
-<meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F_%E7%BB%AD.JPG">
+<meta property="og:description" content="1.前言&amp;emsp;&amp;emsp;根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序算法 比较排序算法有哪些？性能表现又是如何？ 注1：关于 Memo">
+<meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%A4%A7%E6%A0%B9%E5%A0%86%E5%B0%8F%E6%A0%B9%E5%A0%86.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%86.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E8%B0%83%E6%95%B4%E6%88%90%E4%B8%BA%E5%A4%A7%E6%A0%B9%E5%A0%862.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F1.jpg">
 <meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F2.jpg">
-<meta property="og:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg">
-<meta property="og:updated_time" content="2017-08-01T09:51:55.942Z">
+<meta property="og:updated_time" content="2017-08-07T12:56:01.333Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="排序算法">
-<meta name="twitter:description" content="今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。 1.前言根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG">
+<meta name="twitter:title" content="比较排序算法">
+<meta name="twitter:description" content="1.前言&amp;emsp;&amp;emsp;根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。 常见的内外排序有哪些？内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法外排序：外归并排序算法 比较排序算法有哪些？性能表现又是如何？ 注1：关于 Memo">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg">
   
     <link rel="alternate" href="/atom.xml" title="DreamWu&#39;s Archive" type="application/atom+xml">
   
@@ -66,9 +64,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -91,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      排序算法
+      比较排序算法
     </h1>
   
 
@@ -99,10 +97,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天的专题，我会从尽量概括和全面的角度来将自己在算法方法学习到的知识总结出来，提纲挈领。</p>
-<h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
+        <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h1><p>&emsp;&emsp;根据排序过程中待排序记录是否全部存放在内存中，可以将排序算法归为两类：内排序和外排序。一般的记录数较少的情况下，采用的方法都是内排序；而记录数量巨大，而且要求排序算法效率高的情况下，采用的是外排序。</p>
 <p>常见的内外排序有哪些？<br>内排序：插入排序算法、选择排序算法、交换排序算法、归并排序算法<br>外排序：外归并排序算法</p>
-<p>比较排序算法有哪些？性能表现又是如何？<br>(Pic here)<br>注1：关于 Memory，如果算法为 “in place”（原地） 排序，则仅需要 O(1) 内存；有时对于额外的 O(log(n)) 内存也可以称为 “in place”（原地）。</p>
+<p>比较排序算法有哪些？性能表现又是如何？<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg" alt="Sort Comparision"></p>
+<p>注1：关于 Memory，如果算法为 “in place”（原地） 排序，则仅需要 O(1) 内存；有时对于额外的 O(log(n)) 内存也可以称为 “in place”（原地）。</p>
 <p>注2：Microsoft .Net Framework中Array.Sort方法就是实现了内省排序算法。</p>
 <hr>
 <h1 id="2-内排序"><a href="#2-内排序" class="headerlink" title="2.内排序"></a>2.内排序</h1><h2 id="2-1插入排序-（Insertion-Sorts）"><a href="#2-1插入排序-（Insertion-Sorts）" class="headerlink" title="2.1插入排序 （Insertion Sorts）"></a>2.1插入排序 （Insertion Sorts）</h2><h3 id="2-1-1-直接插入排序-Directly-Insertion-Sort"><a href="#2-1-1-直接插入排序-Directly-Insertion-Sort" class="headerlink" title="2.1.1 直接插入排序 (Directly Insertion Sort)"></a>2.1.1 直接插入排序 (Directly Insertion Sort)</h3><p>定义：将一个记录插入一个有序表中，从而得到一个新的，记录数加一的有序表。</p>
@@ -449,410 +447,8 @@ private static void swap(int[] array, int i, int j) {
 2.因为排序都是先奇数，再偶数，要等两轮排序就等于冒泡排序的从头到尾的一轮排序
 </code></pre><h3 id="2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法"><a href="#2-2-5-快速排序（Quick-Sort）-—-最重要的排序算法" class="headerlink" title="2.2.5 快速排序（Quick Sort） — 最重要的排序算法"></a>2.2.5 快速排序（Quick Sort） — 最重要的排序算法</h3><p>定义：对冒泡排序的改进。</p>
 <p>思想：通过一趟排序实现对记录的分割，其中一部分记录的关键字均比另一部分记录的关键字小。则可分别对两部分记录进行排序，已达到整体有序的。</p>
-<p>复杂度分析：<br>最优情况：<br>时间复杂度：最优情况下，每次都很均匀地分成两组，所以最后分出来的递归树的深度就是：[log2n]+1（[x]表示不大于x的最大整数），仅需要递归.log2n.次，每次比较的次数为n次，交换的次数是n-1次，每次的时间复杂度为O(n)，每次除了比较，交换之外，还需要对其他两个子树进行排序，根据推导：<br>T（n）≤2T（n/2） +n，T（1）=0<br>T（n）≤2（2T（n/4）+n/2） +n=4T（n/4）+2n<br>T（n）≤4（2T（n/8）+n/4） +2n=8T（n/8）+3n<br>……<br>T（n）≤nT（1）+（log2n）×n= O(nlogn)<br>所以时间复杂度为O(nlog2n).</p>
-<p>空间复杂度：<br>每次递归都需要1个额外空间，所以空间复杂度为O(log2n)，</p>
-<p>最坏情况：<br>时间复杂度：最坏情况下，序列是反序的，每次分组都是比上一次少划分一个记录的子序列，另一边则为空，这样就需要进行n-1次分组，递归树深度为n-1，每次比较了n-i次，一共比较了n*(n-1)/2次，所以时间复杂度为O(n^2)</p>
-<p>稳定性：因为不是相邻交换了，所以快速排序是不稳定的。</p>
-<p>评价：快速排序，大家说好，就是真的好。</p>
-<p>代码实现：</p>
-<ul>
-<li>找到枢纽位置pivot是关键步骤，取低位元素作为枢纽值，进行循环分组。</li>
-<li>每一趟分组，先从高位进行分组，选出比枢纽值小的值，与枢纽原位置进行交换（枢纽值处于高位）；接着低位开始进行分组，选出比枢纽值大的元素，与枢纽值进行交换（枢纽值处于低位），一趟结束。</li>
-<li>若低位仍然小于高位，就继续循环，直到低位与高位相等，循环结束</li>
-</ul>
-<p>代码：</p>
-<pre><code>/**
- * 快速排序。分治法的应用，先将数组根据第一个元素大小分成两边。
- * 一边小，一边大。再对将两边的数组分别进行同样的划分。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] quick_sort(int[] array, int low, int high) {
-    int pivot;
-
-    if (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        quick_sort(array, pivot + 1, high);
-    }
-
-    return array;
-}
-
-/**
- * 分组。根据第一个元素大小分成两边的数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition(int[] array, int low, int high) {
-    int pivot_key = array[low];
-
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-    return low;
-}
-
-private static void swap(int[] array, int i, int j) {
-    if (i != j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
-</code></pre><p>关键代码：</p>
-<pre><code>    if (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        quick_sort(array, pivot + 1, high);
-    }
-注释：先分组，再各组递归排序
-
- // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-注释：交替扫描    
-</code></pre><h3 id="2-2-6-改进的快速排序"><a href="#2-2-6-改进的快速排序" class="headerlink" title="2.2.6 改进的快速排序"></a>2.2.6 改进的快速排序</h3><ul>
-<li>问题:快速排序存在四个问题：</li>
-</ul>
-<p>1) 枢轴<br>  问：为什么在正序或者反序的时候，快速排序的时间复杂度为平方阶O(n^2)？<br>  答： 因为对于这两种情况，一边的数组是空的，另一边又是待排序数组的完整版。而且分完组的话枢纽值要么最终在头上，要么最终在尾巴上，比较次数和比较的循环轮数都是最大的。最后的时间复杂度达到了O(n^2)。</p>
-<p>2) 递归交换<br>  问：这里面的分组函数getPartition每次调用swap都会进行3次操作，能不能改成替换，只进行一次操作？<br>  答：可以。</p>
-<p>3) 性能问题（小数据样本时）<br>  问：当数组数量低于7个（资料显示）的时候，采用插入排序反而效率较高？<br>  答：博士生去小学教“1+1=2”也不见得比本科生教得好。快速排序对于基本有序，或者样本极少的数组排序的确效率不高。插入排序反而比较适合基本有序的小样本排序。</p>
-<p>4) 递归交换<br>  问：大家知道，递归对性能是有一定影响的，quick_sort函数在其尾部有两次递归操作。如果待排序的序列划分极端不平衡（正序或反序），递归深度将趋近于n，而不是平衡时的log2n，栈的空间是极其有限的，如何减少递归？<br>  答：解决递归地最好方法就是使用迭代。所以我们需要优化这里面不必要的递归交换。</p>
-<ul>
-<li>改进</li>
-</ul>
-<p>1)问题1解决方案：<br>修改getPartition函数。枢轴不合理，那就选取合理的枢轴。现有的方案中：随机选取比较耗费性能，而且还不能保证一定会简化排序；九数取中分三路进行三路取中，较为复杂，先不讨论；这里采用三数取中选取枢轴值。</p>
-<pre><code>/**
- * 分组。先进行三数取中选取枢轴值，再根据枢轴值分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition1(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-
-        swap(array, low, high);
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        swap(array, low, high);
-    }
-
-    return low;
-}
-</code></pre><p>2)问题2解决方案1：<br>    修改getPartition函数。交换换成替换就可以了。</p>
-<pre><code>/**
- * 分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartition2(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-    // 临时数字保存枢轴
-    int temp = array[low];
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-    return low;
-}
-</code></pre><p>2)问题2解决方案1：<br>    或者换一种思路，设计一个小于等于枢轴值的区域，先将取出的枢轴与数组末尾进行交换，设为哨兵。然后将所有小于等于枢轴值的数字都放进区域，并将区域末尾指针相应右移，直到整个数组末尾。</p>
-<pre><code>/**
-    * 划分方法。完全按照左老师的方法来。
-    * 1.交换枢划分值和数组高位值，让划分值成为哨兵
-    * 2.先在规定区域(high, low)的低位前一位规定一个小于等于划分值区域，初始长度为0
-    * 3.移动index指针，遇到满足条件的数，就放在小于等于划分值区域的下一位（就是交换），区域长度增加1，直到指针走到高位
-    *
-    * 虽然较好的去划分值的方法是三数取中，但是随机数也是可以的。
-    * @param A 待排序数组
-    * @param low 低位指针
-    * @param high 高位指针
-    * @return 划分值在数组中位置以及一个划分过的数组
-    */
-   public static int getPartition3(int[] A, int low, int high) {
-       //随机法取划分值
-       int random = low + (int)((high - low) * Math.random());
-
-       // 交换划分值和数组高位值，让它成为哨兵
-       swap(A, random, high);
-
-       // 划分小于等于划分值区域，刚开始为低位的左边区域的前一位
-       int pivot = low - 1;
-       // 区域指针
-       int index = low;
-       // 移动低位指针，不移动高位指针
-       while (index &lt;= high) {
-           if (A[index] &lt;= A[high]) {
-               // 将小于等于划分值区域的下一个与较小值交换,并将小于等于划分值区域长度加1
-               swap(A, ++pivot, index);
-           }
-
-           index++;
-       }
-
-       return pivot;
-   }
-</code></pre><p>3)问题3解决方案：<br>    修改quick_sort函数。那就加入判断，小于等于7个的时候调用插入排序，大于7个采用快速排序。</p>
-<pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
-/**
- * 改进的快速排序。在数据较少时采用递归。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] modified_quick_sort1(int[] array, int low, int high) {
-    int pivot;
-
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        if (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            quick_sort(array, pivot + 1, high);
-        }
-    } else {
-        // 调用直接插入排序
-        DirectlyInsertSort.directly_insert_sort(array);
-    }
-
-    return array;
-}
-</code></pre><p>4)问题4解决方案：<br>    修改quick_sort函数。将if改成while，使用迭代，删除第二次递归，然后将之前荒废掉的low利用起来，作为指针使用。</p>
-<pre><code>/**
- * 改进的快速排序。优化了递归。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] modified_quick_sort2(int[] array, int low, int high) {
-    int pivot;
-
-    // 将递归换成迭代，减少对栈的使用
-    while (low &lt; high) {
-        pivot = getPartition(array, low, high);
-        quick_sort(array, low, pivot - 1);
-        low = pivot + 1;
-    }
-
-    return array;
-}
-</code></pre><p>最终版：</p>
-<pre><code>private static final int MAX_LENGTH_INSERT_SORT = 7;
-/**
- * 最终版的快速排序。优化了递归和小样本情况采用了插入排序。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 排好序数组
- */
-public static int[] ultimate_quick_sort(int[] array, int low, int high) {
-    int pivot;
-
-    // 将递归换成迭代，减少对栈的使用
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        while (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            low = pivot + 1;
-        }
-    } else {
-        DirectlyInsertSort.directly_insert_sort(array);
-    }
-
-    return array;
-}
-
-/**
- * 最终版分组。以第一个元素为枢轴值，分成两个数组，一边小，一边大。
- * @param array 待排序数组
- * @param low 低位下标
- * @param high 高位下标
- * @return 划分好的数组
- */
-private static int getPartitionUltimate(int[] array, int low, int high) {
-    int pivot_key;
-    // 进行三数取中
-    int mid = low + (high - low) / 2;
-    // 先确保左边是比右边小
-    if (array[low] &gt; array[high]) {
-        swap(array, low, high);
-    }
-    // 再确保中间比右边小
-    if (array[mid] &gt; array[high]) {
-        swap(array, mid, high);
-    }
-    // 最后确保左边比中间小
-    if (array[low] &gt; array[mid]) {
-        swap(array, low, mid);
-    }
-    pivot_key = array[low];
-    // 临时数字保存枢轴
-    int temp = array[low];
-    // 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-    return low;
-}
-</code></pre><p>关键代码：</p>
-<pre><code>// 将递归换成迭代，减少对栈的使用
-    if (array.length &gt; MAX_LENGTH_INSERT_SORT) {
-        while (low &lt; high) {
-            pivot = getPartition(array, low, high);
-            quick_sort(array, low, pivot - 1);
-            low = pivot + 1;
-        }
-    }
-
-// 从表的两端交替向中间扫描
-    while (low &lt; high) {
-        while (low &lt; high &amp;&amp; array[high] &gt;= pivot_key) {
-            high--;
-        }
-        array[low] = array[high];
-
-        while (low &lt; high &amp;&amp; array[low] &lt;= pivot_key) {
-            low++;
-        }
-        array[high] = array[low];
-    }
-    array[low] = temp;
-
-注释：这里用到了插入排序的思想
-</code></pre><h3 id="2-3-7-快速排序的单链表实现（C语言版）"><a href="#2-3-7-快速排序的单链表实现（C语言版）" class="headerlink" title="2.3.7 快速排序的单链表实现（C语言版）"></a>2.3.7 快速排序的单链表实现（C语言版）</h3><p>背景：因为看到有的阿里面试面经里面写到了，觉得很有趣，所以就在这里收录下来了。</p>
-<p>思路：C里面都是操作指针，快排也有操作指针实现的方法。但是这里用改变值得方法来排序，会不会更接近Java程序员的思维？对于初始版本，选择，采用两个指针，一快一慢。快指针负责比较，慢指针负责记录比枢轴小的序列的末尾位置，这个位置后来会存放枢轴。一直循环直到快指针指向数组末尾指针的next—NULL。</p>
-<p>具体实例：<br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.JPG" alt="Quick Sort"><br><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F_%E7%BB%AD.JPG" alt="Quick Sort"></p>
-<p>代码：</p>
-<pre><code>struct Node
-{
-    int key;
-    Node* next;
-};
-
-Node* getPartition(Node* pBegin, Node* pEnd) {
-    int key = pBegin-&gt;key;
-    Node* p = pBegin;
-    Node* q = p-&gt;next;
-
-    while(q != pEnd) {
-        if (q-&gt;key &lt; key) {
-            p = p-&gt;next;
-            swap(p, q);
-        }
-        q = q-&gt;next;
-    }
-
-    swap(p, pBegin);
-}
-
-void QuickSort(Node* pBegin, Node* pEnd) {
-    if (pBegin != pEnd) {
-        Node* pivot = getPartition(pBegin, pEnd);
-        QuickSort(pBegin, pivot);
-        QuickSort(pivot, pEnd);
-    }
-}
-
-void swap(Node* a, Node* b) {
-    if (a-&gt;key != b-&gt;key) {
-        int temp = b-&gt;key;
-        b-&gt;key = a-&gt;key;
-        a-&gt;key = temp;
-    }
-}
-</code></pre><hr>
+<p><strong>注释：对于快速排序，因为它和它的拓展内容十分丰富，我单独开了一篇来讲它。下面是直通车：</strong></p>
+<hr>
 <h1 id="2-3-选择排序"><a href="#2-3-选择排序" class="headerlink" title="2.3 选择排序"></a>2.3 选择排序</h1><h2 id="2-3-1-简单选择排序"><a href="#2-3-1-简单选择排序" class="headerlink" title="2.3.1 简单选择排序"></a>2.3.1 简单选择排序</h2><p>思想：每一趟从未排序元素中选择出一个最小（最大）的值，放在队头。</p>
 <p>复杂度分析：<br>时间复杂度：最好，最坏比较都是(N-1)*(N+1)/2,交换是N-1次，所以时间复杂度是O(n^2)<br>空间复杂度：原地排序，一个临时变量，所以是常数级别的O(1)<br>稳定性:因为是相邻元素的比较，而且中途没有交换，所以是稳定的，而且是特别稳定，任何情况的比较和交换（不算赋值过程）都是一样的</p>
 <p>评价：交换的次数较少，但是比较的次数较多，普通性能的排序。</p>
@@ -1174,7 +770,6 @@ private static void merge(int[] temp, int[] target, int start, int middle, int e
 <p>上面的要点都是我在调试代码过程中自己的心得体会，对于面对上机考试和面试，都会很有用。</p>
 <p>排序算法优化的原则：<br>1.能用迭代就不要用递归。<br>2.能用替换就不要用交换(swap)<br>3.低级排序并不一定比高级排序差，主要还是要看清楚应用场景</p>
 </blockquote>
-<h3 id="附：内排序性能比较"><a href="#附：内排序性能比较" class="headerlink" title="附：内排序性能比较"></a>附：内排序性能比较</h3><p><img src="https://raw.githubusercontent.com/compactcfusr/MarkdownPhotos/master/Res/%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94.jpg" alt="Sort Comparision"></p>
 <h1 id="3-外排序"><a href="#3-外排序" class="headerlink" title="3 外排序"></a>3 外排序</h1><ul>
 <li>定义：外排序（External sorting）是指能够处理极大量数据的排序算法。</li>
 </ul>
@@ -1349,7 +944,7 @@ private static int findMaxBit(int[] A, int n) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/06/28/排序算法/" data-id="cj5teof9c00081wu9k06d5dw4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/06/28/排序算法/" data-id="cj6zrtpll0006a8u90dne0vyq" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li></ul>
@@ -1360,19 +955,19 @@ private static int findMaxBit(int[] A, int n) {
     
 <nav id="article-nav">
   
-    <a href="/2017/07/07/经典排序算法有关笔试题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+    <a href="/2017/08/07/快速排序算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
       <div class="article-nav-title">
         
-          经典排序算法有关笔试题
+          (no title)
         
       </div>
     </a>
   
   
-    <a href="/2017/06/27/查找算法/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">查找算法</div>
+    <a href="/2017/06/04/堆排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">堆排序</div>
     </a>
   
 </nav>
@@ -1389,7 +984,7 @@ private static int findMaxBit(int[] A, int n) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/内外排序-数据结构-算法/">内外排序 数据结构 算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堆排序-数据结构与算法-完全二叉树/">堆排序 数据结构与算法 完全二叉树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-子网分配/">算法 子网分配</a></li></ul>
     </div>
@@ -1399,7 +994,7 @@ private static int findMaxBit(int[] A, int n) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/内外排序-数据结构-算法/" style="font-size: 10px;">内外排序 数据结构 算法</a> <a href="/tags/堆排序-数据结构与算法-完全二叉树/" style="font-size: 10px;">堆排序 数据结构与算法 完全二叉树</a> <a href="/tags/算法-子网分配/" style="font-size: 10px;">算法 子网分配</a>
     </div>
@@ -1410,7 +1005,7 @@ private static int findMaxBit(int[] A, int n) {
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li></ul>
     </div>
   </div>
 
@@ -1418,20 +1013,20 @@ private static int findMaxBit(int[] A, int n) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/07/07/经典排序算法有关笔试题/">经典排序算法有关笔试题</a>
+            <a href="/2017/08/21/疑难算法之动态规划/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2017/06/28/排序算法/">排序算法</a>
+            <a href="/2017/08/07/快速排序算法/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2017/06/27/查找算法/">查找算法</a>
+            <a href="/2017/06/28/排序算法/">比较排序算法</a>
           </li>
         
           <li>
@@ -1455,7 +1050,7 @@ private static int findMaxBit(int[] A, int n) {
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Dream Wu<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
